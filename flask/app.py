@@ -13,3 +13,24 @@ db = SQLAlchemy(app)
 
 CORS(app)
 
+
+class Skill(db.model):
+    __tablename__ = 'skill'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name  = db.Column(db.String(100))
+    description = db.Column(db.String(100))
+
+class Role(db.model):
+    __tablename__ = 'role'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name  = db.Column(db.String(100))
+    description = db.Column(db.String(100))
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
+
+
+db.create_all()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
