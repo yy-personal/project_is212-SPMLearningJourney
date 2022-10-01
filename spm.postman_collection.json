@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "025315a3-b4f2-4ff9-a3fd-17d5cdba8376",
+		"name": "spm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17246635"
+	},
+	"item": [
+		{
+			"name": "/skill",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 10\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/skill",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"skill"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/skill",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 10\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/skill",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"skill"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.2.2 Python/3.10.6"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 01 Oct 2022 07:30:37 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "108"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"description\": \"yayyyy\",\n            \"id\": 10,\n            \"name\": \"cherylskill3\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "/skill",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 17\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/skill",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"skill"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/skill",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 17\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/skill",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"skill"
+							]
+						}
+					},
+					"status": "CREATED",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.2.2 Python/3.10.6"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 01 Oct 2022 07:44:01 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "15"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 17\n}"
+				}
+			]
+		},
+		{
+			"name": "/skill",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"cherylskill3\",\n    \"description\": \"yayyyy\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/skill",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"skill"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/skill",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"cherylskill3\",\n    \"description\": \"yayyyy\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/skill",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"skill"
+							]
+						}
+					},
+					"status": "CREATED",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.2.2 Python/3.10.6"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 01 Oct 2022 07:42:11 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "68"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"description\": \"yayyyy\",\n    \"id\": 17,\n    \"name\": \"cherylskill3\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/skills",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/skills",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"skills"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/skills",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/skills",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"skills"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.2.2 Python/3.10.6"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 01 Oct 2022 08:16:52 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1595"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"description\": \"Python is a computer programming language often used to build websites and software, automate tasks,\",\n            \"id\": 1,\n            \"name\": \"Python\"\n        },\n        {\n            \"description\": \"Strategic thinking is an organizational and pragmatic type of critical thinking.\",\n            \"id\": 2,\n            \"name\": \"Strategic Thinking\"\n        },\n        {\n            \"description\": \"JavaScript is a lightweight interpreted programming language.\",\n            \"id\": 3,\n            \"name\": \"JavaScript\"\n        },\n        {\n            \"description\": \"Market Research is the process of determining the viability of a new service or product through rese\",\n            \"id\": 4,\n            \"name\": \"Market Research\"\n        },\n        {\n            \"description\": \"Machine learning (ML) is a type of artificial intelligence (AI) that allows software applications to\",\n            \"id\": 5,\n            \"name\": \"Machine Learning\"\n        },\n        {\n            \"description\": \"Object-oriented design (OOD) is the process of planning a system of interacting objects for the purp\",\n            \"id\": 6,\n            \"name\": \"Object-Oriented Design\"\n        },\n        {\n            \"description\": \"Software testing is the process of assessing the functionality of a software program.\",\n            \"id\": 7,\n            \"name\": \"Software Testing\"\n        },\n        {\n            \"description\": \"NY7V2CTAB1VLI1C9VLK5\",\n            \"id\": 8,\n            \"name\": \"skill#83\"\n        },\n        {\n            \"description\": \"SEYTMT3J2ID6FW839FTHVV6TB51YFBA9COS7765JP7N9YRAVPA\",\n            \"id\": 10,\n            \"name\": \"skill#13\"\n        },\n        {\n            \"description\": \"57CLVC9ADI4WAEP8PNK3CEX78AUWIGUU2BWIS87L8VSQIKW203\",\n            \"id\": 12,\n            \"name\": \"skill#184\"\n        }\n    ]\n}"
+				}
+			]
+		}
+	]
+}
