@@ -1,3 +1,4 @@
 /htdocs/tailwind/node_modules
 /env
 /flask/.pytest_cache
+/TemplateApp_copy/node_modules
