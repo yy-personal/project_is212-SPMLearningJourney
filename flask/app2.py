@@ -3,8 +3,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+# Mac user ====================================================================
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+#                                         '@localhost:3306/ljms'
+# =============================================================================
+
+
+# Windows user -------------------------------------------------------------------
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
                                         '@localhost:3306/ljms'
+# --------------------------------------------------------------------------------
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_size': 100,
                                            'pool_recycle': 280}
@@ -35,6 +43,8 @@ class Person(db.Model):
         for column in columns:
             result[column] = getattr(self, column)
         return result
+
+
 
 
 # class Doctor(Person):
@@ -297,6 +307,10 @@ class Role(db.Model):
     description = db.Column(db.String(100))
     skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
 
+    __mapper_args__ = {
+        'polymorphic_identity': 'role'
+    }
+
     def to_dict(self):
         """
         'to_dict' converts the object into a dictionary,
@@ -338,7 +352,17 @@ def create_skill():
 
 db.create_all()
 
+# Read Existing Roles
+@app.route("/roles")
+def consultations():
+    roleList = Role.query.all()
+    return jsonify(
+        {
+            "data": [role.to_dict()
+                    for role in roleList]
+        }
+    ), 200
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5010, debug=True)
