@@ -311,11 +311,35 @@ class Role(db.Model):
 
 
 
-@app.route("/", methods=['GET'])
-def create_skill2():
-    print("helloo")
-    return "hello"
+@app.route("/skills", methods=['GET'])
+def get_skill():
+    consultation_list = Skill.query.all()
+    return jsonify(
+        {
+            "data": [consultation.to_dict()
+                     for consultation in consultation_list]
+        }
+    ), 200
 
+
+@app.route("/skill", methods=['GET'])
+def get_one_skill():
+    data = request.get_json()
+    consultation_list = Skill.query.filter_by(id=data["id"])
+    return jsonify(
+        {
+            "data": [consultation.to_dict()
+                     for consultation in consultation_list]
+        }
+    ), 200
+
+
+
+@app.route("/sampleGetEndpoint", methods=['GET'])
+def get_sampleGetEndpoint():
+    print("helloo")
+    return jsonify({"status_code": 200,
+        "msg": "hello"})
 
 @app.route("/skill", methods=['POST'])
 def create_skill():
@@ -335,6 +359,37 @@ def create_skill():
         return jsonify({
             "message": "Unable to commit to database."
         }), 500
+
+@app.route("/skill", methods=['DELETE'])
+def delete_skill():
+    data = request.get_json()
+    # print(f"data.keys(): {not all(key in data.keys() for key in ('id', 'name2'))}")
+    if not all(key in data.keys() for
+                # only allows two or more inputs in tuple during checking
+               key in ("id", "id")):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+
+    try:
+        try:
+            skill = Skill.query.filter_by(id=data["id"]).one()
+        except Exception:
+             return jsonify({
+            "message": f"Unable to find skill with id: {data['id']}"
+            }), 500
+        db.session.delete(skill)
+        db.session.commit()
+        return jsonify(data), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+    
+    
+
+    # return jsonify({"status_code": 200,
+    #     "msg": "hello2"})
 
 db.create_all()
 
