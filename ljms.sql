@@ -14,8 +14,7 @@ USE `ljms`;
 CREATE TABLE `role` (
     `id` int(10) NOT NULL,
     `name` varchar(100) DEFAULT NULL,
-    `description` varchar(100) DEFAULT NULL,
-    `skill_id` int(10) DEFAULT NULL
+    `description` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table strcuture for table 'skill'
@@ -32,8 +31,7 @@ CREATE TABLE `course` (
     `description` varchar(100) DEFAULT NULL,
     `status` varchar(50) DEFAULT NULL,
     `type` varchar(50) DEFAULT NULL,
-    `category` varchar(50) DEFAULT NULL,
-    `skill_id` int(10) DEFAULT NULL
+    `category` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- insert data for table `skill`
@@ -49,10 +47,10 @@ INSERT INTO `skill` (`id`, `name`, `description`) VALUES
 
 -- insert data for table `role`
 
-INSERT INTO `role` (`id`, `name`, `description` , `skill_id`) VALUES
-(1, 'Data Analyst', "A data analyst reviews data to identify key insights into a business's customers and ways the data can be used to solve problems." , 1),
-(2, 'Software Engineer', 'A software engineer analyzes and modifies existing software as well as designing, constructing and testing end-user applications that meet user needs', 2),
-(3, 'Product Manager', 'A Product Manager is a professional who combines both product planning and marketing to manage the entire life cycle of one project.' , 4);
+INSERT INTO `role` (`id`, `name`, `description`) VALUES
+(1, 'Data Analyst', "A data analyst reviews data to identify key insights into a business's customers and ways the data can be used to solve problems."),
+(2, 'Software Engineer', 'A software engineer analyzes and modifies existing software as well as designing, constructing and testing end-user applications that meet user needs'),
+(3, 'Product Manager', 'A Product Manager is a professional who combines both product planning and marketing to manage the entire life cycle of one project.');
 
 
 -- insert data for table `courses`
@@ -61,8 +59,7 @@ INSERT INTO `role` (`id`, `name`, `description` , `skill_id`) VALUES
 -- Indexes for table `role`
 
 ALTER TABLE `role`
-    ADD PRIMARY KEY (`id`),
-    ADD KEY `skill_id` (`skill_id`);
+    ADD PRIMARY KEY (`id`);
 
 -- Indexes for table `skill`
 
@@ -77,14 +74,9 @@ ALTER TABLE `skill`
 ALTER TABLE `role`
     MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-
 --
 -- AUTO_INCREMENT for table `consultation`
 
 ALTER TABLE `skill`
     MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
--- Constraints for table `role`
-
-ALTER TABLE `role`
-    ADD CONSTRAINT `role_ibfk_1` FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`);
