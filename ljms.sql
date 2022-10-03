@@ -22,7 +22,7 @@ CREATE TABLE `role` (
 CREATE TABLE `skill` (
     `id` int(10) NOT NULL,
     `name` varchar(100) DEFAULT NULL,
-    `description` varchar(100) DEFAULT NULL
+    `description` varchar(20000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table strcuture for table 'courses'
