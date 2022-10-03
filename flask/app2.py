@@ -50,6 +50,10 @@ class Skill(db.Model):
     name  = db.Column(db.String(100))
     description = db.Column(db.String(100))
 
+    __mapper_args__ = {
+        'polymorphic_identity': 'skill',
+    }
+
     def to_dict(self):
         """
         'to_dict' converts the object into a dictionary,
@@ -84,29 +88,6 @@ class Role(db.Model):
             result[column] = getattr(self, column)
         return result
 
-@app.route("/", methods=['GET'])
-def create_skill2():
-    print("helloo")
-    return "hello"
-
-@app.route("/skill", methods=['POST'])
-def create_skill():
-    data = request.get_json()
-    if not all(key in data.keys() for
-               key in ('name', 'description')):
-        return jsonify({
-            "message": "Incorrect JSON object provided."
-        }), 500
-    doctor = Skill(**data)
-
-    try:
-        db.session.add(doctor)
-        db.session.commit()
-        return jsonify(doctor.to_dict()), 201
-    except Exception:
-        return jsonify({
-            "message": "Unable to commit to database."
-        }), 500
 
 ######## ROLES ########
 # Read Existing Roles (R)
@@ -123,8 +104,25 @@ def consultations():
 
 ######## SKILLS ########
 #create skills (C)
-
-
+@app.route('/skills' , methods=['POST'])
+def create_skill():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+               key in ('name',
+                       'description')):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    skill = Skill(**data)
+    try:
+        db.session.add(skill)
+        db.session.commit()
+        return jsonify(skill.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
 
 
 # Read Existing Skills (R)
@@ -165,9 +163,6 @@ def delete_skill():
             "message": "Unable to commit to database."
         }), 500
     
-
-
-
 
 db.create_all()
 
