@@ -14,21 +14,21 @@ USE `ljms`;
 CREATE TABLE `role` (
     `id` int(10) NOT NULL,
     `name` varchar(100) DEFAULT NULL,
-    `description` varchar(100) DEFAULT NULL
+    `description` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table strcuture for table 'skill'
 CREATE TABLE `skill` (
     `id` int(10) NOT NULL,
     `name` varchar(100) DEFAULT NULL,
-    `description` varchar(100) DEFAULT NULL
+    `description` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table strcuture for table 'courses'
 CREATE TABLE `course` (
     `id` int(10) NOT NULL,
     `name` varchar(100) DEFAULT NULL,
-    `description` varchar(100) DEFAULT NULL,
+    `description` varchar(500) DEFAULT NULL,
     `status` varchar(50) DEFAULT NULL,
     `type` varchar(50) DEFAULT NULL,
     `category` varchar(50) DEFAULT NULL
