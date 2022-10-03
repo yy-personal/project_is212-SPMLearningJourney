@@ -41,8 +41,8 @@
 
 </head>
 
-<body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;">
-    <div id="main-container" class="bg-yellow-300" >
+<body class=" leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;">
+    <div id="main-container" class=" " >
     <nav id="header" class="fixed w-full z-30 top-0 text-white bg-gray-500">
         <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
           <div class="pl-4 flex items-center h-20 ">
@@ -129,7 +129,7 @@
         </svg>
       </div>
 
-      <section class="bg-white border-b py-8 hidden">
+      <section class="bg-purple-300 border-b py-8 hidden ">
         <div class="container max-w-5xl mx-auto m-8">
           <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
             Title one
@@ -529,7 +529,7 @@
 
       
 
-      <section class="bg-white border-b py-8  pt-20" id="Skills">
+      <section class=" border-b py-8  pt-20 bg-gradient-to-br-none from-green-400 to-blue-500 bg-white" id="Skills">
         <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
             
           </h2>
@@ -587,7 +587,7 @@
                     Delete
                 </button> -->
                 <!-- <button > Delete </button> -->
-                <button v-on:click="deletethis(role.id)" type="button" class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Delete</button>
+                <button v-on:click="deletethis(role.id)" type="button" class="text-white bg-gradient-to-br from-pink-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Delete</button>
                 </div>
             </div>
             </div>
@@ -638,7 +638,8 @@
                 currPage: "Home",
                 activeClass: "inline-block py-2 px-4 text-black font-bold no-underline",
                 inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
-                skills: []
+                skills: [],
+                url: "http://localhost:5010"
             },
             mounted: async function() {
                 // axios.get('http://localhost:5000/roles')
@@ -651,7 +652,7 @@
 
                 var config = {
             method: 'get',
-            url: 'http://localhost:5000/skills',
+            url: this.url + '/skills',
             headers: { }
           };
           skills2 = []
@@ -696,7 +697,7 @@
 
           var config = {
             method: 'get',
-            url: 'http://localhost:5000/skills',
+            url: this.url + '/skills',
             headers: { }
           };
           skills = []
@@ -732,7 +733,7 @@ var data = JSON.stringify({
 
 var config = {
   method: 'delete',
-  url: 'http://localhost:5000/skill',
+  url: this.url + '/skill',
   headers: { 
     'Content-Type': 'application/json'
   },

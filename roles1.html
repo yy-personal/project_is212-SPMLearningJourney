@@ -652,7 +652,8 @@
                 activeClass: "inline-block py-2 px-4 text-black font-bold no-underline",
                 inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
                 skills: [],
-                isOpen: 0
+                isOpen: 0,
+                url: "http://localhost:5010"
             },
             mounted: async function() {
                 // axios.get('http://localhost:5000/roles')
@@ -665,7 +666,7 @@
 
                 var config = {
             method: 'get',
-            url: 'http://localhost:5000/skills',
+            url: this.url + '/skills',
             headers: { }
           };
           skills2 = []
@@ -710,7 +711,7 @@
 
           var config = {
             method: 'get',
-            url: 'http://localhost:5000/skills',
+            url: url + '/skills',
             headers: { }
           };
           skills = []
@@ -746,7 +747,7 @@ var data = JSON.stringify({
 
 var config = {
   method: 'delete',
-  url: 'http://localhost:5000/skill',
+  url: this.url + '/skill',
   headers: { 
     'Content-Type': 'application/json'
   },
