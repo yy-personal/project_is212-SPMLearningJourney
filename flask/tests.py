@@ -74,6 +74,7 @@ def test_create_skill(client):
     assert randomSkillName == data["name"]
 
 
+# happy delete skill test case:
 def test_delete_skill(client):
     from random import randint, choices
     value = randint(0, 200)
@@ -103,4 +104,98 @@ def test_delete_skill(client):
     print("RESULT:", data)
     assert response.status_code == 201
     assert idToDelete == data["id"]
+
+
+# negative delete skill test case - duplicate:
+def test_delete_skill_negative_1(client):
+    from random import randint, choices
+    value = randint(0, 200)
+    descriptionLength = 20
+    randomSkillName = f"skill#value"
+    randomSkillDescription = ''.join(random.choices(string.ascii_uppercase + string.digits, k = descriptionLength))    
+    response = client.post("/skill",data=json.dumps(
+            {
+                "name": randomSkillName,
+                "description" : randomSkillDescription
+            }
+        ),
+        content_type="application/json" )
+    print(f"The skill was successfully created: {response.data}")
+    data = json.loads(response.data.decode())
+    idToDelete = data["id"]
+
+
+    initialresponse = client.delete("/skill", data=json.dumps(
+            {
+                "id": idToDelete
+            }
+        ),
+        content_type="application/json" )
+    print(f"response: {initialresponse.data}")
+
+    response = client.delete("/skill", data=json.dumps(
+        {
+            "id": idToDelete
+        }
+    ),
+    content_type="application/json" )
+    print(f"response: {response.data}")
+
+    data = json.loads(response.data.decode())
+    print("RESULT:", data)
+    assert response.status_code == 400
+    assert "Unable to find skill with id" in data["message"]
+
+
+# negative delete skill test case - duplicate:
+def skip_test_delete_skill_negative_2(client):
+    from random import randint, choices
+    value = randint(0, 200)
+    descriptionLength = 20
+
+    # createrole and link with new skill:
+
+
+    # create skill
+    randomSkillName = f"skill#value"
+    randomSkillDescription = ''.join(random.choices(string.ascii_uppercase + string.digits, k = descriptionLength))    
+    response = client.post("/skill",data=json.dumps(
+            {
+                "name": randomSkillName,
+                "description" : randomSkillDescription
+            }
+        ),
+        content_type="application/json" )
+    print(f"The skill was successfully created: {response.data}")
+    data = json.loads(response.data.decode())
+    idToDelete = data["id"]
+
+
+    initialresponse = client.delete("/skill", data=json.dumps(
+            {
+                "id": idToDelete
+            }
+        ),
+        content_type="application/json" )
+    print(f"response: {initialresponse.data}")
+
+
+    # get a role and its associated skills:
+    response = client.get("/role", data=json.dumps(
+        {
+            "id": idToDelete
+        }
+    ),
+    content_type="application/json" )
+    print(f"response: {response.data}")
+
+    # assert to check if skill deleted has been removed from role and associated skills: 
+
+    data = json.loads(response.data.decode())
+    print("RESULT:", data)
+    assert response.status_code == 400
+    assert "Unable to find skill with id" in data["message"]
+
+
+
 

@@ -377,14 +377,14 @@ def delete_skill():
         except Exception:
              return jsonify({
             "message": f"Unable to find skill with id: {data['id']}"
-            }), 500
+            }), 400
         db.session.delete(skill)
         db.session.commit()
         return jsonify(data), 201
     except Exception:
         return jsonify({
             "message": "Unable to commit to database."
-        }), 500
+        }), 400
     
     
 
