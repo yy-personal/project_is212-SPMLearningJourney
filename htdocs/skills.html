@@ -34,8 +34,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-   <!-- Flowbite -->
-   <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    <!-- Flowbite -->
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
     <style>
         .gradient {
             background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
@@ -47,7 +47,7 @@
 <body class="leading-normal tracking-normal text-white" style="font-family: 'Source Sans Pro', sans-serif;">
     <div id="main-container">
         <!-- NAV BAR -->
-        <nav id="header" class="fixed w-full z-30 top-0 text-white gradient" >
+        <nav id="header" class="fixed w-full z-30 top-0 text-white gradient">
             <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
                 <div class="pl-4 flex items-center">
                     <div class="block lg:hidden pr-4 text-black">
@@ -120,11 +120,13 @@
                             </a>
                         </div>
 
-                        <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
-                            <div class="flex items-center justify-end">
-                                <button v-on:click="deletethis(role.id)" type="button"
-                                    class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Delete</button>
-                            </div>
+                        <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6" style="text-align: center;">
+                            <button v-on:click="updateSkill(skill.id)" type="button"
+                                class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Update</button>
+                            <button v-on:click="deleteSkill(skill.id)" type="button"
+                                class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Delete</button>
                         </div>
                     </div>
                 </div>
@@ -132,9 +134,8 @@
 
             <button type="button"
                 class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
-            focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4 mx-5" data-modal-toggle="authentication-modal"
-                style='float: right;'>
-                Create Skill</button>
+            focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4 mx-5"
+                data-modal-toggle="authentication-modal" style='float: right;'>Create Skill</button>
 
 
             <!-- CREATE SKILL POP UP -->
@@ -159,26 +160,32 @@
                             <form class="space-y-6" action="#">
                                 <div>
                                     <label for="skill_name"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill Name</label>
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
+                                        Name</label>
                                     <input type="text" name="skill_name" id="skill_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
                                 </div>
+
                                 <div>
                                     <label for="skill_description"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill Description</label>
-                                    <textarea name="skill_description" id="skill_description" 
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
+                                        Description</label>
+                                    <textarea name="skill_description" id="skill_description"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
                                     </textarea>
                                 </div>
-                                <button type="submit"
-                                    class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                    Submit</button>
-                                <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+
+                                <div style="text-align: center;">
+                                    <button type="submit" v-on:click="createSkill()"
+                                        class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                        Submit</button>
+                                    <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                                     Not registered? <a href="#"
                                         class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
                                 </div> -->
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -258,7 +265,7 @@
                     this.skills = skills
                 },
 
-                deletethis: async function (id) {
+                deleteSkill: async function (id) {
                     console.log("delete: ", id)
 
                     // var axios = require('axios');
@@ -303,6 +310,10 @@
                 },
 
                 createSkill: function () {
+
+                },
+
+                updateSkill: function () {
 
                 }
             }
