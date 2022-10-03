@@ -45,7 +45,6 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Skill ID</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,7 +52,6 @@
                     <td>{{ role.id }}</td>
                     <td>{{ role.name }}</td>
                     <td>{{ role.description }}</td>
-                    <td>{{ role.skill_id }}</td>
                 </tr>
             </tbody>
         </table>
@@ -66,7 +64,7 @@
             data: {
                 roles: []
             },
-            mounted: function() {
+            mounted: function () {
                 axios.get('http://localhost:5010/roles')
                     .then(response => {
                         this.roles = response.data.data;

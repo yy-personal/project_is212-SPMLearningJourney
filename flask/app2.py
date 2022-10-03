@@ -297,7 +297,7 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name  = db.Column(db.String(100))
     description = db.Column(db.String(100))
-    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
+    #skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
 
     __mapper_args__ = {
         'polymorphic_identity': 'role'
