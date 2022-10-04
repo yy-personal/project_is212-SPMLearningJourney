@@ -362,5 +362,27 @@ def readSkills():
         }
     ), 200
 
+
+# Create new Job Role
+@app.route("/roles/add_role", methods=['POST'])
+def create_role():
+    data = request.get_json()
+    if not all(key in data.keys() for
+               key in ('name', 'description')):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    role = Role(**data)
+    print(data)
+
+    try:
+        db.session.add(role)
+        db.session.commit()
+        return jsonify(role.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5010, debug=True)
