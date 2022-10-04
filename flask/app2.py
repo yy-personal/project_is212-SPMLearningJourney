@@ -108,10 +108,10 @@ def consultations():
 @app.route('/skills' , methods=['POST'])
 def create_skill():
     data = request.get_json()
-    print(data)
+    # print(data)
     if not all(key in data.keys() for
                key in ('name',
-                       'description', 'image' )):
+                    'description', 'image' )):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
