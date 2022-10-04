@@ -72,20 +72,22 @@
                                     <div class="modal-body text-start">
                                         <form>
                                             <div class="mb-3 has-validation">
-                                                <label for="name" class="col-form-label">ID: {{ skill.id }}</label>            
+                                                <label for="id" class="col-form-label">ID: {{ skill.id }}</label>            
                                             </div>
                                             <div class="mb-3">
-                                                <label for="description" class="col-form-label">Description:</label>
-                                                <input v-model="skill.name" class="form-control" id="PassDescription" placeholder="Enter descriptions here" required>
+                                                <label for="description" class="col-form-label">Skill name:</label>
+                                                <input class="form-control" v-model="varName"  placeholder="Enter skill name here" required></input>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="places" class="col-form-label">Description:</label>
-                                                <textarea v-model="skill.description" class="form-control" id="PassPlaces" placeholder="Enter locations here" required></textarea>
+                                                <label for="places" class="col-form-label">Skill description:</label>
+                                                <textarea class="form-control" v-model="varDesc" placeholder="Enter skill description here" required></textarea>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" @click="CreateNewPass" data-bs-dismiss="modal">Save</button>
+                                        <button type="button" class="btn btn-primary" @click="updateSkillInformation(skill.id)">Save_local</button>
+                                        <button type="button" class="btn btn-primary" @click="updateSkillInformation_API(skill.id)">Save_api</button>
+
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </div>
@@ -102,11 +104,16 @@
         
     </div>
     <script>
-
+        
+        // const skillsURL = "http://localhost:5100/skills/";
         const vm = new Vue({
+            
             el: '#main-container',
             data: {
-                skills: []
+                skills: [],
+                varName: "",
+                varDesc: null,
+                varObj: {},
             },
             mounted: function() {
                 axios.get('http://localhost:5010/skills')
@@ -114,7 +121,43 @@
                         this.skills = response.data.data;
                     })
                     .catch(error => alert(error));
+            },
+            methods: {
+                updateSkillInformation: function(skillID) {
+                console.log(skillID, this.varName, this.varDesc)
+                
+                this.skills[skillID-1]['name'] = this.varName
+                this.skills[skillID-1]['description'] = this.varDesc
+                // this.varObj
+                this.varName = null
+                this.varDesc = null
+                
+                },
+
+                updateSkillInformation_API: function(skillID){
+                skillsURL = "http://localhost:5010/skills/" + skillID
+                console.log(skillsURL)
+                fetch(skillsURL,
+                {   
+                    method:'PUT',
+                    headers:{
+                    'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({
+                        'name' : this.varName,
+                        'description' : this.varDesc
+                    })
+                }).then(response=>{
+                    return response.json()
+                }).then(data=> 
+                // this is the data we get after putting our data,
+                console.log(data)
+                )
+
+                }
+                
             }
+
         });
     </script>
 </body>
