@@ -401,12 +401,17 @@
 
                 addIDs: function (a_tag) {
                     a_tags = document.getElementsByTagName('a')
+<<<<<<< Updated upstream
 
                 },
+=======
+>>>>>>> Stashed changes
 
+                },
                 createSkill: function (item) {
                     var new_skill_name = this.create_skill_name;
                     var new_skill_des = this.create_skill_des;
+<<<<<<< Updated upstream
                     var new_skill_img = this.image; 
 
                     var url = 'http://localhost:5010/skills'
@@ -415,6 +420,13 @@
                         description: new_skill_des,
                         image: new_skill_img.split(',')[1]
                     })
+=======
+                    var url = 'http://localhost:5010/skills'
+                    axios.post(url, {
+                            name: new_skill_name,
+                            description: new_skill_des,
+                        })
+>>>>>>> Stashed changes
                         .then(response => {
                             console.log(response.data)
                         })
