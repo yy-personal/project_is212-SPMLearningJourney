@@ -110,8 +110,8 @@ def create_skill():
     data = request.get_json()
     # print(data)
     if not all(key in data.keys() for
-               key in ('name',
-                    'description', 'image' )):
+               key in ('name', 'description',
+                       'image')):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500

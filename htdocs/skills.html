@@ -321,7 +321,7 @@
                     .then(function (response) {
                         //console.log(JSON.stringify(response.data.data));
                         skills = response.data.data
-                        //console.log(skills);
+                        console.log(skills);
                         coursesDivs = ""
                         skills2 = skills
                     })
@@ -358,7 +358,7 @@
                     skills = []
                     await axios(config)
                         .then(function (response) {
-                            console.log(JSON.stringify(response.data.data));
+                            //console.log(JSON.stringify(response.data.data));
                             skills = response.data.data
                             //console.log(skills);
                             coursesDivs = ""
