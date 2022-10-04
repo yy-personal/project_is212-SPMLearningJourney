@@ -49,6 +49,7 @@ class Skill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name  = db.Column(db.String(100))
     description = db.Column(db.String(100))
+    image = db.Column(db.String(20000))
 
     __mapper_args__ = {
         'polymorphic_identity': 'skill',
@@ -110,7 +111,7 @@ def create_skill():
     print(data)
     if not all(key in data.keys() for
                key in ('name',
-                       'description')):
+                       'description', 'image' )):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
@@ -153,7 +154,7 @@ def delete_skill():
             skill = Skill.query.filter_by(id=data["id"]).one()
         except Exception:
             return jsonify({
-            
+            "message": f"Unable to find skill with id: {data['id']}"
             }), 500
         db.session.delete(skill)
         db.session.commit()
