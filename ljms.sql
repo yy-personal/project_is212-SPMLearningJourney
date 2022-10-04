@@ -21,7 +21,8 @@ CREATE TABLE `role` (
 CREATE TABLE `skill` (
     `id` int(10) NOT NULL,
     `name` varchar(100) DEFAULT NULL,
-    `description` varchar(500) DEFAULT NULL
+    `description` varchar(500) DEFAULT NULL,
+    `photo` varbinary(max) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table strcuture for table 'courses'
@@ -31,19 +32,19 @@ CREATE TABLE `course` (
     `description` varchar(500) DEFAULT NULL,
     `status` varchar(50) DEFAULT NULL,
     `type` varchar(50) DEFAULT NULL,
-    `category` varchar(50) DEFAULT NULL
+    `category` varchar(50) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- insert data for table `skill`
 
-INSERT INTO `skill` (`id`, `name`, `description`) VALUES
-(1, 'Python', 'Python is a computer programming language often used to build websites and software, automate tasks, and conduct data analysis.'),
-(2, 'Strategic Thinking', 'Strategic thinking is an organizational and pragmatic type of critical thinking.'),
-(3, 'JavaScript', 'JavaScript is a lightweight interpreted programming language.'),
-(4, 'Market Research', 'Market Research is the process of determining the viability of a new service or product through research conducted directly with potential customers.'),
-(5, 'Machine Learning', 'Machine learning (ML) is a type of artificial intelligence (AI) that allows software applications to become more accurate at predicting outcomes without being explicitly programmed to do so.'),
-(6, 'Object-Oriented Design', 'Object-oriented design (OOD) is the process of planning a system of interacting objects for the purpose of solving a software problem.'),
-(7, 'Software Testing', 'Software testing is the process of assessing the functionality of a software program.');
+INSERT INTO `skill` (`id`, `name`, `description`, `photo`) VALUES
+(1, 'Python', 'Python is a computer programming language often used to build websites and software, automate tasks, and conduct data analysis.', 'photos/python.png' ),
+(2, 'Strategic Thinking', 'Strategic thinking is an organizational and pragmatic type of critical thinking.' , 'photos/strategic_thinking.png'),
+(3, 'JavaScript', 'JavaScript is a lightweight interpreted programming language.', 'photos/javascript.png' ),
+(4, 'Market Research', 'Market Research is the process of determining the viability of a new service or product through research conducted directly with potential customers.' , 'photos/market_research.png'),
+(5, 'Machine Learning', 'Machine learning (ML) is a type of artificial intelligence (AI) that allows software applications to become more accurate at predicting outcomes without being explicitly programmed to do so.' , 'photos/machine_learning.png'),
+(6, 'Object-Oriented Design', 'Object-oriented design (OOD) is the process of planning a system of interacting objects for the purpose of solving a software problem.' , 'photos/object_oriented.png'),
+(7, 'Software Testing', 'Software testing is the process of assessing the functionality of a software program.' , 'photos/software_testing.png');
 
 -- insert data for table `role`
 
