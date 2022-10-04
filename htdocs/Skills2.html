@@ -14,6 +14,10 @@
     <![endif]-->
     <!-- Bootstrap libraries -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -45,6 +49,8 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Action</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -52,10 +58,48 @@
                     <td>{{ skill.id }}</td>
                     <td>{{ skill.name }}</td>
                     <td>{{ skill.description }}</td>
+                    <td>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" :data-bs-target="`#skillUpdateModal`+skill.id">
+                            Update
+                        </button>
+                        <div class="modal fade" :id="`skillUpdateModal`+skill.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Update skills</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-start">
+                                        <form>
+                                            <div class="mb-3 has-validation">
+                                                <label for="name" class="col-form-label">ID: {{ skill.id }}</label>            
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="description" class="col-form-label">Description:</label>
+                                                <input v-model="skill.name" class="form-control" id="PassDescription" placeholder="Enter descriptions here" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="places" class="col-form-label">Description:</label>
+                                                <textarea v-model="skill.description" class="form-control" id="PassPlaces" placeholder="Enter locations here" required></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" @click="CreateNewPass" data-bs-dismiss="modal">Save</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
-
+        <!-- Modal -->
+        <div>
+            
+        </div>
+        
     </div>
     <script>
 
