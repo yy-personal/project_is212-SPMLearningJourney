@@ -152,8 +152,8 @@ def delete_skill():
         try:
             skill = Skill.query.filter_by(id=data["id"]).one()
         except Exception:
-             return jsonify({
-            "message": f"Unable to find skill with id: {data['id']}"
+            return jsonify({
+            
             }), 500
         db.session.delete(skill)
         db.session.commit()
