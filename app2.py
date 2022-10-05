@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 
 # Windows user -------------------------------------------------------------------
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
                                         '@localhost:3306/ljms'
 # --------------------------------------------------------------------------------
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -366,7 +366,7 @@ def consultations():
 
 
 #Delete Roles
-@app.route('/roles', methods=['POST'])
+@app.route('/roles', methods=['DELETE'])
 def delete_role():
     data = request.get_json()
     if not all(key in data.keys() for
