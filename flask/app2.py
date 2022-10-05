@@ -375,12 +375,27 @@ def updateSkillInformation(id):
         return jsonify(
             {
                 "code": 200,
-                "data": chosenSkill.json()
+                # "data": chosenSkill.json()
             }
         )
-        
 
-
+@app.route("/roles/<int:id>", methods=['PUT'])
+def updateRolesInformation(id):
+    chosenRole = Role.query.filter_by(id=id).first()
+    if chosenRole:
+        data = request.get_json() 
+        if data['name']:
+            chosenRole.name = data['name']
+        if data['description']:
+            chosenRole.description = data['description']
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                # "data": chosenRole.json()
+            }
+        )
+    
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5010, debug=True)

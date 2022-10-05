@@ -14,6 +14,9 @@
     <![endif]-->
     <!-- Bootstrap libraries -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -45,6 +48,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +56,43 @@
                     <td>{{ role.id }}</td>
                     <td>{{ role.name }}</td>
                     <td>{{ role.description }}</td>
+                    <!-- Adding of update modal -->
+                    <td>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" :data-bs-target="`#roleUpdateModal`+role.id">
+                            Update
+                        </button>
+                        <div class="modal fade" :id="`roleUpdateModal`+role.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Update roles</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-start">
+                                        <form>
+                                            <div class="mb-3 has-validation">
+                                                <label for="id" class="col-form-label">ID: {{ role.id }}</label>            
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="description" class="col-form-label">Role name:</label>
+                                                <input class="form-control" v-model="varName"  placeholder="Enter role name here" required></input>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="places" class="col-form-label">Role description:</label>
+                                                <textarea class="form-control" v-model="varDesc" placeholder="Enter role description here" required></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" @click="updateRoleInformation(role.id)">Save_local</button>
+                                        <button type="button" class="btn btn-primary" @click="updateRoleInformation_API(role.id)">Save_api</button>
+
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -62,7 +103,10 @@
         const vm = new Vue({
             el: '#main-container',
             data: {
-                roles: []
+                roles: [],
+                varName: "",
+                varDesc: null,
+                varObj: {},
             },
             mounted: function () {
                 axios.get('http://localhost:5010/roles')
@@ -70,6 +114,45 @@
                         this.roles = response.data.data;
                     })
                     .catch(error => alert(error));
+            },
+            methods: {
+                updateRoleInformation: function(roleID) {
+                //console.log(roleID, this.varName, this.varDesc)
+                
+                this.roles[roleID-1]['name'] = this.varName
+                this.roles[roleID-1]['description'] = this.varDesc
+                // this.varObj
+                this.varName = null
+                this.varDesc = null
+                
+                },
+
+                updateRoleInformation_API: function(roleID){
+                rolesURL = "http://localhost:5010/roles/" + roleID
+                //console.log(rolesURL)
+                fetch(rolesURL,
+                {   
+                    method:'PUT',
+                    headers:{
+                    'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({
+                        'name' : this.varName,
+                        'description' : this.varDesc
+                    })
+                }).then(response=>{
+                    this.roles[roleID-1]['name'] = this.varName
+                    this.roles[roleID-1]['description'] = this.varDesc
+                    // this.varObj
+                    this.varName = null
+                    this.varDesc = null
+                    return response.json()
+                }).then(data=> 
+                console.log(data)
+                )
+
+                }
+                
             }
         });
     </script>
