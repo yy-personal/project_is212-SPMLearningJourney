@@ -81,38 +81,41 @@
                         this.roles = response.data.data;
                     })
                     .catch(error => alert(error));
-            }
+            },
+            methods: {
+                delete_role: async function (id){
+                console.log("delete: ", id)
+
+                var data = JSON.stringify({
+                "id": id
+                });
+
+                var config = {
+                method: 'delete',
+                url: 'http://localhost:5010' + '/roles',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                data : data
+                };
+
+                await axios(config)
+                .then(async function (response) {
+                console.log(JSON.stringify(response.data));
+                //   await getSkills();
+
+                })
+                .catch(function (error) {
+                console.log(error);
+                });
+                // this.getRoles()
+
+                }
+                    }
                 
             });
 
-        // deletethis: async function (id){
-        console.log("delete: ", id)
-
-        var data = JSON.stringify({
-        "id": id
-        });
-
-        var config = {
-        method: 'delete',
-        url: 'http://localhost:5010' + '/roles',
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        data : data
-        };
-
-        await axios(config)
-        .then(async function (response) {
-        console.log(JSON.stringify(response.data));
-        //   await getSkills();
-
-        })
-        .catch(function (error) {
-        console.log(error);
-        });
-        this.getRoles()
-
-        // }
+        
 
         
 
