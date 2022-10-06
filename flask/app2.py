@@ -185,6 +185,28 @@ def delete_skill():
         }), 500
     
 
+# Create A New Job Role (C)
+@app.route("/roles", methods=['POST'])
+def create_role():
+    data = request.get_json()
+    if not all(key in data.keys() for
+               key in ('name', 'description')):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    role = Role(**data)
+    print(data)
+
+    try:
+        db.session.add(role)
+        db.session.commit()
+        return jsonify(role.to_dict()), 201
+    except Exception as e:
+        print(str(e))
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
 db.create_all()
 
 if __name__ == '__main__':
