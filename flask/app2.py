@@ -137,6 +137,26 @@ def readSkills():
         }
     ), 200
 
+# Update Existing Skills (U)
+@app.route("/skills/<int:id>", methods=['PUT'])
+def updateSkillInformation(id):
+    chosenSkill = Skill.query.filter_by(id=id).first()
+    if chosenSkill:
+        data = request.get_json() 
+        if data['name']:
+            chosenSkill.name = data['name']
+        if data['description']:
+            chosenSkill.description = data['description']
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                # "data": chosenSkill.json()
+            }
+        )
+
+
+
 #delete skills (D)
 @app.route("/skill", methods=['DELETE'])
 def delete_skill():

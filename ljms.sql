@@ -78,4 +78,3 @@ ALTER TABLE `role`
 
 ALTER TABLE `skill`
     MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
-
