@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 
@@ -45,6 +47,8 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <!-- <th>Skill ID</th> -->
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -52,7 +56,14 @@
                     <td>{{ role.id }}</td>
                     <td>{{ role.name }}</td>
                     <td>{{ role.description }}</td>
+                    <!-- <td>{{ role.skill_id }}</td> -->
+                    <!-- <form action="/roles" method="post"> -->
+                    <td><button type="submit" class="btn btn-secondary" v-on:click="delete_role(role.id)">Delete</button></td>
+                    <!-- </form> -->
                 </tr>
+                <!-- <form action="/roles" method="post">
+                    <td><button type="submit" class="btn btn-secondary">Delete</button></td>
+                </form> -->
             </tbody>
         </table>
 
@@ -62,16 +73,86 @@
         const vm = new Vue({
             el: '#main-container',
             data: {
-                roles: []
+                roles: [],
+                
             },
-            mounted: function () {
-                axios.get('http://localhost:5010/roles')
+            mounted: function() {
+                this.getRoles()
+            },
+            methods: {
+                getRoles: function(){
+                    axios.get('http://localhost:5010/roles')
                     .then(response => {
                         this.roles = response.data.data;
                     })
                     .catch(error => alert(error));
-            }
-        });
+                },
+                delete_role: async function (id){
+                console.log("delete: ", id)
+
+                var data = JSON.stringify({
+                "id": id
+                });
+
+                var config = {
+                method: 'delete',
+                url: 'http://localhost:5010' + '/roles',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                data : data
+                };
+
+                await axios(config)
+                .then(async function (response) {
+                // console.log(JSON.stringify(response.data));
+
+
+                })
+                .catch(function (error) {
+                console.log(error);
+                });
+                this.getRoles()
+
+                },
+                delete_role2: async function (id){
+                console.log("delete: ", id)
+
+                var data = JSON.stringify({
+                "id": id
+                });
+
+                var config = {
+                method: 'delete',
+                url: 'http://localhost:5010' + '/roles',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                data : data
+                };
+
+                await axios(config)
+                .then(async function (response) {
+                console.log(JSON.stringify(response.data));
+                //   await getSkills();
+
+                })
+                .catch(function (error) {
+                console.log(error);
+                });
+                    
+                // To reflect the updated version from database
+                this.getRoles()
+
+                }
+                    }
+                
+            });
+
+        
+
+        
+
     </script>
 </body>
 

@@ -21,6 +21,7 @@ db = SQLAlchemy(app)
 
 CORS(app)
 
+
 class Person(db.Model):
     __tablename__ = 'person'
 
@@ -42,6 +43,9 @@ class Person(db.Model):
         for column in columns:
             result[column] = getattr(self, column)
         return result
+
+
+
 
 # class Doctor(Person):
 #     __tablename__ = 'doctor'
@@ -291,6 +295,10 @@ class Skill(db.Model):
             result[column] = getattr(self, column)
         return result
 
+
+
+
+
 class Role(db.Model):
     __tablename__ = 'role'
 
@@ -314,10 +322,14 @@ class Role(db.Model):
             result[column] = getattr(self, column)
         return result
 
+
+
+
 @app.route("/", methods=['GET'])
 def create_skill2():
     print("helloo")
     return "hello"
+
 
 @app.route("/skill", methods=['POST'])
 def create_skill():
@@ -351,16 +363,45 @@ def consultations():
         }
     ), 200
 
-# Read Existing Skills
-@app.route("/skills")
-def readSkills():
-    skillList = Skill.query.all()
-    return jsonify(
-        {
-            "data": [skill.to_dict()
-                    for skill in skillList]
-        }
-    ), 200
+
+
+#Delete Roles
+@app.route('/roles', methods=['DELETE'])
+def delete_role():
+    data = request.get_json()
+    if not all(key in data.keys() for
+               key in ('id', 'id')):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    # role = Role.query.filter_by(id).first()
+    
+    # if role:
+    #     db.session.delete(role)
+    #     db.session.commit()
+    #     return jsonify({
+    #         "message": "Role has been deleted successfully."
+    #     }), 201
+    # else:
+    #     return jsonify({
+    #         "message": "Delete Role is unsuccessful."
+    #     }), 500
+    
+    try:
+        try:
+            role = Role.query.filter_by(id=data["id"]).one()
+        except Exception:
+            return jsonify({
+                "message": f"Unable to find role with id: {data['id']}."
+            }), 500
+        db.session.delete(role)
+        db.session.commit()
+
+        return jsonify(data), 201
+    except Exception:
+            return jsonify({
+                "message": "Unable to commit to database."
+            }), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5010, debug=True)
