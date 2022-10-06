@@ -14,7 +14,7 @@ USE `ljms`;
 CREATE TABLE `role` (
     `id` int(10) NOT NULL,
     `name` varchar(100) DEFAULT NULL,
-    `description` varchar(100) DEFAULT NULL
+    `description` varchar (1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table strcuture for table 'skill'
