@@ -364,7 +364,7 @@ def readSkills():
 
 
 # Create new Job Role
-@app.route("/roles/add_role", methods=['POST'])
+@app.route("/roles", methods=['POST'])
 def create_role():
     data = request.get_json()
     if not all(key in data.keys() for
