@@ -155,7 +155,23 @@ def updateSkillInformation(id):
             }
         )
 
-
+# Update Existing Roles (U)
+@app.route("/roles/<int:id>", methods=['PUT'])
+def updateRoleInformation(id):
+    chosenRole = Role.query.filter_by(id=id).first()
+    if chosenRole:
+        data = request.get_json() 
+        if data['name']:
+            chosenRole.name = data['name']
+        if data['description']:
+            chosenRole.description = data['description']
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                # "data": chosenRole.json()
+            }
+        )
 
 #delete skills (D)
 @app.route("/skill", methods=['DELETE'])

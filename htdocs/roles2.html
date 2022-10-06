@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="">
     <!-- Bootstrap libraries -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -147,7 +153,7 @@
 
                         <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
                             style="text-align: center;">
-                            <button v-on:click="updateRole(role.id)" type="button" 
+                            <button v-on:click="openUpdateModal(role.id)" type="button" 
                                 class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Update</button>
                             <button v-on:click="deleteRole(role.id)" type="button"
@@ -232,15 +238,16 @@
                 </div>
             </div>
 
-            <!-- UPDATE SKILL POP UP -->
-            <div id="authentication-modal2" tabindex="-1" aria-hidden="true"
-                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+            <!-- UPDATE ROLE POP UP -->
+            <div v-if="updateID != null" id="authentication-modal" tabindex="-1" aria-hidden="true"
+                class="backdrop overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full grid justify-center items-center">
+                <div class="relative p-4 h-full md:h-auto">
                     <!-- Modal content -->
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <button type="button"
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 w-96">
+
+                        <button type="button" v-on:click="closeUpdateModal"
                             class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                            data-modal-toggle="authentication-modal2">
+                            data-modal-toggle="authentication-modal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -249,23 +256,30 @@
                             </svg>
                             <span class="sr-only">Close modal</span>
                         </button>
+
                         <div class="py-6 px-6 lg:px-8">
-                            <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update Skill</h3>
+                            <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update Existing Role</h3>
+                            <!-- OLD -->
+                            <p class="mx-auto flex justify-center"><img
+                                v-bind:src="`data:image/png;base64,${varImage}`" />
+                            </p> 
+                            </br>
+
                             <form class="space-y-6" action="#">
                                 <div>
-                                    <label for="skill_name"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
+                                    <label for="role_name" 
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter Updated Role
                                         Name</label>
-                                    <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
+                                    <input type="text" name="role_name" id="role_name" v-model="varName"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
                                 </div>
 
                                 <div>
-                                    <label for="skill_description"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
+                                    <label for="role_description"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter Updated Role
                                         Description</label>
-                                    <textarea name="skill_description" id="skill_description" v-model="create_skill_des"
+                                    <textarea name="role_description" id="role_description" v-model="varDesc"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
                                     </textarea>
@@ -273,19 +287,23 @@
 
                                 <div>
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        for="file_input">Update Skill Image</label>
-                                    <input
+                                        for="file_input">Upload Updated Role Image</label>
+                                    <input 
                                         class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        aria-describedby="file_input_help" id="file_input" type="file"
-                                        v-on:change="onChangeFile" required>
+                                        aria-describedby="file_input_help" id="file_input" type="file" 
+                                        v-on:change="onChangeFile">
                                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG,
                                         PNG, JPG or GIF (MAX. 800x400px).</p>
                                 </div>
 
                                 <div style="text-align: center;">
-                                    <button type="submit" v-on:click="createSkill(this)"
+                                    <button type="submit" v-on:click="updateRole(updateID)" 
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
+                                    <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                                    Not registered? <a href="#"
+                                        class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
+                                </div> -->
                                 </div>
                             </form>
                         </div>
@@ -310,6 +328,10 @@
                 create_skill_des: "",
                 image: "",
                 error: "",
+                varName: "",
+                varDesc: "",
+                varImg: "",
+                updateID: null,
             },
             mounted: async function () {
                 var config = {
@@ -420,7 +442,76 @@
                         .catch(error => {
                             this.error = error.response.data.message
                         });
-                }
+                },
+
+                openUpdateModal(roleID) {
+                    this.updateID = roleID;
+                    console.log(this.roles)
+                    for (i in this.roles) {
+                            if (this.roles[i].id == roleID) {
+                                this.varName = this.roles[i].name;
+                                this.varDesc = this.roles[i].description;
+                                this.varImage = this.roles[i].image 
+                            }
+                        }
+                },
+                closeUpdateModal(){
+                    this.updateID = null;
+                },
+                updateRole: function (roleID) {
+                    console.log(this.image)
+                    rolesURL = "http://localhost:5010/roles/" + roleID
+                    console.log(rolesURL)
+                    fetch(rolesURL, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'name': this.varName,
+                            'description': this.varDesc,
+                            'image': this.Image,
+                        })
+                    }).then(response => {
+                        console.log(roleID)
+                        for (i in this.roles) {
+                            if (this.roles[i].id == roleID) {
+                                this.roles[i].name = this.varName
+                                this.roles[i].description = this.varDesc
+                                this.roles[i].image = this.Image
+                            }
+                        }
+                        console.log(this.roles)
+                        // this.varObj
+                        this.varName = null
+                        this.varDesc = null
+                        this.varImage = null
+                        return response.json()
+                    }).then(data =>
+                        // this is the data we get after putting our data,
+                        console.log(data)
+                    )
+                    this.closeUpdateModal();
+                },
+                onChangeFile: function (e) {
+                    var files = e.target.files || e.dataTransfer.files;
+                    if (!files.length)
+                        return;
+                    this.createImage(files[0]);
+                },
+                createImage(file) {
+                    var image = new Image();
+                    var reader = new FileReader();
+
+                    reader.onload = (e) => {
+                        this.image = e.target.result;
+                        console.log(this.image)
+                    };
+                    reader.readAsDataURL(file);
+                },
+                removeImage: function (e) {
+                    this.image = '';
+                },
 
                 // updateSkill: function () {
 
