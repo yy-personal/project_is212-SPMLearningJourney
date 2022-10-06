@@ -379,7 +379,8 @@ def create_role():
         db.session.add(role)
         db.session.commit()
         return jsonify(role.to_dict()), 201
-    except Exception:
+    except Exception as e:
+        print(str(e))
         return jsonify({
             "message": "Unable to commit to database."
         }), 500
