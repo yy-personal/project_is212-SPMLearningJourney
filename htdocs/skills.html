@@ -151,6 +151,7 @@
                             <button type="button" v-on:click="openUpdateModal(skill.id)"
                                 class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Update</button>
+                            
                             <!-- Delete button -->
                             <button v-on:click="deleteSkill(skill.id)" type="button"
                                 class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
@@ -218,7 +219,8 @@
                                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG,
                                         PNG, JPG or GIF (MAX. 800x400px).</p>
                                 </div>
-
+                                <!-- Error message button to try -->
+                                
                                 <div style="text-align: center;">
                                     <button type="submit" v-on:click="createSkill(this)"
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
@@ -262,13 +264,31 @@
                             </br>
 
                             <form class="space-y-6" action="#">
-                                <div>
+                                <div v-if="!checkUpdateNameValid() && !checkUpdateNameTooLong()">
                                     <label for="skill_name" 
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter Updated Skill
                                         Name</label>
                                     <input type="text" name="skill_name" id="skill_name" v-model="varName"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
+                                </div>
+
+                                <div v-else-if="checkUpdateNameValid()">
+                                    <label for="skill_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter Updated Skill
+                                        Name</label>
+                                    <input type="text" name="skill_name" id="skill_name" v-model="varName"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Please do not enter any special characters!</p>
+                                </div>
+
+                                <div v-else-if="checkUpdateNameTooLong()">
+                                    <label for="skill_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter Updated Skill
+                                        Name</label>
+                                    <input type="text" name="skill_name" id="skill_name" v-model="varName"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 100 characters!</p>
                                 </div>
 
                                 <div>
@@ -280,6 +300,7 @@
                                         required>
                                     </textarea>
                                 </div>
+
 
                                 <div>
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -293,7 +314,7 @@
                                 </div>
 
                                 <div style="text-align: center;">
-                                    <button type="submit" v-on:click="updateSkill(updateID)" 
+                                    <button type="submit" :disabled="checkUpdateNameValid()|| checkUpdateNameTooLong()" v-on:click="updateSkill(updateID)" 
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
                                     <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
@@ -312,6 +333,7 @@
 
     <!--- JAVASCRIPT -->
     <script>
+        const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
         const vm = new Vue({
             el: '#main-container',
             data: {
@@ -430,7 +452,24 @@
                 closeUpdateModal(){
                     this.updateID = null;
                 },
+                checkUpdateNameValid(){
+                    // If varName consist illegal char = true
+                    if(specialChars.test(this.varName)){
+                        // console.log("Invalid input value for skill ID, please do not use any special characters!")
+                        return true;
+                    }
+                },
+                checkUpdateNameTooLong(){
+                    // If varName consist illegal char = true
+                    if((this.varName).length > 100){
+                        // console.log("Invalid length should not exceed 100!")
+                        return true;
+                    }
+                },
                 updateSkill: function (skillID) {
+                    if(this.checkUpdateNameValid() == true){
+                        return
+                    }
                     console.log(this.image)
                     skillsURL = "http://localhost:5010/skills/" + skillID
                     console.log(skillsURL)
@@ -451,8 +490,8 @@
                                 this.skills[i].name = this.varName
                                 this.skills[i].description = this.varDesc
                                 this.skills[i].image = this.Image
+                                }
                             }
-                        }
                         console.log(this.skills)
                         // this.varObj
                         this.varName = null
@@ -487,6 +526,11 @@
             }
         });
     </script>
+    <style scoped>
+        button:disabled {
+        background: hwb(0 0% 100% / 0.493);
+        }
+    </style>
     <!-- flowbite -->
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
 </body>
