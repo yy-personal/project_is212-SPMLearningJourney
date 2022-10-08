@@ -225,5 +225,44 @@ def create_role():
 
 db.create_all()
 
+
+# Delete An Existing Job Role (D)
+@app.route('/roles', methods=['DELETE'])
+def delete_role():
+    data = request.get_json()
+    if not all(key in data.keys() for
+               key in ('id', 'id')):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    # role = Role.query.filter_by(id).first()
+    
+    # if role:
+    #     db.session.delete(role)
+    #     db.session.commit()
+    #     return jsonify({
+    #         "message": "Role has been deleted successfully."
+    #     }), 201
+    # else:
+    #     return jsonify({
+    #         "message": "Delete Role is unsuccessful."
+    #     }), 500
+    
+    try:
+        try:
+            role = Role.query.filter_by(id=data["id"]).one()
+        except Exception:
+            return jsonify({
+                "message": f"Unable to find role with id: {data['id']}."
+            }), 500
+        db.session.delete(role)
+        db.session.commit()
+
+        return jsonify(data), 201
+    except Exception:
+            return jsonify({
+                "message": "Unable to commit to database."
+            }), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5010, debug=True)
