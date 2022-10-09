@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 
 # Windows user -------------------------------------------------------------------
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
                                         '@localhost:3306/ljms'
 # --------------------------------------------------------------------------------
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -27,6 +27,7 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     title = db.Column(db.String(10))
+    image = db.Column(db.String(20000))
 
     __mapper_args__ = {
         'polymorphic_identity': 'person'
@@ -72,6 +73,7 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name  = db.Column(db.String(100))
     description = db.Column(db.String(100))
+    image = db.Column(db.String(20000))
     #skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
 
     __mapper_args__ = {
@@ -87,20 +89,8 @@ class Role(db.Model):
         result = {}
         for column in columns:
             result[column] = getattr(self, column)
+        # print(result)
         return result
-
-
-######## ROLES ########
-# Read Existing Roles (R)
-@app.route("/roles")
-def consultations():
-    roleList = Role.query.all()
-    return jsonify(
-        {
-            "data": [role.to_dict()
-                    for role in roleList]
-        }
-    ), 200
 
 
 ######## SKILLS ########
@@ -110,8 +100,8 @@ def create_skill():
     data = request.get_json()
     # print(data)
     if not all(key in data.keys() for
-               key in ('name', 'description',
-                       'image')):
+            key in ('name', 'description',
+                    'image')):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
@@ -155,24 +145,6 @@ def updateSkillInformation(id):
             }
         )
 
-# Update Existing Roles (U)
-@app.route("/roles/<int:id>", methods=['PUT'])
-def updateRoleInformation(id):
-    chosenRole = Role.query.filter_by(id=id).first()
-    if chosenRole:
-        data = request.get_json() 
-        if data['name']:
-            chosenRole.name = data['name']
-        if data['description']:
-            chosenRole.description = data['description']
-        db.session.commit()
-        return jsonify(
-            {
-                "code": 200,
-                # "data": chosenRole.json()
-            }
-        )
-
 #delete skills (D)
 @app.route("/skill", methods=['DELETE'])
 def delete_skill():
@@ -201,30 +173,56 @@ def delete_skill():
         }), 500
     
 
+
+######## ROLES ########
 # Create A New Job Role (C)
 @app.route("/roles", methods=['POST'])
 def create_role():
     data = request.get_json()
     if not all(key in data.keys() for
-               key in ('name', 'description')):
+            key in ('name', 'description',
+                    'image')):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
     role = Role(**data)
-    print(data)
-
     try:
         db.session.add(role)
         db.session.commit()
         return jsonify(role.to_dict()), 201
-    except Exception as e:
-        print(str(e))
+    except Exception:
         return jsonify({
             "message": "Unable to commit to database."
         }), 500
 
-db.create_all()
+# Read Existing Roles (R)
+@app.route("/roles")
+def consultations():
+    roleList = Role.query.all()
+    return jsonify(
+        {
+            "data": [role.to_dict()
+                    for role in roleList]
+        }
+    ), 200
 
+# Update Existing Roles (U)
+@app.route("/roles/<int:id>", methods=['PUT'])
+def updateRoleInformation(id):
+    chosenRole = Role.query.filter_by(id=id).first()
+    if chosenRole:
+        data = request.get_json() 
+        if data['name']:
+            chosenRole.name = data['name']
+        if data['description']:
+            chosenRole.description = data['description']
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                # "data": chosenRole.json()
+            }
+        )
 
 # Delete An Existing Job Role (D)
 @app.route('/roles', methods=['DELETE'])
@@ -235,19 +233,6 @@ def delete_role():
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
-    # role = Role.query.filter_by(id).first()
-    
-    # if role:
-    #     db.session.delete(role)
-    #     db.session.commit()
-    #     return jsonify({
-    #         "message": "Role has been deleted successfully."
-    #     }), 201
-    # else:
-    #     return jsonify({
-    #         "message": "Delete Role is unsuccessful."
-    #     }), 500
-    
     try:
         try:
             role = Role.query.filter_by(id=data["id"]).one()
@@ -263,6 +248,8 @@ def delete_role():
             return jsonify({
                 "message": "Unable to commit to database."
             }), 500
+
+db.create_all()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5010, debug=True)
