@@ -279,7 +279,7 @@
                                     <input type="text" name="skill_name" id="skill_name" v-model="varName"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                     required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Please do not enter any special characters!</p>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Please only enter alphabetic characters!</p>
                                 </div>
 
                                 <div v-else-if="checkUpdateNameTooLong()">
@@ -333,7 +333,7 @@
 
     <!--- JAVASCRIPT -->
     <script>
-        const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+        const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~1234567890]/;
         const vm = new Vue({
             el: '#main-container',
             data: {
