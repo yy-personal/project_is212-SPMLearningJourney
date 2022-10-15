@@ -133,9 +133,6 @@
                             style='padding-top: 20px;'>
                             <a href="#" class="flex flex-wrap no-underline hover:no-underline"
                                 v-on:click="addIDs(this)">
-                                <p class="mx-auto pb-8 flex justify-center"><img
-                                        v-bind:src="`data:image/png;base64,${skill.image}`" />
-                                </p> <!-- INSERT IMAGE -->
                                 <p class="w-full font-bold text-xl text-gray-800 px-6"
                                     style='margin-bottom: 10px; font-size: 25px;'>
                                     {{skill.name}}
@@ -230,16 +227,6 @@
                                     </textarea>
                                 </div>
 
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        for="file_input">Upload Skill Image</label>
-                                    <input
-                                        class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        aria-describedby="file_input_help" id="file_input" type="file"
-                                        v-on:change="onChangeFile">
-                                    <p v-if = "" class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG,
-                                        PNG, JPG or GIF (MAX. 800x400px).</p>
-                                </div>
                                 <!-- Error message button to try -->
                                 
                                 <div style="text-align: center;">
@@ -275,11 +262,6 @@
                         <div class="py-6 px-6 lg:px-8">
                             <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update Existing Skill</h3>
                             <!-- OLD -->
-                            <p class="mx-auto flex justify-center"><img
-                                v-bind:src="`data:image/png;base64,${varImage}`" />
-                            </p> 
-                            </br>
-
                             <form class="space-y-6" action="#">
                                 <div v-if="!checkUpdateNameValid() && !checkUpdateNameTooLong()">
                                     <label for="skill_name" 

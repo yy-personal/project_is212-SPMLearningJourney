@@ -117,7 +117,7 @@
                 <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
         </nav>
 
-        <!-- DISPLAY SKILLS -->
+        <!-- DISPLAY ROLES -->
         <section class="container bg-white py-8 pt-20" id="Roles">
             <div class="container mx-auto flex flex-wrap pt-4">
                 <h2 class="w-full mt-12 text-5xl font-bold leading-tight text-center text-gray-800 pt-4">
@@ -137,8 +137,6 @@
                             style='padding-top: 20px;'>
                             <a href="#" class="flex flex-wrap no-underline hover:no-underline"
                                 v-on:click="addIDs(this)">
-                                <p class="mx-auto pb-8 flex justify-center"><img v-bind:src="`data:image/png;base64,${role.image}`" />
-                                </p> 
                                 <p class="w-full font-bold text-xl text-gray-800 px-6"
                                     style='margin-bottom: 10px; font-size: 25px;'>
                                     {{role.name}}
@@ -210,17 +208,6 @@
                                     </textarea>
                                 </div>
 
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        for="file_input">Upload Skill Image</label>
-                                    <input
-                                        class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        aria-describedby="file_input_help" id="file_input" type="file"
-                                        v-on:change="onChangeFile">
-                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG,
-                                        PNG, JPG or GIF (MAX. 800x400px).</p>
-                                </div>
-
                                 <div style="text-align: center;">
                                     <button type="submit" v-on:click="createRole(this)"
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
@@ -258,11 +245,6 @@
                         <div class="py-6 px-6 lg:px-8">
                             <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update Existing Role</h3>
                             <!-- OLD -->
-                            <p class="mx-auto flex justify-center"><img
-                                v-bind:src="`data:image/png;base64,${varImage}`" />
-                            </p> 
-                            </br>
-
                             <form class="space-y-6" action="#">
                                 <div v-if="!checkUpdateNameValid() && !checkUpdateNameTooLong()">
                                     <label for="role_name" 
@@ -342,11 +324,9 @@
                 inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
                 create_role_name: "",
                 create_role_des: "",
-                image: "",
                 error: "",
                 varName: "",
                 varDesc: "",
-                varImg: "",
                 updateID: null,
             },
             mounted: async function () {
@@ -447,13 +427,11 @@
                 createRole: function (item) {
                     var new_role_name = this.create_role_name;
                     var new_role_des = this.create_role_des;
-                    var new_role_img = this.image; 
 
                     var url = 'http://localhost:5010/roles'
                     axios.post(url, {
                         name: new_role_name,
                         description: new_role_des,
-                        image: new_role_img.split(',')[1]
                     })
                         .then(response => {
                             console.log(response.data)
@@ -470,7 +448,6 @@
                             if (this.roles[i].id == roleID) {
                                 this.varName = this.roles[i].name;
                                 this.varDesc = this.roles[i].description;
-                                this.varImage = this.roles[i].image 
                             }
                         }
                 },
