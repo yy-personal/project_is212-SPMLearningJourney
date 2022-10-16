@@ -18,7 +18,7 @@ CREATE TABLE `Role` (
 
 -- Table strcuture for table 'Staff'
 CREATE TABLE `Staff` (
-    `staff_id` int PRIMARY KEY,
+    `staff_id` int PRIMARY KEY AUTO_INCREMENT,
     `staff_Fname` varchar(50) NOT NULL,
     `staff_Lname` varchar(50) NOT NULL,
     `department` varchar(50) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `Staff` (
 
 -- Table strcuture for table 'JobRole'
 CREATE TABLE `JobRole` (
-    `job_role_id` int PRIMARY KEY,
+    `job_role_id` int PRIMARY KEY AUTO_INCREMENT,
     `job_role_name` varchar(100) NOT NULL,
     `job_role_description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -56,7 +56,7 @@ CREATE TABLE `Course` (
 
 -- Table strcuture for table 'Registeration'
 CREATE TABLE `Registeration` (
-    `reg_id` int PRIMARY KEY,
+    `reg_id` int PRIMARY KEY AUTO_INCREMENT,
     `course_id` varchar(20) NOT NULL,
     `staff_id` int NOT NULL,
     `reg_status` varchar(20) DEFAULT NULL,

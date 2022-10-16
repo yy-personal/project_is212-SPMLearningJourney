@@ -46,9 +46,9 @@ class Person(db.Model):
 class Skill(db.Model):
     __tablename__ = 'skill'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name  = db.Column(db.String(100))
-    description = db.Column(db.String(100))
+    skill_id = db.Column(db.Integer, primary_key=True)
+    skill_name  = db.Column(db.String(100))
+    skill_description = db.Column(db.String(500))
 
     __mapper_args__ = {
         'polymorphic_identity': 'skill',
@@ -70,8 +70,7 @@ class Role(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name  = db.Column(db.String(100))
-    description = db.Column(db.String(100))
-    #skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
+    #description = db.Column(db.String(500))
 
     __mapper_args__ = {
         'polymorphic_identity': 'role'
@@ -86,7 +85,30 @@ class Role(db.Model):
         result = {}
         for column in columns:
             result[column] = getattr(self, column)
-        # print(result)
+        print(result)
+        return result
+
+class JobRole(db.Model):
+    __tablename__ = 'jobrole'
+
+    job_role_id = db.Column(db.Integer, primary_key=True)
+    job_role_name = db.Column(db.String(100))
+    job_role_description = db.Column(db.String(500))
+    #skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'jobrole'
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
         return result
 
 class Course(db.Model):
@@ -117,12 +139,12 @@ class Course(db.Model):
 
 ######## SKILLS ########
 #create skills (C)
-@app.route('/skills' , methods=['POST'])
+@app.route('/skill' , methods=['POST'])
 def create_skill():
     data = request.get_json()
     # print(data)
     if not all(key in data.keys() for
-            key in ('name', 'description',
+            key in ('skill_name', 'skill_description',
                     )):
         return jsonify({
             "message": "Incorrect JSON object provided."
@@ -150,15 +172,15 @@ def read_skill():
     ), 200
 
 # Update Existing Skills (U)
-@app.route("/skills/<int:id>", methods=['PUT'])
+@app.route("/skill/<int:id>", methods=['PUT'])
 def update_skill(id):
-    chosenSkill = Skill.query.filter_by(id=id).first()
+    chosenSkill = Skill.query.filter_by(skill_id=id).first()
     if chosenSkill:
         data = request.get_json() 
-        if data['name']:
-            chosenSkill.name = data['name']
-        if data['description']:
-            chosenSkill.description = data['description']
+        if data['skill_name']:
+            chosenSkill.name = data['skill_name']
+        if data['skill_description']:
+            chosenSkill.description = data['skill_description']
         db.session.commit()
         return jsonify(
             {
@@ -171,20 +193,19 @@ def update_skill(id):
 @app.route("/skill", methods=['DELETE'])
 def delete_skill():
     data = request.get_json()
-    # print(f"data.keys(): {not all(key in data.keys() for key in ('id', 'name2'))}")
     if not all(key in data.keys() for
                 # only allows two or more inputs in tuple during checking
-               key in ("id", "id")):
+            key in ("skill_id", "skill_id")):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
 
     try:
         try:
-            skill = Skill.query.filter_by(id=data["id"]).one()
+            skill = Skill.query.filter_by(skill_id=data["skill_id"]).one()
         except Exception:
             return jsonify({
-            "message": f"Unable to find skill with id: {data['id']}"
+            "message": f"Unable to find skill with id: {data['skill_id']}"
             }), 500
         db.session.delete(skill)
         db.session.commit()
@@ -198,16 +219,17 @@ def delete_skill():
 
 ######## ROLES ########
 # Create A New Job Role (C)
-@app.route("/roles", methods=['POST'])
+@app.route("/jobrole", methods=['POST'])
 def create_role():
     data = request.get_json()
+    print(data)
     if not all(key in data.keys() for
-            key in ('name', 'description',
+            key in ('job_role_name', 'job_role_description',
                     )):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
-    role = Role(**data)
+    role = JobRole(**data)
     try:
         db.session.add(role)
         db.session.commit()
@@ -218,9 +240,9 @@ def create_role():
         }), 500
 
 # Read Existing Roles (R)
-@app.route("/roles")
+@app.route("/jobroles")
 def read_role():
-    roleList = Role.query.all()
+    roleList = JobRole.query.all()
     return jsonify(
         {
             "data": [role.to_dict()
@@ -229,15 +251,15 @@ def read_role():
     ), 200
 
 # Update Existing Roles (U)
-@app.route("/roles/<int:id>", methods=['PUT'])
+@app.route("/jobrole/<int:id>", methods=['PUT'])
 def update_role(id):
-    chosenRole = Role.query.filter_by(id=id).first()
+    chosenRole = JobRole.query.filter_by(job_role_id=id).first()
     if chosenRole:
         data = request.get_json() 
-        if data['name']:
-            chosenRole.name = data['name']
-        if data['description']:
-            chosenRole.description = data['description']
+        if data['job_role_name']:
+            chosenRole.job_role_name = data['job_role_name']
+        if data['job_role_description']:
+            chosenRole.job_role_description = data['job_role_description']
         db.session.commit()
         return jsonify(
             {
@@ -247,20 +269,20 @@ def update_role(id):
         )
 
 # Delete An Existing Job Role (D)
-@app.route('/roles', methods=['DELETE'])
+@app.route('/jobrole', methods=['DELETE'])
 def delete_role():
     data = request.get_json()
     if not all(key in data.keys() for
-               key in ('id', 'id')):
+            key in ('job_role_id', 'job_role_id')):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
     try:
         try:
-            role = Role.query.filter_by(id=data["id"]).one()
+            role = JobRole.query.filter_by(job_role_id=data["job_role_id"]).one()
         except Exception:
             return jsonify({
-                "message": f"Unable to find role with id: {data['id']}."
+                "message": f"Unable to find role with id: {data['job_role_id']}."
             }), 500
         db.session.delete(role)
         db.session.commit()

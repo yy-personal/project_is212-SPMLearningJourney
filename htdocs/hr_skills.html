@@ -135,22 +135,22 @@
                                 v-on:click="addIDs(this)">
                                 <p class="w-full font-bold text-xl text-gray-800 px-6"
                                     style='margin-bottom: 10px; font-size: 25px;'>
-                                    {{skill.name}}
+                                    {{skill.skill_name}}
                                 </p>
                                 <p class="text-gray-800 text-base px-6 mb-5">
-                                    {{skill.description}}
+                                    {{skill.skill_description}}
                                 </p>
                             </a>
                         </div>
 
                         <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
                             style="text-align: center;">
-                            <button type="button" v-on:click="openUpdateModal(skill.id)"
+                            <button type="button" v-on:click="openUpdateModal(skill.skill_id)"
                                 class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Update</button>
                             
                             <!-- Delete button -->
-                            <button v-on:click="deleteSkill(skill.id)" type="button"
+                            <button v-on:click="deleteSkill(skill.skill_id)" type="button"
                                 class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Delete</button>
                         </div>
@@ -350,7 +350,6 @@
         const vm = new Vue({
             el: '#main-container',
             data: {
-                roles: [],
                 currPage: "Home",
                 activeClass: "inline-block py-2 px-4 text-black font-bold no-underline",
                 inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
@@ -403,11 +402,9 @@
                     this.skills = skills
                 },
                 deleteSkill: async function (id) {
-                    //console.log("delete: ", id)
-
                     // var axios = require('axios');
                     var data = JSON.stringify({
-                        "id": id
+                        "skill_id": id
                     });
 
                     var config = {
@@ -439,13 +436,13 @@
                     var new_skill_name = this.create_skill_name;
                     var new_skill_des = this.create_skill_des;
 
-                    var url = 'http://localhost:5010/skills'
+                    var url = 'http://localhost:5010/skill'
                     axios.post(url, {
-                            name: new_skill_name,
-                            description: new_skill_des,
+                            skill_name: new_skill_name,
+                            skill_description: new_skill_des,
                         })
                         .then(response => {
-                            console.log(response.data)
+                            //console.log(response.data)
                             this.success_create = "Successfully created a skill!" 
                         })
                         .catch(error => {
@@ -470,10 +467,9 @@
                     this.updateID = skillID;
                     console.log(this.skills)
                     for (i in this.skills) {
-                            if (this.skills[i].id == skillID) {
-                                this.varName = this.skills[i].name;
-                                this.varDesc = this.skills[i].description;
-                                this.varImage = this.skills[i].image 
+                            if (this.skills[i].skill_id == skillID) {
+                                this.varName = this.skills[i].skill_name;
+                                this.varDesc = this.skills[i].skill_description;
                             }
                         }
                 },
@@ -498,8 +494,7 @@
                     if(this.checkUpdateNameValid() == true){
                         return
                     }
-                    console.log(this.image)
-                    skillsURL = "http://localhost:5010/skills/" + skillID
+                    skillsURL = "http://localhost:5010/skill/" + skillID
                     console.log(skillsURL)
                     fetch(skillsURL, {
                         method: 'PUT',
@@ -507,20 +502,20 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            'name': this.varName,
-                            'description': this.varDesc,
+                            'skill_name': this.varName,
+                            'skill_description': this.varDesc,
                             // 'image': this.Image,
                         })
                     }).then(response => {
-                        console.log(skillID)
+                        //console.log(skillID)
                         for (i in this.skills) {
-                            if (this.skills[i].id == skillID) {
-                                this.skills[i].name = this.varName
-                                this.skills[i].description = this.varDesc
+                            if (this.skills[i].skill_id == skillID) {
+                                this.skills[i].skill_name = this.varName
+                                this.skills[i].skill_description = this.varDesc
                                 // this.skills[i].image = this.Image
                                 }
                             }
-                        console.log(this.skills)
+                        //console.log(this.skills)
                         // this.varObj
                         this.varName = null
                         this.varDesc = null
