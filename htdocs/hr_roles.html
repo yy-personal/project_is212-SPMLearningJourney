@@ -332,7 +332,7 @@
             mounted: async function () {
                 var config = {
                     method: 'get',
-                    url: 'http://localhost:5010/roles',
+                    url: 'https://localhost:5010/roles',
                     headers: {}
                 };
                 roles2 = []
@@ -371,7 +371,7 @@
 
                     var config = {
                         method: 'get',
-                        url: 'http://localhost:5010/roles',
+                        url: 'https://localhost:5010/roles',
                         headers: {}
                     };
                     roles = []
@@ -400,7 +400,7 @@
 
                     var config = {
                         method: 'delete',
-                        url: 'http://localhost:5010/roles',
+                        url: 'https://localhost:5010/roles',
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -428,7 +428,7 @@
                     var new_role_name = this.create_role_name;
                     var new_role_des = this.create_role_des;
 
-                    var url = 'http://localhost:5010/roles'
+                    var url = 'https://localhost:5010/roles'
                     axios.post(url, {
                         name: new_role_name,
                         description: new_role_des,
@@ -473,7 +473,7 @@
                         return
                     }
                     console.log(this.image)
-                    rolesURL = "http://localhost:5010/roles/" + roleID
+                    rolesURL = "https://localhost:5010/roles/" + roleID
                     console.log(rolesURL)
                     fetch(rolesURL, {
                         method: 'PUT',
