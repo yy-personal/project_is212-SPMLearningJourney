@@ -66,17 +66,59 @@ class Role(db.Model):
         print(result)
         return result
 
+class Staff(db.Model):
+    __tablename__ = 'staff'
+
+    staff_id = db.Column(db.Integer, primary_key=True)
+    staff_Fname  = db.Column(db.String(50))
+    staff_Lname  = db.Column(db.String(50))
+    department  = db.Column(db.String(50))
+    email  = db.Column(db.String(50))
+    role = db.Column(db.Integer , db.ForeignKey('role.role_id'))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'staff'
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        print(result)
+        return result
+
+
 class JobRole(db.Model):
     __tablename__ = 'jobrole'
 
     job_role_id = db.Column(db.Integer, primary_key=True)
     job_role_name = db.Column(db.String(100))
     job_role_description = db.Column(db.String(500))
-    #skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
 
     __mapper_args__ = {
         'polymorphic_identity': 'jobrole'
     }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+class JobRoleSkill(db.Model):
+    __tablename__ = 'jobroleskill'
+    job_role_id = db.Column(db.Integer, db.ForeignKey('jobrole.job_role_id'), primary_key=True)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
 
     def to_dict(self):
         """
@@ -140,8 +182,8 @@ class Registration(db.Model):
     __tablename__ = 'registration'
 
     reg_id = db.Column(db.Integer, primary_key=True)
-    course_id = db.Column(db.String(20))
-    staff_id = db.Column(db.Integer)
+    course_id = db.Column(db.String(20), db.ForeignKey('course.course_id'))
+    staff_id = db.Column(db.Integer, db.ForeignKey('staff.staff_id'))
     reg_status = db.Column(db.String(20))
     completion_status = db.Column(db.String(20))
 
@@ -164,8 +206,8 @@ class LearningJourney(db.Model):
     __tablename__ = 'learningjourney'
 
     learning_journey_id = db.Column(db.Integer, primary_key=True)
-    staff_id = db.Column(db.Integer)
-    job_role_id = db.Column(db.Integer)
+    staff_id = db.Column(db.Integer, db.ForeignKey('staff.staff_id'))
+    job_role_id = db.Column(db.Integer , db.ForeignKey('jobrole.job_role_id'))
 
     __mapper_args__ = {
         'polymorphic_identity': 'learningjourney',
@@ -181,6 +223,40 @@ class LearningJourney(db.Model):
         for column in columns:
             result[column] = getattr(self, column)
         return result
+
+class LearningJourneySkill(db.Model):
+    __tablename__ = 'learningjourneyskill'
+    learning_journey_id = db.Column(db.Integer, db.ForeignKey('learningjourney.learning_journey_id'), primary_key=True)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+
+class LearningJourneyCourse(db.Model):
+    __tablename__ = 'learningjourneycourse'
+    learning_journey_id = db.Column(db.Integer, db.ForeignKey('learningjourney.learning_journey_id'), primary_key=True)
+    course_id = db.Column(db.String(20), db.ForeignKey('course.course_id'), primary_key=True)
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
 
 
 ######## SKILLS ########
@@ -338,6 +414,32 @@ def delete_role():
             return jsonify({
                 "message": "Unable to commit to database."
             }), 500
+
+
+######## COURSES ########
+# Read Courses (R)
+@app.route("/courses")
+def read_course():
+    courseList = Course.query.all()
+    return jsonify(
+        {
+            "data": [course.to_dict()
+                    for course in courseList]
+        }
+    ), 200
+
+######## Learning Journey ########
+# Get all Learning Journey 
+@app.route("/learning_journies")
+def get_learning_journey():
+    learning_journey_List = LearningJourney.query.all()
+    return jsonify(
+        {
+            "data": [learning_journey.to_dict()
+                    for learning_journey in learning_journey_List]
+        }
+    ), 200
+
 
 db.create_all()
 
