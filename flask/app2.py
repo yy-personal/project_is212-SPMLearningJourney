@@ -440,6 +440,17 @@ def get_learning_journey():
         }
     ), 200
 
+# Get all Learning Journey Skill R/S
+@app.route("/learning_journey_skills")
+def get_learning_journey_skill():
+    learning_journey_skill_List = LearningJourneySkill.query.all()
+    return jsonify(
+        {
+            "data": [learning_journey_skill.to_dict()
+                    for learning_journey_skill in learning_journey_skill_List]
+        }
+    ), 200
+
 
 db.create_all()
 
