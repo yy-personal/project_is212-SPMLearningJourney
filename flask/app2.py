@@ -89,6 +89,31 @@ class Role(db.Model):
         # print(result)
         return result
 
+class Course(db.Model):
+    __tablename__ = 'course'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    description = db.Column(db.String(100))
+    status = db.Column(db.String(15))
+    type = db.Column(db.String(10))
+    category = db.Column(db.String(50))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'course',
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
 
 ######## SKILLS ########
 #create skills (C)
@@ -115,7 +140,7 @@ def create_skill():
 
 # Read Existing Skills (R)
 @app.route("/skills")
-def readSkills():
+def read_skill():
     skillList = Skill.query.all()
     return jsonify(
         {
@@ -126,7 +151,7 @@ def readSkills():
 
 # Update Existing Skills (U)
 @app.route("/skills/<int:id>", methods=['PUT'])
-def updateSkillInformation(id):
+def update_skill(id):
     chosenSkill = Skill.query.filter_by(id=id).first()
     if chosenSkill:
         data = request.get_json() 
@@ -194,7 +219,7 @@ def create_role():
 
 # Read Existing Roles (R)
 @app.route("/roles")
-def consultations():
+def read_role():
     roleList = Role.query.all()
     return jsonify(
         {
@@ -205,7 +230,7 @@ def consultations():
 
 # Update Existing Roles (U)
 @app.route("/roles/<int:id>", methods=['PUT'])
-def updateRoleInformation(id):
+def update_role(id):
     chosenRole = Role.query.filter_by(id=id).first()
     if chosenRole:
         data = request.get_json() 
