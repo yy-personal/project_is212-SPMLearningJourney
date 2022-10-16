@@ -11,14 +11,14 @@ USE `ljms`;
 
 -- Table strcuture for table 'Role'
 CREATE TABLE `Role` (
-    `role_id` int PRIMARY KEY AUTO_INCREMENT,
+    `role_id` int PRIMARY KEY,
     `role_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- Table strcuture for table 'Staff'
 CREATE TABLE `Staff` (
-    `staff_id` int PRIMARY KEY AUTO_INCREMENT,
+    `staff_id` int PRIMARY KEY,
     `staff_Fname` varchar(50) NOT NULL,
     `staff_Lname` varchar(50) NOT NULL,
     `department` varchar(50) NOT NULL,
@@ -54,9 +54,9 @@ CREATE TABLE `Course` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Table strcuture for table 'Registeration'
-CREATE TABLE `Registeration` (
-    `reg_id` int PRIMARY KEY AUTO_INCREMENT,
+-- Table strcuture for table 'Registration'
+CREATE TABLE `Registration` (
+    `reg_id` int PRIMARY KEY,
     `course_id` varchar(20) NOT NULL,
     `staff_id` int NOT NULL,
     `reg_status` varchar(20) DEFAULT NULL,
@@ -93,10 +93,6 @@ CREATE TABLE `LearningJourneyCourse` (
 
 
 
-
-
-
-
 -- insert data for table `Skill`
 
 INSERT INTO `Skill` (`skill_id`, `skill_name`, `skill_description`) VALUES
@@ -122,9 +118,9 @@ INSERT INTO `Course` (`course_id`, `course_name`, `course_description`, `course_
 ('FIN003', 'Business Continuity Planning', 'Business continuity planning is essential in any business to minimise loss when faced with potential threats and disruptions.', 'Retired', 'External', 'Finance'),
 ('tch004', 'Introduction to Open Platform Communications', 'This course provides the participants with a good in-depth understanding of the SS IEC 62541 standard', 'Pending', 'Internal', 'Technical');
 
--- insert data for table `Registeration`
+-- insert data for table `Registration`
 
-INSERT INTO `Registeration` (`reg_id`, `course_id`, `staff_id`, `reg_status`, `completion_status`) VALUES
+INSERT INTO `Registration` (`reg_id`, `course_id`, `staff_id`, `reg_status`, `completion_status`) VALUES
 (249, 'FIN003', 140004, 'Registered', 'OnGoing'),
 (8, 'COR002', 140036, 'Waitlist', NULL),
 (5, 'COR002', 140003, 'Rejected', NULL),
@@ -184,10 +180,10 @@ ADD FOREIGN KEY (`learning_journey_id`) REFERENCES `LearningJourney`(`learning_j
 ALTER TABLE `LearningJourneyCourse`
 ADD FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`);
 
--- Add foreign key to table 'Registeration'
-ALTER TABLE `Registeration`
+-- Add foreign key to table 'Registration'
+ALTER TABLE `Registration`
 ADD FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`);
-ALTER TABLE `Registeration`
+ALTER TABLE `Registration`
 ADD FOREIGN KEY (`staff_id`) REFERENCES `Staff`(`staff_id`);
 
 
