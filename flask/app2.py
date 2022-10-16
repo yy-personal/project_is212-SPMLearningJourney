@@ -27,7 +27,6 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     title = db.Column(db.String(10))
-    image = db.Column(db.String(20000))
 
     __mapper_args__ = {
         'polymorphic_identity': 'person'
@@ -50,7 +49,6 @@ class Skill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name  = db.Column(db.String(100))
     description = db.Column(db.String(100))
-    image = db.Column(db.String(20000))
 
     __mapper_args__ = {
         'polymorphic_identity': 'skill',
@@ -73,7 +71,6 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name  = db.Column(db.String(100))
     description = db.Column(db.String(100))
-    image = db.Column(db.String(20000))
     #skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
 
     __mapper_args__ = {
@@ -101,7 +98,7 @@ def create_skill():
     # print(data)
     if not all(key in data.keys() for
             key in ('name', 'description',
-                    'image')):
+                    )):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
@@ -181,7 +178,7 @@ def create_role():
     data = request.get_json()
     if not all(key in data.keys() for
             key in ('name', 'description',
-                    'image')):
+                    )):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
