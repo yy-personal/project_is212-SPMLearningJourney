@@ -156,10 +156,6 @@ INSERT INTO `LearningJourney` (`learning_journey_id`, `staff_id`, `job_role_id`)
 (3, 140036, 3);
 
 
-
-
-
-
 -- Add foreign key to table 'Staff'
 ALTER TABLE `Staff`
 ADD FOREIGN KEY (`role`) REFERENCES `Role`(`role_id`);
