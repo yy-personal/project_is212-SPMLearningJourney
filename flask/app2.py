@@ -1,4 +1,3 @@
-from unicodedata import category
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -44,12 +43,100 @@ class Person(db.Model):
             result[column] = getattr(self, column)
         return result
 
-class Skill(db.Model):
-    __tablename__ = 'skill'
+class Role(db.Model):
+    __tablename__ = 'role'
 
     id = db.Column(db.Integer, primary_key=True)
     name  = db.Column(db.String(100))
-    description = db.Column(db.String(100))
+    #description = db.Column(db.String(500))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'role'
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        print(result)
+        return result
+
+class Staff(db.Model):
+    __tablename__ = 'staff'
+
+    staff_id = db.Column(db.Integer, primary_key=True)
+    staff_Fname  = db.Column(db.String(50))
+    staff_Lname  = db.Column(db.String(50))
+    department  = db.Column(db.String(50))
+    email  = db.Column(db.String(50))
+    role = db.Column(db.Integer , db.ForeignKey('role.role_id'))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'staff'
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        print(result)
+        return result
+
+
+class JobRole(db.Model):
+    __tablename__ = 'jobrole'
+
+    job_role_id = db.Column(db.Integer, primary_key=True)
+    job_role_name = db.Column(db.String(100))
+    job_role_description = db.Column(db.String(500))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'jobrole'
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+class JobRoleSkill(db.Model):
+    __tablename__ = 'jobroleskill'
+    job_role_id = db.Column(db.Integer, db.ForeignKey('jobrole.job_role_id'), primary_key=True)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+class Skill(db.Model):
+    __tablename__ = 'skill'
+
+    skill_id = db.Column(db.Integer, primary_key=True)
+    skill_name  = db.Column(db.String(100))
+    skill_description = db.Column(db.String(500))
 
     __mapper_args__ = {
         'polymorphic_identity': 'skill',
@@ -66,39 +153,15 @@ class Skill(db.Model):
             result[column] = getattr(self, column)
         return result
 
-class Role(db.Model):
-    __tablename__ = 'role'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name  = db.Column(db.String(100))
-    description = db.Column(db.String(100))
-    #skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'role'
-    }
-
-    def to_dict(self):
-        """
-        'to_dict' converts the object into a dictionary,
-        in which the keys correspond to database columns
-        """
-        columns = self.__mapper__.column_attrs.keys()
-        result = {}
-        for column in columns:
-            result[column] = getattr(self, column)
-        # print(result)
-        return result
-
 class Course(db.Model):
     __tablename__ = 'course'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    description = db.Column(db.String(100))
-    status = db.Column(db.String(15))
-    type = db.Column(db.String(10))
-    category = db.Column(db.String(50))
+    course_id = db.Column(db.Integer, primary_key=True)
+    course_name = db.Column(db.String(50))
+    course_description = db.Column(db.String(100))
+    course_status = db.Column(db.String(15))
+    course_type = db.Column(db.String(10))
+    course_category = db.Column(db.String(50))
 
     __mapper_args__ = {
         'polymorphic_identity': 'course',
@@ -115,15 +178,95 @@ class Course(db.Model):
             result[column] = getattr(self, column)
         return result
 
+class Registration(db.Model):
+    __tablename__ = 'registration'
+
+    reg_id = db.Column(db.Integer, primary_key=True)
+    course_id = db.Column(db.String(20), db.ForeignKey('course.course_id'))
+    staff_id = db.Column(db.Integer, db.ForeignKey('staff.staff_id'))
+    reg_status = db.Column(db.String(20))
+    completion_status = db.Column(db.String(20))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'registration',
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+class LearningJourney(db.Model):
+    __tablename__ = 'learningjourney'
+
+    learning_journey_id = db.Column(db.Integer, primary_key=True)
+    staff_id = db.Column(db.Integer, db.ForeignKey('staff.staff_id'))
+    job_role_id = db.Column(db.Integer , db.ForeignKey('jobrole.job_role_id'))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'learningjourney',
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+class LearningJourneySkill(db.Model):
+    __tablename__ = 'learningjourneyskill'
+    learning_journey_id = db.Column(db.Integer, db.ForeignKey('learningjourney.learning_journey_id'), primary_key=True)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+
+class LearningJourneyCourse(db.Model):
+    __tablename__ = 'learningjourneycourse'
+    learning_journey_id = db.Column(db.Integer, db.ForeignKey('learningjourney.learning_journey_id'), primary_key=True)
+    course_id = db.Column(db.String(20), db.ForeignKey('course.course_id'), primary_key=True)
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+
 
 ######## SKILLS ########
 #create skills (C)
-@app.route('/skills' , methods=['POST'])
+@app.route('/skill' , methods=['POST'])
 def create_skill():
     data = request.get_json()
     # print(data)
     if not all(key in data.keys() for
-            key in ('name', 'description',
+            key in ('skill_name', 'skill_description',
                     )):
         return jsonify({
             "message": "Incorrect JSON object provided."
@@ -151,15 +294,15 @@ def read_skill():
     ), 200
 
 # Update Existing Skills (U)
-@app.route("/skills/<int:id>", methods=['PUT'])
+@app.route("/skill/<int:id>", methods=['PUT'])
 def update_skill(id):
-    chosenSkill = Skill.query.filter_by(id=id).first()
+    chosenSkill = Skill.query.filter_by(skill_id=id).first()
     if chosenSkill:
         data = request.get_json() 
-        if data['name']:
-            chosenSkill.name = data['name']
-        if data['description']:
-            chosenSkill.description = data['description']
+        if data['skill_name']:
+            chosenSkill.name = data['skill_name']
+        if data['skill_description']:
+            chosenSkill.description = data['skill_description']
         db.session.commit()
         return jsonify(
             {
@@ -172,20 +315,19 @@ def update_skill(id):
 @app.route("/skill", methods=['DELETE'])
 def delete_skill():
     data = request.get_json()
-    # print(f"data.keys(): {not all(key in data.keys() for key in ('id', 'name2'))}")
     if not all(key in data.keys() for
                 # only allows two or more inputs in tuple during checking
-               key in ("id", "id")):
+            key in ("skill_id", "skill_id")):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
 
     try:
         try:
-            skill = Skill.query.filter_by(id=data["id"]).one()
+            skill = Skill.query.filter_by(skill_id=data["skill_id"]).one()
         except Exception:
             return jsonify({
-            "message": f"Unable to find skill with id: {data['id']}"
+            "message": f"Unable to find skill with id: {data['skill_id']}"
             }), 500
         db.session.delete(skill)
         db.session.commit()
@@ -199,16 +341,17 @@ def delete_skill():
 
 ######## ROLES ########
 # Create A New Job Role (C)
-@app.route("/roles", methods=['POST'])
+@app.route("/jobrole", methods=['POST'])
 def create_role():
     data = request.get_json()
+    print(data)
     if not all(key in data.keys() for
-            key in ('name', 'description',
+            key in ('job_role_name', 'job_role_description',
                     )):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
-    role = Role(**data)
+    role = JobRole(**data)
     try:
         db.session.add(role)
         db.session.commit()
@@ -219,9 +362,9 @@ def create_role():
         }), 500
 
 # Read Existing Roles (R)
-@app.route("/roles")
+@app.route("/jobroles")
 def read_role():
-    roleList = Role.query.all()
+    roleList = JobRole.query.all()
     return jsonify(
         {
             "data": [role.to_dict()
@@ -230,15 +373,15 @@ def read_role():
     ), 200
 
 # Update Existing Roles (U)
-@app.route("/roles/<int:id>", methods=['PUT'])
+@app.route("/jobrole/<int:id>", methods=['PUT'])
 def update_role(id):
-    chosenRole = Role.query.filter_by(id=id).first()
+    chosenRole = JobRole.query.filter_by(job_role_id=id).first()
     if chosenRole:
         data = request.get_json() 
-        if data['name']:
-            chosenRole.name = data['name']
-        if data['description']:
-            chosenRole.description = data['description']
+        if data['job_role_name']:
+            chosenRole.job_role_name = data['job_role_name']
+        if data['job_role_description']:
+            chosenRole.job_role_description = data['job_role_description']
         db.session.commit()
         return jsonify(
             {
@@ -248,20 +391,20 @@ def update_role(id):
         )
 
 # Delete An Existing Job Role (D)
-@app.route('/roles', methods=['DELETE'])
+@app.route('/jobrole', methods=['DELETE'])
 def delete_role():
     data = request.get_json()
     if not all(key in data.keys() for
-               key in ('id', 'id')):
+            key in ('job_role_id', 'job_role_id')):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
     try:
         try:
-            role = Role.query.filter_by(id=data["id"]).one()
+            role = JobRole.query.filter_by(job_role_id=data["job_role_id"]).one()
         except Exception:
             return jsonify({
-                "message": f"Unable to find role with id: {data['id']}."
+                "message": f"Unable to find role with id: {data['job_role_id']}."
             }), 500
         db.session.delete(role)
         db.session.commit()
@@ -272,11 +415,44 @@ def delete_role():
                 "message": "Unable to commit to database."
             }), 500
 
-######## COURSE ########
 
+######## COURSES ########
+# Read Courses (R)
+@app.route("/courses")
+def read_course():
+    courseList = Course.query.all()
+    return jsonify(
+        {
+            "data": [course.to_dict()
+                    for course in courseList]
+        }
+    ), 200
+
+######## Learning Journey ########
+# Get all Learning Journey 
+@app.route("/learning_journies")
+def get_learning_journey():
+    learning_journey_List = LearningJourney.query.all()
+    return jsonify(
+        {
+            "data": [learning_journey.to_dict()
+                    for learning_journey in learning_journey_List]
+        }
+    ), 200
+
+# Get all Learning Journey Skill R/S
+@app.route("/learning_journey_skills")
+def get_learning_journey_skill():
+    learning_journey_skill_List = LearningJourneySkill.query.all()
+    return jsonify(
+        {
+            "data": [learning_journey_skill.to_dict()
+                    for learning_journey_skill in learning_journey_skill_List]
+        }
+    ), 200
 
 
 db.create_all()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5010, debug=True)
+    app.run(host='0.0.0.0', port=5010, debug=True)g=True)
