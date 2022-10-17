@@ -142,15 +142,12 @@
 
                 <div id='middle'
                     class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
-                    <!-- CARD 1 -->
+                    <!-- SKILLS AVAILABLE -->
                     <div
                         class="p-4 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                         <div class="flex justify-between items-center mb-4">
                             <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Available Skills
                             </h5>
-                            <!-- <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-                                View all
-                            </a> -->
                         </div>
                         <div class="flow-root">
                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -166,7 +163,7 @@
                                         </div>
                                         <div
                                             class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                            <input type='checkbox'>
+                                            <input type='checkbox' v-model = 'selectedSkills'  :value ="skill.skill_name" v-model = "selectedSkills">
                                         </div>
                                     </div>
                                 </li>
@@ -181,7 +178,7 @@
                         </div>
                     </div>
 
-                    <!-- CARD 2-->
+                    <!-- SKILLS ASSIGNED -->
                     <div
                         class="p-4 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                         <div class="flex justify-between items-center mb-4">
@@ -221,6 +218,7 @@
                     jobRoleDes: "",
                     jobRoleName: "",
                     skills: [],
+                    selectedSkills: []
                 },
                 mounted: async function () {
                     var config = {
@@ -255,14 +253,8 @@
                 },
                 methods: {
                     assignSkills() {
-
+                        console.log(this.selectedSkills)
                     },
-                    scroll() {
-                        const element = document.getElementById('contact-me');
-                        element.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
                 },
                 computed: {
                     getSkills() {
