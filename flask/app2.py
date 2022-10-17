@@ -451,6 +451,8 @@ def get_learning_journey_skill():
         }
     ), 200
 
+######## JOBROLESKILL ########
+# add skils to jobrole 
 
 db.create_all()
 

@@ -163,7 +163,8 @@
                                         </div>
                                         <div
                                             class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                            <input type='checkbox' v-model = 'selectedSkills'  :value ="skill.skill_name" v-model = "selectedSkills">
+                                            <input type='checkbox' v-model='selectedSkills' :value="skill.skill_name"
+                                                v-model="selectedSkills">
                                         </div>
                                     </div>
                                 </li>
@@ -254,6 +255,25 @@
                 methods: {
                     assignSkills() {
                         console.log(this.selectedSkills)
+                        var skills = this.getSkills
+                        var skillIDs = []
+
+                        var url = ""
+                        axios.get()
+
+
+
+
+                        for (each_name of this.selectedSkills) {
+                            for (each_skill of skills) {
+                                if (each_skill.skill_name == each_name){
+                                    skillIDs.push(each_skill.skill_id)
+                                }
+                            }
+                        }
+
+                        console.log(skillIDs)
+                        this.selectedSkills = []
                     },
                 },
                 computed: {
