@@ -42,7 +42,7 @@
         }
 
         .backdrop {
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
@@ -91,7 +91,8 @@
                             </li>
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                                    href="../htdocs/hr_skills.html" v-on:onclick="goPage(this)" id="Skillslink">Skills</a>
+                                    href="../htdocs/hr_skills.html" v-on:onclick="goPage(this)"
+                                    id="Skillslink">Skills</a>
                             </li>
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
@@ -131,26 +132,23 @@
                         <!-- EACH SKILL -->
                         <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
                             style='padding-top: 20px;'>
-                            <a href="#" class="flex flex-wrap no-underline hover:no-underline"
-                                v-on:click="addIDs(this)">
-                                <p class="w-full font-bold text-xl text-gray-800 px-6"
-                                    style='margin-bottom: 10px; font-size: 25px;'>
-                                    {{skill.name}}
-                                </p>
-                                <p class="text-gray-800 text-base px-6 mb-5">
-                                    {{skill.description}}
-                                </p>
-                            </a>
+                            <p class="w-full font-bold text-xl text-gray-800 px-6"
+                                style='margin-bottom: 10px; font-size: 25px;'>
+                                {{skill.skill_name}}
+                            </p>
+                            <p class="text-gray-800 text-base px-6 mb-5">
+                                {{skill.skill_description}}
+                            </p>
                         </div>
 
                         <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
                             style="text-align: center;">
-                            <button type="button" v-on:click="openUpdateModal(skill.id)"
+                            <button type="button" v-on:click="openUpdateModal(skill.skill_id)"
                                 class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Update</button>
-                            
+
                             <!-- Delete button -->
-                            <button v-on:click="deleteSkill(skill.id)" type="button"
+                            <button v-on:click="deleteSkill(skill.skill_id)" type="button"
                                 class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Delete</button>
                         </div>
@@ -187,8 +185,8 @@
                         <div class="py-6 px-6 lg:px-8">
                             <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Create New Skill</h3>
                             <form class="space-y-6" action="#">
-                                
-                                <div v-if = "!checkCreateNameValid() && !checkCreateNameTooLong()">
+
+                                <div v-if="!checkCreateNameValid() && !checkCreateNameTooLong()">
                                     <label for="skill_name"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
                                         Name</label>
@@ -204,7 +202,9 @@
                                     <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Please do not enter any special characters or numbers!</p>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
+                                            class="font-medium"></span> Please do not enter any special characters or
+                                        numbers!</p>
                                 </div>
 
                                 <div v-else-if="checkCreateNameTooLong()">
@@ -214,7 +214,9 @@
                                     <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 100 characters!</p>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
+                                            class="font-medium"></span> Input length should be lesser than 100
+                                        characters!</p>
                                 </div>
 
                                 <div>
@@ -228,7 +230,7 @@
                                 </div>
 
                                 <!-- Error message button to try -->
-                                
+
                                 <div style="text-align: center;">
                                     <button type="submit" v-on:click="createSkill(this)"
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
@@ -264,8 +266,9 @@
                             <!-- OLD -->
                             <form class="space-y-6" action="#">
                                 <div v-if="!checkUpdateNameValid() && !checkUpdateNameTooLong()">
-                                    <label for="skill_name" 
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter Updated Skill
+                                    <label for="skill_name"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter
+                                        Updated Skill
                                         Name</label>
                                     <input type="text" name="skill_name" id="skill_name" v-model="varName"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -273,26 +276,35 @@
                                 </div>
 
                                 <div v-else-if="checkUpdateNameValid()">
-                                    <label for="skill_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter Updated Skill
+                                    <label for="skill_name"
+                                        class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter
+                                        Updated Skill
                                         Name</label>
                                     <input type="text" name="skill_name" id="skill_name" v-model="varName"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Please do not enter any special characters and numbers! </p>
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
+                                            class="font-medium"></span> Please do not enter any special characters and
+                                        numbers! </p>
                                 </div>
 
                                 <div v-else-if="checkUpdateNameTooLong()">
-                                    <label for="skill_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter Updated Skill
+                                    <label for="skill_name"
+                                        class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter
+                                        Updated Skill
                                         Name</label>
                                     <input type="text" name="skill_name" id="skill_name" v-model="varName"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 100 characters!</p>
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
+                                            class="font-medium"></span> Input length should be lesser than 100
+                                        characters!</p>
                                 </div>
 
                                 <div>
                                     <label for="skill_description"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter Updated Skill
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter
+                                        Updated Skill
                                         Description</label>
                                     <textarea name="skill_description" id="skill_description" v-model="varDesc"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -300,7 +312,8 @@
                                     </textarea>
                                 </div>
                                 <div style="text-align: center;">
-                                    <button type="submit" :disabled="checkUpdateNameValid()|| checkUpdateNameTooLong()" v-on:click="updateSkill(updateID)" 
+                                    <button type="submit" :disabled="checkUpdateNameValid()|| checkUpdateNameTooLong()"
+                                        v-on:click="updateSkill(updateID)"
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
                                     <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
@@ -334,7 +347,7 @@
                         </button>
 
                         <div class="py-6 px-6 lg:px-8">
-                            <h3>{{success_create}}</h3> 
+                            <h3>{{success_create}}</h3>
                         </div>
                     </div>
                 </div>
@@ -350,7 +363,6 @@
         const vm = new Vue({
             el: '#main-container',
             data: {
-                roles: [],
                 currPage: "Home",
                 activeClass: "inline-block py-2 px-4 text-black font-bold no-underline",
                 inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
@@ -403,11 +415,9 @@
                     this.skills = skills
                 },
                 deleteSkill: async function (id) {
-                    //console.log("delete: ", id)
-
                     // var axios = require('axios');
                     var data = JSON.stringify({
-                        "id": id
+                        "skill_id": id
                     });
 
                     var config = {
@@ -428,40 +438,36 @@
                         });
                     this.getSkills()
                 },
-
-                addIDs: function (a_tag) {
-                    a_tags = document.getElementsByTagName('a');
-                },
                 createSkill: function (item) {
-                    if(this.checkCreateNameValid() == true){
-                        return 
+                    if (this.checkCreateNameValid() == true) {
+                        return
                     }
                     var new_skill_name = this.create_skill_name;
                     var new_skill_des = this.create_skill_des;
 
-                    var url = 'http://localhost:5010/skills'
+                    var url = 'http://localhost:5010/skill'
                     axios.post(url, {
-                            name: new_skill_name,
-                            description: new_skill_des,
+                            skill_name: new_skill_name,
+                            skill_description: new_skill_des,
                         })
                         .then(response => {
-                            console.log(response.data)
-                            this.success_create = "Successfully created a skill!" 
+                            //console.log(response.data)
+                            this.success_create = "Successfully created a skill!"
                         })
                         .catch(error => {
                             this.error = error.response.data.message
                         });
                 },
-                checkCreateNameValid(){
+                checkCreateNameValid() {
                     // If varName consist illegal char = true
-                    if(specialChars.test(this.create_skill_name) | /\d/.test(this.create_skill_name)){
+                    if (specialChars.test(this.create_skill_name) | /\d/.test(this.create_skill_name)) {
                         // console.log("Invalid input value for skill ID, please do not use any special characters!")
                         return true;
                     }
                 },
-                checkCreateNameTooLong(){
+                checkCreateNameTooLong() {
                     // If varName consist illegal char = true
-                    if((this.create_skill_name).length > 100){
+                    if ((this.create_skill_name).length > 100) {
                         // console.log("Invalid length should not exceed 100!")
                         return true;
                     }
@@ -470,36 +476,34 @@
                     this.updateID = skillID;
                     console.log(this.skills)
                     for (i in this.skills) {
-                            if (this.skills[i].id == skillID) {
-                                this.varName = this.skills[i].name;
-                                this.varDesc = this.skills[i].description;
-                                this.varImage = this.skills[i].image 
-                            }
+                        if (this.skills[i].skill_id == skillID) {
+                            this.varName = this.skills[i].skill_name;
+                            this.varDesc = this.skills[i].skill_description;
                         }
+                    }
                 },
-                closeUpdateModal(){
+                closeUpdateModal() {
                     this.updateID = null;
                 },
-                checkUpdateNameValid(){
+                checkUpdateNameValid() {
                     // If varName consist illegal char = true
-                    if(specialChars.test(this.varName)){
+                    if (specialChars.test(this.varName)) {
                         // console.log("Invalid input value for skill ID, please do not use any special characters!")
                         return true;
                     }
                 },
-                checkUpdateNameTooLong(){
+                checkUpdateNameTooLong() {
                     // If varName consist illegal char = true
-                    if((this.varName).length > 100){
+                    if ((this.varName).length > 100) {
                         // console.log("Invalid length should not exceed 100!")
                         return true;
                     }
                 },
                 updateSkill: function (skillID) {
-                    if(this.checkUpdateNameValid() == true){
+                    if (this.checkUpdateNameValid() == true) {
                         return
                     }
-                    console.log(this.image)
-                    skillsURL = "http://localhost:5010/skills/" + skillID
+                    skillsURL = "http://localhost:5010/skill/" + skillID
                     console.log(skillsURL)
                     fetch(skillsURL, {
                         method: 'PUT',
@@ -507,20 +511,20 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            'name': this.varName,
-                            'description': this.varDesc,
+                            'skill_name': this.varName,
+                            'skill_description': this.varDesc,
                             // 'image': this.Image,
                         })
                     }).then(response => {
-                        console.log(skillID)
+                        //console.log(skillID)
                         for (i in this.skills) {
-                            if (this.skills[i].id == skillID) {
-                                this.skills[i].name = this.varName
-                                this.skills[i].description = this.varDesc
+                            if (this.skills[i].skill_id == skillID) {
+                                this.skills[i].skill_name = this.varName
+                                this.skills[i].skill_description = this.varDesc
                                 // this.skills[i].image = this.Image
-                                }
                             }
-                        console.log(this.skills)
+                        }
+                        //console.log(this.skills)
                         // this.varObj
                         this.varName = null
                         this.varDesc = null
@@ -537,7 +541,7 @@
     </script>
     <style>
         button:disabled {
-        background: hwb(0 0% 100% / 0.493);
+            background: hwb(0 0% 100% / 0.493);
         }
     </style>
     <!-- flowbite -->
