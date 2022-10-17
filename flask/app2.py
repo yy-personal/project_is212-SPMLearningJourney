@@ -21,27 +21,6 @@ db = SQLAlchemy(app)
 
 CORS(app)
 
-class Person(db.Model):
-    __tablename__ = 'person'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    title = db.Column(db.String(10))
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'person'
-    }
-
-    def to_dict(self):
-        """
-        'to_dict' converts the object into a dictionary,
-        in which the keys correspond to database columns
-        """
-        columns = self.__mapper__.column_attrs.keys()
-        result = {}
-        for column in columns:
-            result[column] = getattr(self, column)
-        return result
 
 class Role(db.Model):
     __tablename__ = 'role'
