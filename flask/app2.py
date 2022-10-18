@@ -453,6 +453,37 @@ def get_learning_journey_skill():
 
 ######## JOBROLESKILL ########
 # add skils to jobrole 
+@app.route("/skills_to_jobrole", methods=['POST'])
+def add_skill_to_jobrole():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('job_role_id', 'skill_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    jobrole_skill = JobRoleSkill(**data)
+    try:
+        db.session.add(jobrole_skill)
+        db.session.commit()
+        return jsonify(jobrole_skill.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+#get all the skills from that role
+@app.route("/skills_to_jobrole")
+def get_skills_from_jobrole():
+    jobrole_skills_List = JobRoleSkill.query.all()
+    return jsonify(
+        {
+            "data": [jobrole_skills.to_dict()
+                    for jobrole_skills in jobrole_skills_List]
+        }
+    ), 200
+
 
 db.create_all()
 

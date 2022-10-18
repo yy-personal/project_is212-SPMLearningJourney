@@ -218,8 +218,10 @@
                     jobRole: null,
                     jobRoleDes: "",
                     jobRoleName: "",
+                    jobRoleID: null,
                     skills: [],
-                    selectedSkills: []
+                    selectedSkills: [],
+                    assignedSkills: [],
                 },
                 mounted: async function () {
                     var config = {
@@ -248,6 +250,7 @@
                             jobRole = each
                             this.jobRoleDes = jobRole.job_role_description
                             this.jobRoleName = jobRole.job_role_name
+                            this.jobRoleID = jobRole.job_role_id
                         }
                     }
                     this.jobRole = jobRole
@@ -258,22 +261,44 @@
                         var skills = this.getSkills
                         var skillIDs = []
 
-                        var url = ""
-                        axios.get()
-
-
-
-
                         for (each_name of this.selectedSkills) {
                             for (each_skill of skills) {
-                                if (each_skill.skill_name == each_name){
+                                if (each_skill.skill_name == each_name) {
                                     skillIDs.push(each_skill.skill_id)
                                 }
                             }
+                            console.log(skillIDs)
+                            this.selectedSkills = []
                         }
 
-                        console.log(skillIDs)
-                        this.selectedSkills = []
+                        var url = "http://localhost:5010/skills_to_jobrole"
+                        var config = {
+                            job_role_id: this.jobRoleID,
+                            skill_id: skillIDs[0]
+                        }
+                        axios.post(url, config)
+                            .then(response => {
+                                this.getAssignedSkills()
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            })
+                    },
+                    getAssignedSkills(){
+                        var url = 'http://localhost:5010/skills_to_jobrole'
+                        axios.get(url)
+                        .then(response => {
+                            var data = response.data.data
+                            for (each of data){
+                                console.log(each)
+                                if(each.job_role_id == this.jobRoleID){
+                                    console.log(each.skill_id)
+                                }
+                            }
+                        })
+                        .catch(error =>{
+                            console.log(error)
+                        })
                     },
                 },
                 computed: {
