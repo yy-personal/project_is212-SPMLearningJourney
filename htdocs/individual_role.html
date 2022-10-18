@@ -151,7 +151,7 @@
                         </div>
                         <div class="flow-root">
                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <li class="py-3 sm:py-4" v-for="skill in getSkills">
+                                <li class="py-3 sm:py-4" v-for="skill in skills">
                                     <div class="flex items-center space-x-4">
                                         <div class="flex-1 min-w-0">
                                             <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
@@ -172,6 +172,7 @@
 
                             <div
                                 class="flex flex-col justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+                                <p class="text-sm font-medium text-red-700 dark:text-red-500">{{error}}</p>
                                 <button v-on:click="assignSkills()" type="button"
                                     class="mt-3 text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                     Confirm Selection</button>
@@ -191,14 +192,14 @@
                         </div>
                         <div class="flow-root">
                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <li class="py-3 sm:py-4">
+                                <li class="py-3 sm:py-4" v-for="skill in assignedSkills">
                                     <div class="flex items-center space-x-4">
                                         <div class="flex-1 min-w-0">
                                             <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
-                                                SKILL_1
+                                                {{skill.skill_name}}
                                             </p>
                                             <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                skill_des_1
+                                                {{skill.skill_description}}
                                             </p>
                                         </div>
                                     </div>
@@ -222,101 +223,119 @@
                     skills: [],
                     selectedSkills: [],
                     assignedSkills: [],
+                    error: "",
                 },
                 mounted: async function () {
-                    var config = {
-                        method: 'get',
-                        url: 'http://localhost:5010/jobroles',
-                        headers: {}
-                    };
-                    jobroles2 = []
-                    await axios(config)
-                        .then(function (response) {
-                            //console.log(JSON.stringify(response.data.data));
-                            jobRoles = response.data.data
-                            //console.log(roles);
-                            coursesDivs = ""
-                            jobRoles2 = jobRoles
+                    let one = "http://localhost:5010/jobroles";
+                    let two = "http://localhost:5010/skills";
+
+                    const requestOne = axios.get(one);
+                    const requestTwo = axios.get(two);
+
+                    axios.all([requestOne, requestTwo])
+                        .then(axios.spread((...responses) => {
+                            const responseOne = responses[0].data
+                            const responseTwo = responses[1].data
+
+                            //job roles
+                            this.jobRoles = responseOne.data
+                            //console.log(this.jobRoles)
+                            var query = window.location.search.substring(4);
+                            for (each of this.jobRoles) {
+                                if (each.job_role_id == query) {
+                                    this.jobRole = each
+                                    //console.log(this.jobRole)
+                                    this.jobRoleDes = each.job_role_description
+                                    this.jobRoleName = each.job_role_name
+                                    this.jobRoleID = each.job_role_id
+                                }
+                            }
+
+                            //skills
+                            this.skills = responseTwo.data
+
+                            //assigned skills
+                            this.getAssignedSkills()
+                           
+
+                        })).catch(errors => {
+                            console.log(errors)
                         })
-                        .catch(function (error) {
-                            console.log(error);
-                            this.error = error;
-                        })
-                    this.jobRoles = jobRoles2
-                    jobRole = null
-                    var query = window.location.search.substring(4);
-                    for (each of jobRoles) {
-                        if (each.job_role_id == query) {
-                            jobRole = each
-                            this.jobRoleDes = jobRole.job_role_description
-                            this.jobRoleName = jobRole.job_role_name
-                            this.jobRoleID = jobRole.job_role_id
-                        }
-                    }
-                    this.jobRole = jobRole
                 },
                 methods: {
                     assignSkills() {
                         console.log(this.selectedSkills)
-                        var skills = this.getSkills
+                        var skills = this.skills
                         var skillIDs = []
 
-                        for (each_name of this.selectedSkills) {
-                            for (each_skill of skills) {
-                                if (each_skill.skill_name == each_name) {
-                                    skillIDs.push(each_skill.skill_id)
+                        if (this.selectedSkills.length == 0) {
+                            this.error = "Please select skills to assign"
+                        } else {
+                            this.error = ""
+                            for (each_name of this.selectedSkills) {
+                                for (each_skill of skills) {
+                                    if (each_skill.skill_name == each_name) {
+                                        skillIDs.push(each_skill.skill_id)
+                                    }
                                 }
+                                console.log(skillIDs)
+                                this.selectedSkills = []
                             }
-                            console.log(skillIDs)
-                            this.selectedSkills = []
-                        }
 
-                        var url = "http://localhost:5010/skills_to_jobrole"
-                        var config = {
-                            job_role_id: this.jobRoleID,
-                            skill_id: skillIDs[0]
+                            var url = "http://localhost:5010/skills_to_jobrole"
+                            var config = {
+                                job_role_id: this.jobRoleID,
+                                skill_id: skillIDs[0]
+                            }
+                            axios.post(url, config)
+                                .then(response => {
+                                    this.getAssignedSkills()
+                                })
+                                .catch(error => {
+                                    console.log(error)
+                                })
                         }
-                        axios.post(url, config)
+                    },
+                    getAssignedSkills() {
+                        var url = 'http://localhost:5010/skills_to_jobrole'
+                        axios.get(url)
                             .then(response => {
-                                this.getAssignedSkills()
+                                var data = response.data.data
+                                //console.log(data)
+                                for (each of data) {
+                                    if (each.job_role_id == this.jobRoleID) {
+                                        for (each_skill of this.skills) {
+                                            if (each.skill_id == each_skill.skill_id) {
+                                                if (!this.assignedSkills.includes(each_skill)){
+                                                this.assignedSkills.push(each_skill)
+                                                //console.log(this.assignedSkills)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             })
                             .catch(error => {
                                 console.log(error)
                             })
-                    },
-                    getAssignedSkills(){
-                        var url = 'http://localhost:5010/skills_to_jobrole'
-                        axios.get(url)
-                        .then(response => {
-                            var data = response.data.data
-                            for (each of data){
-                                console.log(each)
-                                if(each.job_role_id == this.jobRoleID){
-                                    console.log(each.skill_id)
-                                }
-                            }
-                        })
-                        .catch(error =>{
-                            console.log(error)
-                        })
+                        return this.assignedSkills
                     },
                 },
-                computed: {
-                    getSkills() {
-                        // var axios = require('axios');
-                        var url = 'http://localhost:5010/skills'
-                        axios.get(url) //Assynchronous 
-                            .then(response => {
-                                //console.log(JSON.stringify(response.data.data));
-                                skills = response.data.data
-                                this.skills = skills
-                            })
-                            .catch(error => {
-                                console.log(error);
-                            })
-                        return this.skills
-                    },
-                },
+                // computed: {
+                //     // getSkills() {
+                //     //     // var axios = require('axios');
+                //     //     var url = 'http://localhost:5010/skills'
+                //     //     axios.get(url) //Assynchronous 
+                //     //         .then(response => {
+                //     //             //console.log(JSON.stringify(response.data.data));
+                //     //             skills = response.data.data
+                //     //             this.skills = skills
+                //     //         })
+                //     //         .catch(error => {
+                //     //             console.log(error);
+                //     //         })
+                //     //     return this.skills
+                //     // },
             })
         </script>
         <!-- flowbite -->
