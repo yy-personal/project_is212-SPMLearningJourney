@@ -256,7 +256,6 @@
 
                             //assigned skills
                             this.getAssignedSkills()
-                           
 
                         })).catch(errors => {
                             console.log(errors)
@@ -282,18 +281,23 @@
                                 this.selectedSkills = []
                             }
 
-                            var url = "http://localhost:5010/skills_to_jobrole"
-                            var config = {
-                                job_role_id: this.jobRoleID,
-                                skill_id: skillIDs[0]
+                            for (each_skill_id of skillIDs) {
+                                console.log(each_skill_id)
+                                var url = "http://localhost:5010/skills_to_jobrole"
+                                var config = {
+                                    job_role_id: this.jobRoleID,
+                                    //ONE SKILL ADDED ONLY
+                                    skill_id: each_skill_id
+                                }
+                                axios.post(url, config)
+                                    .then(response => {
+                                        //console.log(response.data)
+                                        this.getAssignedSkills()
+                                    })
+                                    .catch(error => {
+                                        console.log(error)
+                                    })
                             }
-                            axios.post(url, config)
-                                .then(response => {
-                                    this.getAssignedSkills()
-                                })
-                                .catch(error => {
-                                    console.log(error)
-                                })
                         }
                     },
                     getAssignedSkills() {
@@ -306,9 +310,9 @@
                                     if (each.job_role_id == this.jobRoleID) {
                                         for (each_skill of this.skills) {
                                             if (each.skill_id == each_skill.skill_id) {
-                                                if (!this.assignedSkills.includes(each_skill)){
-                                                this.assignedSkills.push(each_skill)
-                                                //console.log(this.assignedSkills)
+                                                if (!this.assignedSkills.includes(each_skill)) {
+                                                    this.assignedSkills.push(each_skill)
+                                                    console.log(this.assignedSkills)
                                                 }
                                             }
                                         }
@@ -321,21 +325,6 @@
                         return this.assignedSkills
                     },
                 },
-                // computed: {
-                //     // getSkills() {
-                //     //     // var axios = require('axios');
-                //     //     var url = 'http://localhost:5010/skills'
-                //     //     axios.get(url) //Assynchronous 
-                //     //         .then(response => {
-                //     //             //console.log(JSON.stringify(response.data.data));
-                //     //             skills = response.data.data
-                //     //             this.skills = skills
-                //     //         })
-                //     //         .catch(error => {
-                //     //             console.log(error);
-                //     //         })
-                //     //     return this.skills
-                //     // },
             })
         </script>
         <!-- flowbite -->
