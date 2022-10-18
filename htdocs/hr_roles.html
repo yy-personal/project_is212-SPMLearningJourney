@@ -193,16 +193,44 @@
                                     <label for="role_name"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Role
                                         Name</label>
-                                    <input type="text" name="role_name" id="role_name" v-model="create_role_name"
+                                    <input type="text" name="role_name" id="role_name" v-model="create_job_role_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                </div>
+                                <!-- <div v-if = "!checkCreateNameValid() && !checkCreateNameTooLong()">
+                                    <label for="job_role_name"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Role
+                                        Name</label>
+                                    <input type="text" name="job_role_name" id="job_role_name" v-model="create_job_role_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
                                 </div>
 
+                                <div v-else-if="checkCreateNameValid()">
+                                    <label for="job_role_name"
+                                        class="block mb-2 text-sm font-medium text-red-600 dark:text-red-500">Role
+                                        Name</label>
+                                    <input type="text" name="job_role_name" id="job_role_name" v-model="create_job_role_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Please do not enter any special characters or numbers!</p>
+                                </div>
+
+                                <div v-else-if="checkCreateNameTooLong()">
+                                    <label for="job_role_name"
+                                        class="block mb-2 text-sm font-medium text-red-600 dark:text-red-500">Role
+                                        Name</label>
+                                    <input type="text" name="job_role_name" id="job_role_name" v-model="create_job_role_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 100 characters!</p>
+                                </div> -->
+
                                 <div>
-                                    <label for="role_description"
+                                    <label for="job_role_description"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Role
                                         Description</label>
-                                    <textarea name="role_description" id="role_description" v-model="create_role_des"
+                                    <textarea name="job_role_description" id="job_role_description" v-model="create_job_role_des"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
                                     </textarea>
@@ -322,8 +350,8 @@
                 currPage: "Home",
                 activeClass: "inline-block py-2 px-4 text-black font-bold no-underline",
                 inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
-                create_role_name: "",
-                create_role_des: "",
+                create_job_role_name: "",
+                create_job_role_des: "",
                 error: "",
                 varName: "",
                 varDesc: "",
@@ -425,8 +453,11 @@
                 // },
 
                 createRole: function (item) {
-                    var new_role_name = this.create_role_name;
-                    var new_role_des = this.create_role_des;
+                    if(this.checkCreateNameValid() == true){
+                        return 
+                    }
+                    var new_role_name = this.create_job_role_name;
+                    var new_role_des = this.create_job_role_des;
 
                     var url = 'http://localhost:5010/roles'
                     axios.post(url, {
@@ -439,6 +470,21 @@
                         .catch(error => {
                             this.error = error.response.data.message
                         });
+                },
+
+                checkCreateNameValid(){
+                    // If varName consist illegal char = true
+                    if(specialChars.test(this.create_job_role_name) | /\d/.test(this.create_job_role_name)){
+                        // console.log("Invalid input value for skill ID, please do not use any special characters!")
+                        return true;
+                    }
+                },
+                checkCreateNameTooLong(){
+                    // If varName consist illegal char = true
+                    if((this.create_job_role_name).length > 100){
+                        // console.log("Invalid length should not exceed 100!")
+                        return true;
+                    }
                 },
 
                 openUpdateModal(roleID) {

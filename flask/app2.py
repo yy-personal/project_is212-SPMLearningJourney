@@ -176,6 +176,8 @@ def delete_skill():
 @app.route("/roles", methods=['POST'])
 def create_role():
     data = request.get_json()
+    print(data)
+    print('yea')
     if not all(key in data.keys() for
             key in ('name', 'description',
                     )):
@@ -189,7 +191,7 @@ def create_role():
         return jsonify(role.to_dict()), 201
     except Exception:
         return jsonify({
-            "message": "Unable to commit to database."
+            "message": "Unable to commit to database." 
         }), 500
 
 # Read Existing Roles (R)
