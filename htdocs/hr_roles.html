@@ -198,7 +198,7 @@
                                         required>
                                 </div>
                                 <div v-else-if="checkCreateNameValid()">
-                                    <label for="role_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter Updated Skill
+                                    <label for="role_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Role
                                         Name</label>
                                     <input type="text" name="role_name" id="role_name" v-model="create_role_name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -207,22 +207,28 @@
                                 </div>
 
                                 <div v-else-if="checkCreateNameTooLong()">
-                                    <label for="skill_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter Updated Skill
+                                    <label for="role_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Role
                                         Name</label>
-                                    <input type="text" name="skill_name" id="skill_name" v-model="create_role_name"
+                                    <input type="text" name="role_name" id="role_name" v-model="create_role_name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                     required>
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 100 characters!</p>
                                 </div>
-
-                                <div>
-                                    <label for="role_description"
+                                <div v-if="!checkCreateDesTooLong()">
+                                    <label for="role_des"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Role
                                         Description</label>
-                                    <textarea name="role_description" id="role_description" v-model="create_role_des"
+                                    <input type="text" name="role_des" id="role_des" v-model="create_role_des"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
-                                    </textarea>
+                                </div>
+                                <div v-else-if="checkCreateDesTooLong()">
+                                    <label for="role_des" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Role
+                                        Description</label>
+                                    <input type="text" name="role_des" id="role_des" v-model="create_role_des"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 500 characters!</p>
                                 </div>
 
                                 <div style="text-align: center;">
@@ -425,6 +431,15 @@
                 },
 
                 createRole: function (item) {
+                    if(this.checkCreateNameValid() == true){
+                        return 
+                    }
+                    if(this.create_role_name == null | this.create_role_name == ''){
+                        return
+                    }
+                    if(this.create_role_des == null | this.create_role_des == ''){
+                        return
+                    }
                     var new_role_name = this.create_role_name;
                     var new_role_des = this.create_role_des;
 
@@ -440,6 +455,11 @@
                             this.error = error.response.data.message
                         });
                 },
+                checkCreateDesTooLong(){
+                    if((this.create_role_des).length >= 500){
+                        return true;
+                    }
+                },
                 checkCreateNameValid(){
                     // If varName consist illegal char = true
                     if(specialChars.test(this.create_role_name) | /\d/.test(this.create_role_name)){
@@ -449,7 +469,7 @@
                 },
                 checkCreateNameTooLong(){
                     // If varName consist illegal char = true
-                    if((this.create_role_name).length > 100){
+                    if((this.create_role_name).length >= 100){
                         // console.log("Invalid length should not exceed 100!")
                         return true;
                     }
