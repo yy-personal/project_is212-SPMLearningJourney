@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+    <title>View Courses Records</title>
+
+    <link rel="stylesheet" href="">
+    <!-- Bootstrap libraries -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script> -->
+
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script> -->
+
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <!--Replace with your tailwind.css once created-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+    <!-- VUE 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Flowbite -->
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+
+    <style>
+        .gradient {
+            background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+        }
+    </style>
+</head>
+
+
+<body class="leading-normal tracking-normal text-white" style="font-family: 'Source Sans Pro', sans-serif;">
+    <!-- what is this huh -->
+    <div id="main-container">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul>
+
+        <!-- NAV BAR -->
+        <nav id="header" class="fixed w-full z-30 top-0 text-white gradient">
+            <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
+                <div class="pl-1 flex items-end">
+
+                    <!-- SMALLER SCREEN -->
+                    <div class="h-20 block lg:hidden pr-4 text-black">
+                        <button id="nav-toggle"
+                            class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                            <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <title>Menu</title>
+                                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- LARGER SCREEN -->
+                    <div class="h-20 w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 lg:bg-transparent text-black p-4 lg:p-0 z-20"
+                        id="nav-content">
+                        <img src='../logo.png' width="135" height="135">
+                        <ul class="list-reset lg:flex justify-end flex-1 items-center">
+                            <li class="mr-3">
+                                <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                    href="#" v-on:onclick="goPage(this)" id="Homelink">Home</a>
+                            </li>
+                            <li class="mr-3">
+                                <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                    href="../htdocs/hr_skills.html" v-on:onclick="goPage(this)"
+                                    id="Skillslink">Skills</a>
+                            </li>
+                            <li class="mr-3">
+                                <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                    href="../htdocs/hr_roles.html" v-on:onclick="goPage(this)" id="Roleslink">Roles</a>
+                            </li>
+                            <li class="mr-3">
+                                <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                    href="../htdocs/hr_courses.html" v-on:onclick="goPage(this)" id="Courseslink">Courses</a>
+                            </li>
+                        </ul>
+
+                        <button id="navAction"
+                            class="hidden h-10 mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full p-1 px-5 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                            Action
+                        </button>
+                    </div>
+
+                </div>
+                <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
+        </nav>
+
+        <!-- DISPLAY COURSES -->
+        <section class="container bg-white py-8 pt-20" id="Courses">
+            <div class="container mx-auto flex flex-wrap pt-4">
+                <h2 class="w-full mt-12 text-5xl font-bold leading-tight text-center text-gray-800 pt-4">
+                    Courses
+                </h2>
+
+                <div class="w-full mb-4">
+                    <div class="h-4 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t font-underline bg-slate-400">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 bg-orange-200 " id="coursesContainer">
+                    <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-for="course in courses">
+
+                        <!-- EACH COURSE -->
+                        <a href="#" class="flex flex-wrap no-underline hover:no-underline"
+                            v-on:click="goToSinglepage(course.course_id)">
+                            <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
+                                style='padding-top: 20px;'>
+                                <p class="w-full font-bold text-xl text-gray-800 px-6"
+                                    style='margin-bottom: 10px; font-size: 25px;'>
+                                    {{course.course_name}}
+                                </p>
+                                <p class="text-gray-800 text-base px-6 mb-5">
+                                    {{course.course_description}}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <p><label id="error" class="text-danger">{{ error }}</label></p>
+            </div>
+
+        </section>
+
+    </div>
+
+    <!--- JAVASCRIPT -->
+    <script>
+        const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+        const vm = new Vue({
+            el: '#main-container',
+            data: {
+                courses: [],
+                currPage: "Home",
+                activeClass: "inline-block py-2 px-4 text-black font-bold no-underline",
+                inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
+                error: "",
+                varName: "",
+                varDesc: "",
+            },
+            mounted: async function () {
+                var config = {
+                    method: 'get',
+                    url: 'http://localhost/courses',
+                    headers: {}
+                };
+                courses2 = []
+                await axios(config)
+                    .then(function (response) {
+                        //console.log(JSON.stringify(response.data.data));
+                        courses = response.data.data
+                        //console.log(roles);
+                        coursesDivs = ""
+                        courses2 = courses
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        this.error = error;
+                    })
+                this.courses = courses2
+            },
+            methods: {
+                goToSinglepage: function (id) {
+                    console.log(id)
+                    window.location.assign("./individual_course.html?id=" + id)
+                },
+                getCourses: async function getCourses() {
+                    // var axios = require('axios');
+
+                    var config = {
+                        method: 'get',
+                        url: 'http://localhost/courses',
+                        headers: {}
+                    };
+                    roles = []
+                    await axios(config)
+                        .then(function (response) {
+                            //console.log(JSON.stringify(response.data.data));
+                            courses = response.data.data
+                            //console.log(skills);
+                            coursesDivs = ""
+                            this.courses = courses
+                            // coursesContainer.innerHTML = coursesDivs
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })
+                    this.courses = courses
+                },
+            }
+        });
+    </script>
+    <!-- flowbite -->
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+</body>
+
+</html>
