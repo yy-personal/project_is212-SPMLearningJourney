@@ -162,6 +162,7 @@ INSERT INTO `JobRoleSkill` (`job_role_id`, `skill_id`) VALUES
 (2, 4),
 (3, 5),
 (3, 7);
+(3, 3);
 
 INSERT INTO `SkillCourse` (`skill_id`, `course_id`) VALUES
 (3, 'COR001'),
