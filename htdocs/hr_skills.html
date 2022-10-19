@@ -402,28 +402,25 @@
                     this.skills = skills
                 },
                 deleteSkill: async function (id) {
-                    // var axios = require('axios');
-                    var data = JSON.stringify({
-                        "skill_id": id
-                    });
+                    console.log("delete: ", id)
+                    var url= 'http://localhost:5010/skill/' + id
 
-                    var config = {
-                        method: 'delete',
-                        url: 'http://localhost:5010/skill',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: data
-                    };
-                    await axios(config)
-                        .then(async function (response) {
-                            //console.log(JSON.stringify(response.data));
-                            //   await getSkills();
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    this.getSkills()
+                    axios.delete(url)
+                    .then(
+                        response => {
+                            console.log(response.data)
+                            for(i in this.skills){
+                                // console.log(this.roles[i].job_role_id)
+                                // console.log(id)
+                                if(this.skills[i].skill_id == id){
+                                    this.skills.splice(i , 1)
+                                }
+                            }
+                        }
+                    )
+                    .catch(error => {
+                        console.log(error)
+                    })
                 },
 
                 addIDs: function (a_tag) {

@@ -401,32 +401,25 @@
                 },
 
                 deleteRole: async function (id) {
-                    //console.log("delete: ", id)
+                    console.log("delete: ", id)
+                    var url= 'http://localhost:5010/jobrole/' + id
 
-                    // var axios = require('axios');
-                    var data = JSON.stringify({
-                        "job_role_id": id
-                    });
-
-                    var config = {
-                        method: 'delete',
-                        url: 'http://localhost:5010/jobrole',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: data
-                    };
-
-                    await axios(config)
-                        .then(async function (response) {
-                            console.log(JSON.stringify(response.data));
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    
-                    // Get the updated version of database after deletion successful
-                    this.getRoles()
+                    axios.delete(url)
+                    .then(
+                        response => {
+                            console.log(response.data)
+                            for(i in this.roles){
+                                // console.log(this.roles[i].job_role_id)
+                                // console.log(id)
+                                if(this.roles[i].job_role_id == id){
+                                    this.roles.splice(i , 1)
+                                }
+                            }
+                        }
+                    )
+                    .catch(error => {
+                        console.log(error)
+                    })
                 },
 
                 createRole: function (item) {

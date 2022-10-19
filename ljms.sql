@@ -11,7 +11,7 @@ USE `ljms`;
 
 -- Table strcuture for table 'Role'
 CREATE TABLE `Role` (
-    `role_id` int PRIMARY KEY,
+    `role_id` int PRIMARY KEY AUTO_INCREMENT,
     `role_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -29,9 +29,10 @@ CREATE TABLE `Staff` (
 
 -- Table strcuture for table 'JobRole'
 CREATE TABLE `JobRole` (
-    `job_role_id` int PRIMARY KEY AUTO_INCREMENT,
+    `job_role_id` int PRIMARY KEY,
     `job_role_name` varchar(100) NOT NULL,
-    `job_role_description` varchar(500) NOT NULL
+    `job_role_description` varchar(500) NOT NULL,
+    `job_role_deleted` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -39,7 +40,8 @@ CREATE TABLE `JobRole` (
 CREATE TABLE `Skill` (
     `skill_id` int PRIMARY KEY AUTO_INCREMENT,
     `skill_name` varchar(100) NOT NULL,
-    `skill_description` varchar(500) NOT NULL
+    `skill_description` varchar(500) NOT NULL,
+    `skill_deleted` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -54,8 +56,8 @@ CREATE TABLE `Course` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Table strcuture for table 'Registration'
-CREATE TABLE `Registration` (
+-- Table strcuture for table 'Registeration'
+CREATE TABLE `Registeration` (
     `reg_id` int PRIMARY KEY,
     `course_id` varchar(20) NOT NULL,
     `staff_id` int NOT NULL,
@@ -118,9 +120,9 @@ INSERT INTO `Course` (`course_id`, `course_name`, `course_description`, `course_
 ('FIN003', 'Business Continuity Planning', 'Business continuity planning is essential in any business to minimise loss when faced with potential threats and disruptions.', 'Retired', 'External', 'Finance'),
 ('tch004', 'Introduction to Open Platform Communications', 'This course provides the participants with a good in-depth understanding of the SS IEC 62541 standard', 'Pending', 'Internal', 'Technical');
 
--- insert data for table `Registration`
+-- insert data for table `Registeration`
 
-INSERT INTO `Registration` (`reg_id`, `course_id`, `staff_id`, `reg_status`, `completion_status`) VALUES
+INSERT INTO `Registeration` (`reg_id`, `course_id`, `staff_id`, `reg_status`, `completion_status`) VALUES
 (249, 'FIN003', 140004, 'Registered', 'OnGoing'),
 (8, 'COR002', 140036, 'Waitlist', NULL),
 (5, 'COR002', 140003, 'Rejected', NULL),
@@ -152,7 +154,6 @@ INSERT INTO `LearningJourney` (`learning_journey_id`, `staff_id`, `job_role_id`)
 (3, 140036, 3);
 
 
-
 -- Add foreign key to table 'Staff'
 ALTER TABLE `Staff`
 ADD FOREIGN KEY (`role`) REFERENCES `Role`(`role_id`);
@@ -181,14 +182,13 @@ ADD FOREIGN KEY (`learning_journey_id`) REFERENCES `LearningJourney`(`learning_j
 ALTER TABLE `LearningJourneyCourse`
 ADD FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`);
 
--- Add foreign key to table 'Registration'
-ALTER TABLE `Registration`
+-- Add foreign key to table 'Registeration'
+ALTER TABLE `Registeration`
 ADD FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`);
-ALTER TABLE `Registration`
+ALTER TABLE `Registeration`
 ADD FOREIGN KEY (`staff_id`) REFERENCES `Staff`(`staff_id`);
 
 
 
 
 -- ASSUME: LearningJourney, Skill, JobRole is added by name, the ID will be randomly assigned with incremental
-
