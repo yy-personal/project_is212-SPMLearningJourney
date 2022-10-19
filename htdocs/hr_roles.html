@@ -378,42 +378,37 @@
                 },
 
                 deleteRole: async function (id) {
-                    //console.log("delete: ", id)
 
-                    // var axios = require('axios');
+                    console.log("delete: ", id)
+                    var url= 'http://localhost:5010/jobrole/' + id
+
                     var status = "success";
-                    var data = JSON.stringify({
-                        "job_role_id": id
-                    });
 
-                    var config = {
-                        method: 'delete',
-                        url: 'http://localhost:5010/jobrole',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: data
-                    };
-
-                    await axios(config)
-                        .then(async function (response) {
-                            console.log(JSON.stringify(response.data));
-                        })
-                        .catch(function (error) {
-                            console.log(error);
+                    await axios.delete(url)
+                        .then(
+                            function(response) {
+                                console.log(response.data)
+                                for(i in this.roles){
+                                    // console.log(this.roles[i].job_role_id)
+                                    // console.log(id)
+                                    if(this.roles[i].job_role_id == id){
+                                        this.roles.splice(i , 1)
+                                    }
+                                }
+                            }
+                        )
+                        .catch(function(error) {
+                            console.log(error)
                             status = "failure";
-                        });
-
-                        if(status == "success"){
-                            // alert that deletion is successful
-                            alert("Deletion is successful!");
-                        }
-                        else{
-                            alert("Deletion unsuccessful, please try again.");
-                        }
+                        })
                     
-                    // Get the updated version of database after deletion successful
-                    this.getRoles()
+                    if(status == "success"){
+                        // alert that deletion is successful
+                        alert("Soft Deletion is successful!");
+                    }
+                    else{
+                        alert("Soft Deletion unsuccessful, please try again.");
+                    }
                 },
 
                 createRole: function (item) {

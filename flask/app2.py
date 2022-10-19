@@ -99,6 +99,7 @@ class JobRole(db.Model):
     job_role_id = db.Column(db.Integer, primary_key=True)
     job_role_name = db.Column(db.String(100))
     job_role_description = db.Column(db.String(500))
+    job_role_deleted = db.Column(db.Boolean(), default=False, nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity': 'jobrole'
@@ -153,6 +154,7 @@ class Skill(db.Model):
     skill_id = db.Column(db.Integer, primary_key=True)
     skill_name  = db.Column(db.String(100))
     skill_description = db.Column(db.String(500))
+    skill_deleted = db.Column(db.Boolean(), default=False, nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity': 'skill',
@@ -328,30 +330,39 @@ def update_skill(id):
         )
 
 #delete skills (D)
-@app.route("/skill", methods=['DELETE'])
-def delete_skill():
-    data = request.get_json()
-    if not all(key in data.keys() for
-                # only allows two or more inputs in tuple during checking
-            key in ("skill_id", "skill_id")):
-        return jsonify({
-            "message": "Incorrect JSON object provided."
-        }), 500
+#SOFT DELETE
+@app.route("/skill/<int:id>", methods=['DELETE'])
+def delete_skill(id):
+    skill = Skill.query.get_or_404(id)
+    skill.skill_deleted = True
+    db.session.commit()
+    return '', 204
 
-    try:
-        try:
-            skill = Skill.query.filter_by(skill_id=data["skill_id"]).one()
-        except Exception:
-            return jsonify({
-            "message": f"Unable to find skill with id: {data['skill_id']}"
-            }), 500
-        db.session.delete(skill)
-        db.session.commit()
-        return jsonify(data), 201
-    except Exception:
-        return jsonify({
-            "message": "Unable to commit to database."
-        }), 500
+#HARD DELETE
+# @app.route("/skill", methods=['DELETE'])
+# def delete_skill():
+#     data = request.get_json()
+#     if not all(key in data.keys() for
+#                 # only allows two or more inputs in tuple during checking
+#             key in ("skill_id", "skill_id")):
+#         return jsonify({
+#             "message": "Incorrect JSON object provided."
+#         }), 500
+
+#     try:
+#         try:
+#             skill = Skill.query.filter_by(skill_id=data["skill_id"]).one()
+#         except Exception:
+#             return jsonify({
+#             "message": f"Unable to find skill with id: {data['skill_id']}"
+#             }), 500
+#         db.session.delete(skill)
+#         db.session.commit()
+#         return jsonify(data), 201
+#     except Exception:
+#         return jsonify({
+#             "message": "Unable to commit to database."
+#         }), 500
     
 
 
@@ -407,29 +418,44 @@ def update_role(id):
         )
 
 # Delete An Existing Job Role (D)
-@app.route('/jobrole', methods=['DELETE'])
-def delete_role():
-    data = request.get_json()
-    if not all(key in data.keys() for
-            key in ('job_role_id', 'job_role_id')):
-        return jsonify({
-            "message": "Incorrect JSON object provided."
-        }), 500
+#SOFT DELETE
+@app.route("/jobrole/<int:id>", methods=['DELETE'])
+def delete_role(id):
     try:
-        try:
-            role = JobRole.query.filter_by(job_role_id=data["job_role_id"]).one()
-        except Exception:
-            return jsonify({
-                "message": f"Unable to find role with id: {data['job_role_id']}."
-            }), 500
-        db.session.delete(role)
+        jobrole = JobRole.query.get_or_404(id)
+        jobrole.job_role_deleted = True
         db.session.commit()
-
-        return jsonify(data), 201
+        return '', 204
     except Exception:
             return jsonify({
                 "message": "Unable to commit to database."
             }), 500
+    
+
+#HARD DELETE
+# @app.route('/jobrole', methods=['DELETE'])
+# def delete_role():
+#     data = request.get_json()
+#     if not all(key in data.keys() for
+#             key in ('job_role_id', 'job_role_id')):
+#         return jsonify({
+#             "message": "Incorrect JSON object provided."
+#         }), 500
+#     try:
+#         try:
+#             role = JobRole.query.filter_by(job_role_id=data["job_role_id"]).one()
+#         except Exception:
+#             return jsonify({
+#                 "message": f"Unable to find role with id: {data['job_role_id']}."
+#             }), 500
+#         db.session.delete(role)
+#         db.session.commit()
+
+#         return jsonify(data), 201
+#     except Exception:
+#             return jsonify({
+#                 "message": "Unable to commit to database."
+#             }), 500
 
 
 ######## COURSES ########
