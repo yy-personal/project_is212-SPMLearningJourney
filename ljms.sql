@@ -31,7 +31,8 @@ CREATE TABLE `Staff` (
 CREATE TABLE `JobRole` (
     `job_role_id` int PRIMARY KEY,
     `job_role_name` varchar(100) NOT NULL,
-    `job_role_description` varchar(500) NOT NULL
+    `job_role_description` varchar(500) NOT NULL,
+    `job_role_deleted` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -39,7 +40,8 @@ CREATE TABLE `JobRole` (
 CREATE TABLE `Skill` (
     `skill_id` int PRIMARY KEY AUTO_INCREMENT,
     `skill_name` varchar(100) NOT NULL,
-    `skill_description` varchar(500) NOT NULL
+    `skill_description` varchar(500) NOT NULL,
+    `skill_deleted` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
