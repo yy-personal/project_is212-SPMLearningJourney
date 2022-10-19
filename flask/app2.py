@@ -394,6 +394,7 @@ def update_role(id):
 @app.route('/jobrole', methods=['DELETE'])
 def delete_role():
     data = request.get_json()
+    print(data)
     if not all(key in data.keys() for
             key in ('job_role_id', 'job_role_id')):
         return jsonify({
@@ -402,6 +403,7 @@ def delete_role():
     try:
         try:
             role = JobRole.query.filter_by(job_role_id=data["job_role_id"]).one()
+            print(role)
         except Exception:
             return jsonify({
                 "message": f"Unable to find role with id: {data['job_role_id']}."

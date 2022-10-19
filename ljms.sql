@@ -93,10 +93,6 @@ CREATE TABLE `LearningJourneyCourse` (
 
 
 
-
-
-
-
 -- insert data for table `Skill`
 
 INSERT INTO `Skill` (`skill_id`, `skill_name`, `skill_description`) VALUES
