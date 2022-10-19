@@ -162,9 +162,7 @@
                     </div>
                 </div>
 
-
-                
-                <div class="w-full justify-center items-center flex">
+                <div class="w-full justify-center items-center flex pb-5">
                 <button id="dropdownDefault"  v-if="selectedRole != null" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                     {{selectedRole.job_role_name}} <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
                     <button id="dropdownDefault"  v-else data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
@@ -172,115 +170,67 @@
                     <!-- Dropdown menu -->
                     <div id="dropdown" class="hidden z-10 w-60 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
                         <ul  class="max-h-60 overflow-auto py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
-                        <li>
-                            <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                        </li>
                         <li id="dropdownDefault" v-for="role in roles"  v-on:click="selectRole(role)">
                             <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{role.job_role_name}}</a>
                         </li>
-                        
-                        
-                     
+
                         </ul>
                     </div>
 
                 </div>
 
+
+
                 <!-- 3 parts here -- role, skills -- courses: -->
 
-                <div class="w-full  grid grid-cols-1 md:grid-cols-3" id="rolesContainer">
+                <div class="w-full flex flex-row" id="rolesContainer">
 
+                <!-- for loading skills: -->
+                <div class="basis-1/2 w-1/2 h-screen flex flex-col flex-grow flex-shrink h-full shadow " >
+                    <h1 class="w-4/5 text-black text-xl font-bold p-3">Skills</h1>
+                    <!-- FOR LOOP -->
+                    <div class="px-4 grid grid-cols-1 md:grid-cols-1
+                     bg-white rounded-t rounded-b-none overflow-hidden"
+                        >
+                        
+                        <button type="button" 
+                        class="m-2 w-fit text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                        v-for="skill in skills" 
+                       
+                        v-on:click="selectSkill(skill)"
+                        >{{skill.skill_name}}</button>
 
-                    <!-- for loading roles: -->
-                    <div class="w-full p-6 flex flex-col flex-grow flex-shrink h-full hidden" >
-                        <!-- FOR LOOP -->
-                        <div class="w-full flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
-                            style='padding-top: 20px;'>
-                            <h1 class="mx-4 w-4/5 text-black text-xl font-bold">Roles</h1>
-                            <button type="button" 
-                            class="mx-4 w-4/5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-                            v-for="role in roles" v-if="role != selectedRole" v-on:click="selectRole(role)"
-                            >{{role.job_role_name}}</button>
+                        <!-- <button type="button" 
+                        class="m-2 w-fit text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                            v-else 
+                            v-on:click="selectSkill(skill)"
+                        >{{skill.skill_name}}</button> -->
 
-                            <button type="button" 
-                            class="bg-blue-200 mx-4 w-4/5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-                             v-else v-on:click="selectRole(role)"
-                            >{{role.job_role_name}}</button>
-                        </div>
-
-                        <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
-                            style="text-align: center;">
-                            <button v-on:click="setRole()" type="button"
-                                class="text-white bg-gradient-to-br from-green-500 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                Confirm Role</button>
-                        </div>
                     </div>
-
-
-                    <!-- for loading skills: -->
-                    <div class="w-full p-6 flex flex-col flex-grow flex-shrink h-full" >
-                        <!-- FOR LOOP -->
-                        <div class="w-full flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
-                            style='padding-top: 20px;'>
-                            <h1 class="mx-4 w-4/5 text-black text-xl font-bold">Skills</h1>
-                            <button type="button" 
-                            class="bg-blue-200 mx-4 w-4/5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-                            v-for="skill in skills" v-if="selectedSkills.indexOf(skill.skill_id) != -1" v-on:click="selectSkill(skill)"
-                            >{{skill.skill_name}}</button>
-
-                            <button type="button" 
-                            class=" mx-4 w-4/5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-                             v-else v-on:click="selectSkill(skill)"
-                            >{{skill.skill_name}}</button>
-                        </div>
-
-                        <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
-                            style="text-align: center;">
-                            <button v-on:click="setSkills()" type="button"
-                                class="text-white bg-gradient-to-br from-green-500 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                Confirm</button>
-                        </div>
-                    </div>
-
-                    <!-- for loading courses: -->
-                    <div class="w-full p-6 flex flex-col flex-grow flex-shrink h-full" >
-                        <!-- FOR LOOP -->
-                        <div class="w-full flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
-                            style='padding-top: 20px;'>
-                            <h1 class="mx-4 w-4/5 text-black text-xl font-bold">Skills</h1>
-                            <button type="button" 
-                            class="bg-blue-200 mx-4 w-4/5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-                            v-for="course in coursesBySkill" v-if="selectedCourses.indexOf(course.course_id) != -1" 
-                            v-on:click="selectCourse(course)"
-                            >{{course.course_name}}</button>
-
-                            <button type="button" 
-                            class=" mx-4 w-4/5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-                             v-else v-on:click="selectCourse(course)"
-                            >{{course.course_name}}</button>
-                        </div>
-
-                        <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
-                            style="text-align: center;">
-                            <button v-on:click="setSkills()" type="button"
-                                class="text-white bg-gradient-to-br from-green-500 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                Confirm</button>
-                        </div>
-                    </div>
-
-
-
-
-
                 </div>
 
 
+                    <div class="basis-3/4 w-full">
+                        <!-- for loading courses2: -->
+                    <div class="w-full pb-6 px-6 flex flex-col flex-grow flex-shrink" v-for="[key, value] of Object.entries(coursesBySkill2)">
+                        <!-- FOR LOOP -->
+                        <div class="w-full p-4 flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
+                            style='padding-top: 20px;'>
+                            <h1 class="m-4 w-4/5 text-black text-xl font-bold">{{key}}</h1>
+                            
+                            <button type="button" 
+                            class="mx-4 w-4/5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                            v-for="i in value[1]" 
+                        
+                            v-on:click="selectCourse(course)"
+                            >{{i.course_name}}</button> 
+
+                        </div>
+                    </div>
+
+                </div>
+
+                </div>
 
             </div>
 
@@ -290,195 +240,6 @@
                     class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
             focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4 mx-5"
                     data-modal-toggle="authentication-modal" style='float: right;'>Create Learning Journey</button>
-            </div>
-
-
-            <!-- CREATE SKILL POP UP -->
-            <div id="authentication-modal" tabindex="-1" aria-hidden="true"
-                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-                    <!-- Modal content -->
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <button type="button"
-                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                            data-modal-toggle="authentication-modal">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                        <div class="py-6 px-6 lg:px-8">
-                            <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Create New Skill</h3>
-                            <form class="space-y-6" action="#">
-                                
-                                <div v-if = "!checkCreateNameValid() && !checkCreateNameTooLong()">
-                                    <label for="skill_name"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
-                                        Name</label>
-                                    <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        required>
-                                </div>
-
-                                <div v-else-if="checkCreateNameValid()">
-                                    <label for="skill_name"
-                                        class="block mb-2 text-sm font-medium text-red-600 dark:text-red-500">Skill
-                                        Name</label>
-                                    <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Please do not enter any special characters or numbers!</p>
-                                </div>
-
-                                <div v-else-if="checkCreateNameTooLong()">
-                                    <label for="skill_name"
-                                        class="block mb-2 text-sm font-medium text-red-600 dark:text-red-500">Skill
-                                        Name</label>
-                                    <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 100 characters!</p>
-                                </div>
-
-                                <div>
-                                    <label for="skill_description"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
-                                        Description</label>
-                                    <textarea name="skill_description" id="skill_description" v-model="create_skill_des"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        required>
-                                    </textarea>
-                                </div>
-
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        for="file_input">Upload Skill Image</label>
-                                    <input
-                                        class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        aria-describedby="file_input_help" id="file_input" type="file"
-                                        v-on:change="onChangeFile">
-                                    <p v-if = "" class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG,
-                                        PNG, JPG or GIF (MAX. 800x400px).</p>
-                                </div>
-                                <!-- Error message button to try -->
-                                
-                                <div style="text-align: center;">
-                                    <button type="submit" v-on:click="createSkill(this)"
-                                        class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                        Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- UPDATE POP UP -->
-            <div v-if="updateID != null" id="authentication-modal" tabindex="-1" aria-hidden="true"
-                class="backdrop overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full grid justify-center items-center">
-                <div class="relative p-4 h-full md:h-auto">
-                    <!-- Modal content -->
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 w-96">
-
-                        <button type="button" v-on:click="closeUpdateModal"
-                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                            data-modal-toggle="authentication-modal">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-
-                        <div class="py-6 px-6 lg:px-8">
-                            <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update Existing Skill</h3>
-                            <!-- OLD -->
-                            <p class="mx-auto flex justify-center"><img
-                                v-bind:src="`data:image/png;base64,${varImage}`" />
-                            </p> 
-                            </br>
-
-                            <form class="space-y-6" action="#">
-                                <div v-if="!checkUpdateNameValid() && !checkUpdateNameTooLong()">
-                                    <label for="skill_name" 
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter Updated Skill
-                                        Name</label>
-                                    <input type="text" name="skill_name" id="skill_name" v-model="varName"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        required>
-                                </div>
-
-                                <div v-else-if="checkUpdateNameValid()">
-                                    <label for="skill_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter Updated Skill
-                                        Name</label>
-                                    <input type="text" name="skill_name" id="skill_name" v-model="varName"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Please do not enter any special characters and numbers! </p>
-                                </div>
-
-                                <div v-else-if="checkUpdateNameTooLong()">
-                                    <label for="skill_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter Updated Skill
-                                        Name</label>
-                                    <input type="text" name="skill_name" id="skill_name" v-model="varName"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 100 characters!</p>
-                                </div>
-
-                                <div>
-                                    <label for="skill_description"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter Updated Skill
-                                        Description</label>
-                                    <textarea name="skill_description" id="skill_description" v-model="varDesc"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                        required>
-                                    </textarea>
-                                </div>
-                                <div style="text-align: center;">
-                                    <button type="submit" :disabled="checkUpdateNameValid()|| checkUpdateNameTooLong()" v-on:click="updateSkill(updateID)" 
-                                        class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                        Submit</button>
-                                    <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                                    Not registered? <a href="#"
-                                        class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
-                                </div> -->
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Success POP UP -->
-            <div v-if="success_create != ''" id="authentication-modal" tabindex="-1" aria-hidden="true"
-                class="backdrop overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full grid justify-center items-center">
-                <div class="relative p-4 h-full md:h-auto">
-                    <!-- Modal content -->
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 w-96">
-
-                        <button type="button" v-on:click="closeUpdateModal"
-                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                            data-modal-toggle="authentication-modal">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-
-                        <div class="py-6 px-6 lg:px-8">
-                            <h3>{{success_create}}</h3>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </section>
@@ -514,7 +275,8 @@
                 success_create: "",
                 cols: [1,2,3],
                 selectedCourses: [],
-                roleDropDown: false
+                roleDropDown: false,
+                coursesBySkill2: {}
             },
             mounted: async function () {
                 this.getRoles()
@@ -535,7 +297,7 @@
                 },
 
                 getRoles: async function getRoles() {
-                    // var axios = require('axios');
+                
                     roles = []
                     var config = {
                     method: 'get',
@@ -545,7 +307,6 @@
 
                     await axios(config)
                     .then(function (response) {
-                    // console.log(JSON.stringify(response.data));
                     roles = response.data.data
                     })
                     .catch(function (error) {
@@ -556,10 +317,7 @@
                 },
 
                 selectRole: async function selectRole(selectedRole) {
-                    // console.log(this.roles)
-                    // for (i of this.roles){
-                    //     console.log(i.job_role_name)
-                    // }
+
                     if (selectedRole == null){
                         console.log("role not selected")
                     }else{
@@ -577,6 +335,31 @@
                     // this.skills = results;
                 },
 
+                getCoursesBySkillSingle: async function getCoursesBySkillSingle(uniqueid) {
+
+                    coursesBySkill = []
+                    var config = {
+                    method: 'get',
+                    url: `http://localhost:5010/coursebyskill/${uniqueid}`,
+                    headers: { }
+                    };
+
+                    result = await axios(config)
+                    .then(function (response) {
+                    coursesBySkill = response.data.data
+                    return coursesBySkill
+                    })
+                    .catch(function (error) {
+                    console.log(error);
+                    return []
+                    });
+
+                    
+                    console.log(this.coursesBySkill, "result for getCoursesBySkillSingle:", result)
+                    return result
+
+                },
+
 
                 setSkills: async function setSkills() {
                     uniqueids =[]
@@ -587,6 +370,7 @@
                     }
                     console.log(uniqueids, "---> ", this.selectedSkills)
                     await this.getCoursesBySkill(uniqueids)
+                    console.log("this.selectedSkills", this.selectedSkills)
                     
                 },
                 setCourses: async function setCourses() {
@@ -667,10 +451,21 @@
                     this.getSkills()
                 },
 
+
                 selectSkill:  async function selectSkill(selectedSkill) {
 
-                    this.selectedSkills.push(selectedSkill.skill_id)
-                    console.log("this.selectedSkills: ", this.selectedSkills)
+                    // this.selectedSkills.push(selectedSkill)
+
+                    if (this.coursesBySkill2.hasOwnProperty(selectedSkill.skill_name)){
+                        delete this.coursesBySkill2[selectedSkill.skill_name]
+                    }else{
+                        
+                        courses = await this.getCoursesBySkillSingle(selectedSkill.skill_id)
+                        console.log(courses)
+                        this.coursesBySkill2[selectedSkill.skill_name] = [selectedSkill, courses]
+                    }
+                    // this.coursesBySkill2 = this.coursesBySkill2
+                    console.log(selectedSkill.skill_name, "this.coursesBySkill2: ", this.coursesBySkill2)
                     
                 },
 

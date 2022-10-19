@@ -696,19 +696,21 @@
                     console.log("this.selectedCourses: ", this.selectedCourses)
                     console.log("this.selectedRole: ", this.selectedRole)
 
-                    learningjourney = await this.createLearningJourney(this.selectedRole.job_role_id)
+                    input = this.selectedRole.job_role_id
+                    console.log(input)
+                    let learningjourney = await this.createLearningJourney(input)
                     console.log("learning journey created!!1: ", learningjourney)
 
-                    // for (skill of this.selectedSkills){
-                    //     console.log("skill: ", skill)
-                    //     addskillresponse = await this.addSkillToLearningJourney(learningjourney.learning_journey_id, skill)
-                    // }
-                    // console.log("skills added created: ", addskillresponse)
+                    for (skill of this.selectedSkills){
+                        console.log("skill: ", skill)
+                        addskillresponse = await this.addSkillToLearningJourney(learningjourney.learning_journey_id, skill)
+                    }
+                    console.log("skills added created: ", addskillresponse)
 
-                    // for (course of this.selectCourses){
-                    //     // console.log("this.selectedCourses: ", this.selectedCourses)
-                    //     addcourseresponse = this.addCourseToLearningJourney(learning_journey, course)
-                    // }
+                    for (course of this.selectCourses){
+                        // console.log("this.selectedCourses: ", this.selectedCourses)
+                        addcourseresponse = this.addCourseToLearningJourney(learning_journey, course)
+                    }
 
                 },
                 getSkills: async function getSkills(id) {
