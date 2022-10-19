@@ -129,36 +129,33 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 bg-orange-200 " id="rolesContainer">
-                    <template v-for="role in roles">
-                        <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-if="role.job_role_deleted==false">
-                                <!-- EACH ROLE -->
-                                <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
-                                style='padding-top: 20px;'>
-                                <a href="#" class="flex flex-wrap no-underline hover:no-underline"
-                                    v-on:click="addIDs(this)">
-                                    <p class="w-full font-bold text-xl text-gray-800 px-6"
-                                        style='margin-bottom: 10px; font-size: 25px;'>
-                                        {{role.job_role_name}}
-                                    </p>
-                                    <p class="text-gray-800 text-base px-6 mb-5">
-                                        {{role.job_role_description}}
-                                    </p>
-                                </a>
-                                </div>
+                    <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-for="role in roles">
 
-                                <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
-                                style="text-align: center;">
-                                <button v-on:click="openUpdateModal(role.job_role_id)" type="button" 
-                                    class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                    Update</button>
-                                <button v-on:click="deleteRole(role.job_role_id)" type="button"
-                                    class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                    Delete</button>
-                                </div>
-
+                        <!-- EACH ROLE -->
+                        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
+                            style='padding-top: 20px;'>
+                            <a href="#" class="flex flex-wrap no-underline hover:no-underline"
+                                v-on:click="addIDs(this)">
+                                <p class="w-full font-bold text-xl text-gray-800 px-6"
+                                    style='margin-bottom: 10px; font-size: 25px;'>
+                                    {{role.job_role_name}}
+                                </p>
+                                <p class="text-gray-800 text-base px-6 mb-5">
+                                    {{role.job_role_description}}
+                                </p>
+                            </a>
                         </div>
-                    </template>
 
+                        <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
+                            style="text-align: center;">
+                            <button v-on:click="openUpdateModal(role.job_role_id)" type="button" 
+                                class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Update</button>
+                            <button v-on:click="deleteRole(role.job_role_id)" type="button"
+                                class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Delete</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
