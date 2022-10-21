@@ -134,10 +134,9 @@
                     <!-- Dropdown menu -->
                     <div id="dropdown" class="hidden z-10 w-60 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
                         <ul  class="max-h-60 overflow-auto py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
-                        <li id="dropdownDefault" v-for="role in roles"  v-on:click="selectRole(role)">
-                            <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{role.job_role_name}}</a>
-                        </li>
-
+                            <li id="dropdownDefault" v-for="role in roles"  v-on:click="selectRole(role)">
+                                <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{role.job_role_name}}</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -160,7 +159,7 @@
                         <button type="button" 
                         class="bg-blue-300 m-2 w-fit text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
                         v-for="skill in skills" 
-                       v-if="selectedSkills.indexOf(skill.skill_id) != -1"
+                        v-if="selectedSkills.indexOf(skill.skill_id) != -1"
                         v-on:click="selectSkill(skill)"
                         >{{skill.skill_name}}</button>
 
@@ -217,6 +216,26 @@
         const vm = new Vue({
             el: '#main-container',
             data: {
+                // Dummy Data for Adding Course Start
+
+                ySkill: [],
+                yJobRole: [],
+                yCourse: [],
+                yLearningJourney: [],
+                yStaff: [
+                    {
+                        "staff_id": 130001,
+                        "staff_Fname": 'John',
+                        "staff_Lname": 'Sim',
+                        "department": 'Chariman',
+                        "email": 'jack.sim@allinone.com.sg',
+                        "role": 1,
+                    },
+                ],
+                yJobRoleSkill: [],
+                ySkillCourse: [],
+
+                // Dummy Data for Adding Course Ends
                 roles: [],
                 selectedRole: null,
                 currPage: "Home",
@@ -270,7 +289,7 @@
                 this.roles = [...roles]
             },
 
-             selectRole: async function selectRole(selectedRole) {
+            selectRole: async function selectRole(selectedRole) {
 
                     if (selectedRole == null){
                         console.log("role not selected")
@@ -284,21 +303,21 @@
                     this.setRole()
                 },
 
-                 setRole: async function setRole() {
-                    console.log("load skills for: ", this.selectedRole.job_role_id)
-                    results = await this.getSkills(this.selectedRole.job_role_id);
-                    console.log("setRole: ",results)
-                    // this.skills = results;
-                },
+            setRole: async function setRole() {
+                console.log("load skills for: ", this.selectedRole.job_role_id)
+                results = await this.getSkills(this.selectedRole.job_role_id);
+                console.log("setRole: ",results)
+                // this.skills = results;
+            },
 
-                getCoursesBySkillSingle: async function getCoursesBySkillSingle(uniqueid) {
+            getCoursesBySkillSingle: async function getCoursesBySkillSingle(uniqueid) {
 
-                    coursesBySkill = []
-                    var config = {
-                    method: 'get',
-                    url: `http://localhost:5010/coursebyskill/${uniqueid}`,
-                    headers: { }
-                    };
+                coursesBySkill = []
+                var config = {
+                method: 'get',
+                url: `http://localhost:5010/coursebyskill/${uniqueid}`,
+                headers: { }
+                };
 
                     result = await axios(config)
                     .then(function (response) {
@@ -316,6 +335,7 @@
 
                     },
 
+                // Put all skills into 'skills' object
                 getSkills: async function getSkills(id) {
                     skills = []
                     var config = {
@@ -373,223 +393,6 @@
                     
                     console.log("ccc", selectedCourse.course_id, " ----> ", this.selectCourses.indexOf(selectedCourse.course_id))
                     },
-
-
-
-
-
-                // ---------------------------------------------------USED HERE ---------------------------------------------------------------------------------------------------------
-
-
-
-                // setSkills: async function setSkills() {
-                //     uniqueids =[]
-                //     for (i of this.selectedSkills){
-                //         if (uniqueids.indexOf(i) == -1){
-                //             uniqueids.push(i)
-                //         }
-                //     }
-                //     console.log(uniqueids, "---> ", this.selectedSkills)
-                //     await this.getCoursesBySkill(uniqueids)
-                //     console.log("this.selectedSkills", this.selectedSkills)
-                    
-                // },
-                // setCourses: async function setCourses() {
-                //     console.log("load skills for: ", this.selectedRole.name)
-                //     results = this.getSkills(this.selectedRole.id);
-                //     // console.log(results)
-                //     this.skills = results;
-                // },
-
-
-
-                // getCoursesBySkill: async function getCoursesBySkill(uniqueids){
-                //     coursesBySkill = []
-                //     console.log(uniqueids)
-                //     for (i of uniqueids){
-                    
-                //     var config = {
-                //     method: 'get',
-                //     url: `http://localhost:5010/coursebyskill/${i}`,
-                //     headers: { }
-                //     };
-
-                //     await axios(config)
-                //     .then(function (response) {
-                //     // console.log(JSON.stringify(response.data));
-                //     console.log("adding for ", i)
-                //     // coursesBySkill += [response.data.data];
-                //     coursesBySkill = [...coursesBySkill, ...response.data.data]
-                //     })
-                //     .catch(function (error) {
-                //     console.log(error);
-                //     });}
-                //     this.coursesBySkill = coursesBySkill
-                //     console.log(this.coursesBySkill)
-
-                // },
-
-                // deleteSkill: async function (id) {
-                //     //console.log("delete: ", id)
-
-                //     // var axios = require('axios');
-                //     var data = JSON.stringify({
-                //         "id": id
-                //     });
-
-                //     var config = {
-                //         method: 'delete',
-                //         url: 'http://localhost:5010/skill',
-                //         headers: {
-                //             'Content-Type': 'application/json'
-                //         },
-                //         data: data
-                //     };
-                //     await axios(config)
-                //         .then(async function (response) {
-                //             //console.log(JSON.stringify(response.data));
-                //             //   await getSkills();
-                //         })
-                //         .catch(function (error) {
-                //             console.log(error);
-                //         });
-                //     this.getSkills()
-                // },
-
-
-       
-
-
-                // addIDs: function (a_tag) {
-                //     a_tags = document.getElementsByTagName('a');
-                // },
-                // createSkill: function (item) {
-                //     if(this.checkCreateNameValid() == true){
-                //         return 
-                //     }
-                //     var new_skill_name = this.create_skill_name;
-                //     var new_skill_des = this.create_skill_des;
-                //     var new_skill_img = this.image;
-
-                //     var url = 'http://localhost:5010/skills'
-                //     axios.post(url, {
-                //             name: new_skill_name,
-                //             description: new_skill_des,
-                //             image: new_skill_img.split(',')[1]
-                //         })
-                //         .then(response => {
-                //             console.log(response.data)
-                //             this.success_create = "Successfully created a skill!" 
-                //         })
-                //         .catch(error => {
-                //             this.error = error.response.data.message
-                //         });
-                // },
-                // checkCreateNameValid(){
-                //     // If varName consist illegal char = true
-                //     if(specialChars.test(this.create_skill_name) | /\d/.test(this.create_skill_name)){
-                //         // console.log("Invalid input value for skill ID, please do not use any special characters!")
-                //         return true;
-                //     }
-                // },
-                // checkCreateNameTooLong(){
-                //     // If varName consist illegal char = true
-                //     if((this.create_skill_name).length > 100){
-                //         // console.log("Invalid length should not exceed 100!")
-                //         return true;
-                //     }
-                // },
-                // openUpdateModal(skillID) {
-                //     this.updateID = skillID;
-                //     console.log(this.skills)
-                //     for (i in this.skills) {
-                //             if (this.skills[i].id == skillID) {
-                //                 this.varName = this.skills[i].name;
-                //                 this.varDesc = this.skills[i].description;
-                //                 this.varImage = this.skills[i].image 
-                //             }
-                //         }
-                // },
-                // closeUpdateModal(){
-                //     this.updateID = null;
-                // },
-                // checkUpdateNameValid(){
-                //     // If varName consist illegal char = true
-                //     if(specialChars.test(this.varName)){
-                //         // console.log("Invalid input value for skill ID, please do not use any special characters!")
-                //         return true;
-                //     }
-                // },
-                // checkUpdateNameTooLong(){
-                //     // If varName consist illegal char = true
-                //     if((this.varName).length > 100){
-                //         // console.log("Invalid length should not exceed 100!")
-                //         return true;
-                //     }
-                // },
-                // updateSkill: function (skillID) {
-                //     if(this.checkUpdateNameValid() == true){
-                //         return
-                //     }
-                //     console.log(this.image)
-                //     skillsURL = "http://localhost:5010/skills/" + skillID
-                //     console.log(skillsURL)
-                //     fetch(skillsURL, {
-                //         method: 'PUT',
-                //         headers: {
-                //             'Content-Type': 'application/json'
-                //         },
-                //         body: JSON.stringify({
-                //             'name': this.varName,
-                //             'description': this.varDesc,
-                //             // 'image': this.Image,
-                //         })
-                //     }).then(response => {
-                //         console.log(skillID)
-                //         for (i in this.skills) {
-                //             if (this.skills[i].id == skillID) {
-                //                 this.skills[i].name = this.varName
-                //                 this.skills[i].description = this.varDesc
-                //                 // this.skills[i].image = this.Image
-                //                 }
-                //             }
-                //         console.log(this.skills)
-                //         // this.varObj
-                //         this.varName = null
-                //         this.varDesc = null
-                //         this.varImage = null
-                //         return response.json()
-                //     }).then(data =>
-                //         // this is the data we get after putting our data,
-                //         console.log(data)
-                //     )
-                //     this.closeUpdateModal();
-                // },
-                // onChangeFile: function (e) {
-                //     var files = e.target.files || e.dataTransfer.files;
-                //     if (!files.length)
-                //         return;
-                //     this.createImage(files[0]);
-                // },
-                // createImage(file) {
-                //     var image = new Image();
-                //     var reader = new FileReader();
-
-                //     reader.onload = (e) => {
-                //         this.image = e.target.result;
-                //         console.log(this.image)
-                //     };
-                //     reader.readAsDataURL(file);
-                // },
-                // removeImage: function (e) {
-                //     this.image = '';
-                // },
-                // openRoleDropDown: function(){
-                    
-                //     this.roleDropDown = !this.roleDropDown;
-                //     console.log(this.roleDropDown)
-                // }
-                
             }
         });
     </script>
