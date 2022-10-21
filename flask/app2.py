@@ -355,6 +355,17 @@ def delete_skill():
             "message": "Unable to commit to database."
         }), 500
 
+######## JobRoleSkill ########
+#Read all JobRoleSkill
+@app.route("/job_role_skill")
+def read_job_role_skill():
+    jobRoleSkillList = JobRoleSkill.query.all()
+    return jsonify(
+        {
+            "data": [jobRoleSkill.to_dict()
+                    for jobRoleSkill in jobRoleSkillList]
+        }
+    ), 200
 
 #read skills by role (D)
 @app.route("/skillbyrole/<int:id>", methods=['GET'])
@@ -464,6 +475,17 @@ def read_course():
         }
     ), 200
 
+# Read Courses (R)
+@app.route("/skillCourse")
+def read_skillCourse():
+    skillCourseList = SkillCourse.query.all()
+    return jsonify(
+        {
+            "data": [skillCours.to_dict()
+                    for skillCours in skillCourseList]
+        }
+    ), 200
+
 #read skills by role (D)
 @app.route("/coursebyskill/<int:id>", methods=['GET'])
 def read_course_by_skill(id):
@@ -485,7 +507,7 @@ def read_course_by_skill(id):
 
 ######## Learning Journey ########
 # Get all Learning Journey 
-@app.route("/learning_journies")
+@app.route("/learning_journeys")
 def get_learning_journey():
     learning_journey_List = LearningJourney.query.all()
     return jsonify(
@@ -541,6 +563,18 @@ def create_learning_journey_skill():
         return jsonify({
             "message": "Unable to commit to database."
         }), 500
+
+###########LearningJourneyCourse#####################
+# Get all Learning Journey Course Relationship (R)
+@app.route("/learning_journey_course")
+def get_learning_journey_course():
+    learningJourneyCourseList = LearningJourneyCourse.query.all()
+    return jsonify(
+        {
+            "data": [learningJourneyCourse.to_dict()
+                    for learningJourneyCourse in learningJourneyCourseList]
+        }
+    ), 200
 
 # Create Learning Journey (C)
 @app.route("/learning_journey_addcourse", methods=['POST'])
