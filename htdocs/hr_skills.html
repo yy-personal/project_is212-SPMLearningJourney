@@ -44,6 +44,9 @@
         .backdrop {
             background-color: rgba(0,0,0,0.4);
         }
+        button:disabled {
+        background: hwb(0 0% 100% / 0.493);
+        }
     </style>
 </head>
 
@@ -173,7 +176,7 @@
                 <div class="relative p-4 w-full max-w-md h-full md:h-auto">
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <button type="button"
+                        <button type="button" @click = 'closeCreateModal()'
                             class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
                             data-modal-toggle="authentication-modal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -188,13 +191,23 @@
                             <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Create New Skill</h3>
                             <form class="space-y-6" action="#">
                                 
-                                <div v-if = "!checkCreateNameValid() && !checkCreateNameTooLong()">
+                                <div v-if = "!checkCreateNameValid() && !checkCreateNameTooLong() && !checkSkillExist()">
                                     <label for="skill_name"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
                                         Name</label>
                                     <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
+                                </div>
+
+                                <div v-else-if="checkSkillExist()">
+                                    <label for="skill_name"
+                                        class="block mb-2 text-sm font-medium text-red-600 dark:text-red-500">Skill
+                                        Name</label>
+                                    <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span>Skill already exist!</p>
                                 </div>
 
                                 <div v-else-if="checkCreateNameValid()">
@@ -230,7 +243,7 @@
                                 <!-- Error message button to try -->
                                 
                                 <div style="text-align: center;">
-                                    <button type="submit" v-on:click="createSkill(this)"
+                                    <button type="submit" v-on:click="createSkill(this)" :disabled="checkCreateDesTooLong() ||  checkCreateNameTooLong() || checkCreateNameValid() || checkSkillExist() || isEmpty() "
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
                                 </div>
@@ -446,6 +459,13 @@
                             this.error = error.response.data.message
                         });
                 },
+                checkSkillExist(){
+                    for(each of this.skills){
+                        if(each.skill_name.toLowerCase() == this.create_skill_name.toLowerCase()){
+                            return true;
+                        }
+                    }
+                },
                 checkCreateNameValid(){
                     // If varName consist illegal char = true
                     if(specialChars.test(this.create_skill_name) | /\d/.test(this.create_skill_name)){
@@ -459,6 +479,20 @@
                         // console.log("Invalid length should not exceed 100!")
                         return true;
                     }
+                },
+                checkCreateDesTooLong(){
+                    if((this.create_skill_des).length >= 500){
+                        return true;
+                    }
+                },
+                isEmpty(){
+                    if (this.create_skill_des == '' | this.create_skill_name == ''){
+                        return true
+                    }
+                },
+                closeCreateModal(){
+                    this.create_skill_name = ''
+                    this.create_skill_des = ''
                 },
                 openUpdateModal(skillID) {
                     this.updateID = skillID;
@@ -475,7 +509,7 @@
                 },
                 checkUpdateNameValid(){
                     // If varName consist illegal char = true
-                    if(specialChars.test(this.varName)){
+                    if(specialChars.test(this.varName) | /\d/.test(this.varName)){
                         // console.log("Invalid input value for skill ID, please do not use any special characters!")
                         return true;
                     }
@@ -527,11 +561,6 @@
             }
         });
     </script>
-    <style>
-        button:disabled {
-        background: hwb(0 0% 100% / 0.493);
-        }
-    </style>
     <!-- flowbite -->
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
 </body>
