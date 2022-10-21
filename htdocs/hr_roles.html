@@ -160,6 +160,7 @@
                     </div>
                 </div>
             </div>
+            {{error}}
 
             <div>
                 <p><label id="error" class="text-danger">{{ error }}</label></p>
@@ -210,7 +211,7 @@
                                 </div>
 
                                 <div style="text-align: center;">
-                                    <button type="submit" v-on:click="createRole(this)"
+                                    <button type="submit" v-on:click="createRole()"
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
                                     <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
@@ -426,7 +427,7 @@
                     //this.getRoles()
                 },
 
-                createRole: function (item) {
+                createRole: function () {
                     var new_role_name = this.create_role_name;
                     var new_role_des = this.create_role_des;
 
@@ -442,7 +443,6 @@
                             this.error = error.response.data.message
                         });
                 },
-
                 openUpdateModal(roleID) {
                     this.updateID = roleID;
                     //console.log(this.roles)

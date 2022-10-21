@@ -29,7 +29,7 @@ CREATE TABLE `Staff` (
 
 -- Table strcuture for table 'JobRole'
 CREATE TABLE `JobRole` (
-    `job_role_id` int PRIMARY KEY,
+    `job_role_id` int PRIMARY KEY AUTO_INCREMENT,
     `job_role_name` varchar(100) NOT NULL,
     `job_role_description` varchar(500) NOT NULL,
     `job_role_deleted` boolean DEFAULT false

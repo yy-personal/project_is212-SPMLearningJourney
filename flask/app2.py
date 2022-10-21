@@ -350,7 +350,7 @@ def delete_skill(id):
 
 ######## ROLES ########
 # Create A New Job Role (C)
-@app.route("/jobrole", methods=['POST'])
+@app.route('/jobrole' , methods=['POST'])
 def create_role():
     data = request.get_json()
     print(data)
@@ -360,11 +360,11 @@ def create_role():
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
-    role = JobRole(**data)
+    jobrole = JobRole(**data)
     try:
-        db.session.add(role)
+        db.session.add(jobrole)
         db.session.commit()
-        return jsonify(role.to_dict()), 201
+        return jsonify(jobrole.to_dict()), 201
     except Exception:
         return jsonify({
             "message": "Unable to commit to database."

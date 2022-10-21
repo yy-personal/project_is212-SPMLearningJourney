@@ -166,7 +166,7 @@
 
 
             <!-- CREATE SKILL POP UP -->
-            <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+            <div v-if = 'OpenCreateModal == true' id="authentication-modal" tabindex="-1" aria-hidden="true"
                 class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
                 <div class="relative p-4 w-full max-w-md h-full md:h-auto">
                     <!-- Modal content -->
@@ -219,6 +219,17 @@
                                         characters!</p>
                                 </div>
 
+                                <!-- <div v-else-if="checkSkillExist()">
+                                    <label for="skill_name"
+                                        class="block mb-2 text-sm font-medium text-red-600 dark:text-red-500">Skill
+                                        Name</label>
+                                    <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
+                                            class="font-medium"></span> Already Exist!</p>
+                                </div> -->
+
                                 <div>
                                     <label for="skill_description"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
@@ -232,6 +243,7 @@
                                 <!-- Error message button to try -->
 
                                 <div style="text-align: center;">
+                                    <p>{{error}}</p>
                                     <button type="submit" v-on:click="createSkill(this)"
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
@@ -374,6 +386,7 @@
                 varDesc: "",
                 updateID: null,
                 success_create: "",
+                OpenCreateModal: true, 
             },
             mounted: async function () {
                 this.getSkills()
@@ -458,9 +471,12 @@
                     // this.getSkills()
                 },
                 createSkill: function (item) {
-                    if (this.checkCreateNameValid() == true) {
-                        return
+                    for(each of this.skills){
+                        if (each.skill_name == this.create_skill_name){
+                            this.error = 'Already Exists!'
+                        }
                     }
+
                     var new_skill_name = this.create_skill_name;
                     var new_skill_des = this.create_skill_des;
 
@@ -476,6 +492,14 @@
                         .catch(error => {
                             this.error = error.response.data.message
                         });
+                },
+                checkSkillExist(){
+                    //console.log(this.create_skill_name)
+                    for(each of this.skills){
+                        if (each.skill_name.lower == this.create_skill_name.lower){
+                            return true;
+                        }
+                    }
                 },
                 checkCreateNameValid() {
                     // If varName consist illegal char = true
