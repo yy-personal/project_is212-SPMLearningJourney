@@ -119,10 +119,11 @@
         </nav>
 
         <!-- DISPLAY SKILLS -->
-        <section class="container bg-white py-8 pt-20">
+        <section class="container bg-white">
             <div class="container mx-auto flex flex-wrap pt-4">
-                <template v-for="eachLearningJourney in learningJourney">
-                    <div class="overflow-x-auto relative shadow-md sm:rounded-lg flex">
+                <template v-for="eachLearningJourney in learningJourney" v-if="eachLearningJourney.learning_journey_id==1">
+                    <div class="overflow-x-auto relative shadow-md sm:rounded-lg flex h-screen justify-center items-center
+                    ">
                         <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100">
                             <thead
                                 class="text-xs text-white uppercase bg-blue-600 border-b border-blue-400 dark:text-white">
@@ -173,7 +174,17 @@
                                         </ul>
                                     </td>
                                     <td class="py-4 px-6 bg-blue-500">
-                                        Test
+                                        <ul v-for="eachLearningJourneySkill in learningJourneySkill">
+                                            <li
+                                                v-if="eachLearningJourneySkill.learning_journey_id == eachLearningJourney.learning_journey_id">
+                                                <template v-for="eachSkill in skills"
+                                                    v-if="eachSkill.skill_id == eachLearningJourneySkill.skill_id">
+                                                    Skill<br>
+                                                    -Course
+                                                </template>
+                                            </li>
+                                        </ul>
+                                        
                                     </td>
 
                                 </tr>
