@@ -200,7 +200,6 @@ class JobRoleSkill(db.Model):
             result[column] = getattr(self, column)
         return result
 
-
 class SkillCourse(db.Model):
     __tablename__ = 'skillcourse'
     skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
@@ -534,6 +533,7 @@ def read_course():
         }
     ), 200
 
+
 ######## Learning Journey ########
 # Get all Learning Journey 
 @app.route("/learning_journies")
@@ -608,6 +608,40 @@ def read_skill_by_role(id):
                     for skill in allSkillsForRole]
         }
     ), 200
+
+######## SKILLCOURSE ########
+# add skils to course 
+@app.route("/skills_to_course", methods=['POST'])
+def add_skill_to_course():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('course_id', 'skill_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    course_skill = SkillCourse(**data)
+    try:
+        db.session.add(course_skill)
+        db.session.commit()
+        return jsonify(course_skill.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+#get all the skills from that role
+@app.route("/skills_to_course")
+def get_skills_from_course():
+    course_skills_List = SkillCourse.query.all()
+    return jsonify(
+        {
+            "data": [course_skills.to_dict()
+                    for course_skills in course_skills_List]
+        }
+    ), 200
+
 
 
 ######## COURSES ########
