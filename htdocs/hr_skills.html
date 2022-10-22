@@ -230,7 +230,7 @@
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 100 characters!</p>
                                 </div>
 
-                                <div>
+                                <div v-if="!checkCreateDesTooLong()">
                                     <label for="skill_description"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
                                         Description</label>
@@ -239,6 +239,16 @@
                                         required>
                                     </textarea>
                                 </div>
+
+                                <div v-else-if="checkCreateDesTooLong()">
+                                    <label for="role_des" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Role
+                                        Description</label>
+                                    <input type="text" name="role_des" id="role_des" v-model="create_role_des"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 500 characters!</p>
+                                </div>
+
 
                                 <!-- Error message button to try -->
                                 
