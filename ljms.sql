@@ -4,6 +4,7 @@ SET time_zone = "+00:00";
 
 -- Database: `ljms`
 --
+drop database if exists `ljms`;
 CREATE DATABASE IF NOT EXISTS `ljms` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `ljms`;
 
@@ -56,8 +57,8 @@ CREATE TABLE `Course` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Table strcuture for table 'Registeration'
-CREATE TABLE `Registeration` (
+-- Table strcuture for table 'Registration'
+CREATE TABLE `Registration` (
     `reg_id` int PRIMARY KEY,
     `course_id` varchar(20) NOT NULL,
     `staff_id` int NOT NULL,
@@ -84,6 +85,12 @@ CREATE TABLE `LearningJourneySkill` (
 CREATE TABLE `JobRoleSkill` (
     `job_role_id` int NOT NULL,
     `skill_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Table strcuture for table 'JobRoleSkill'
+CREATE TABLE `SkillCourse` (
+    `skill_id` int NOT NULL,
+    `course_id` varchar(20)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -119,14 +126,14 @@ INSERT INTO `Course` (`course_id`, `course_name`, `course_description`, `course_
 ('COR004', 'Service Excellence', 'The programme provides the learner with the key foundations of what builds customer confidence in the service industry', 'Pending', 'Internal', 'Core'),
 ('FIN003', 'Business Continuity Planning', 'Business continuity planning is essential in any business to minimise loss when faced with potential threats and disruptions.', 'Retired', 'External', 'Finance'),
 ('tch004', 'Introduction to Open Platform Communications', 'This course provides the participants with a good in-depth understanding of the SS IEC 62541 standard', 'Pending', 'Internal', 'Technical');
+-- insert data for table `Registration`
 
--- insert data for table `Registeration`
-
-INSERT INTO `Registeration` (`reg_id`, `course_id`, `staff_id`, `reg_status`, `completion_status`) VALUES
+INSERT INTO `Registration` (`reg_id`, `course_id`, `staff_id`, `reg_status`, `completion_status`) VALUES
 (249, 'FIN003', 140004, 'Registered', 'OnGoing'),
 (8, 'COR002', 140036, 'Waitlist', NULL),
 (5, 'COR002', 140003, 'Rejected', NULL),
 (245, 'COR001', 130001, 'Registered', 'Completed');
+
 
 -- insert data for table `Role`
 
@@ -153,6 +160,32 @@ INSERT INTO `LearningJourney` (`learning_journey_id`, `staff_id`, `job_role_id`)
 (2, 140001, 2),
 (3, 140036, 3);
 
+INSERT INTO `LearningJourneySkill` (`learning_journey_id`, `skill_id`) VALUES
+(1, 3),
+(1, 4);
+
+INSERT INTO `LearningJourneyCourse` (`learning_journey_id`, `course_id`) VALUES
+(1, 'COR001'),
+(1, 'COR002');
+
+INSERT INTO `JobRoleSkill` (`job_role_id`, `skill_id`) VALUES
+(1, 3),
+(1, 4),
+(2, 4),
+(3, 5),
+(3, 7);
+
+INSERT INTO `SkillCourse` (`skill_id`, `course_id`) VALUES
+(3, 'COR001'),
+(3, 'COR002'),
+(3, 'tch004'),
+(4, 'COR002'),
+(4, 'FIN003'),
+(5, 'COR002'),
+(5, 'FIN003'),
+(5, 'COR004');
+
+
 
 -- Add foreign key to table 'Staff'
 ALTER TABLE `Staff`
@@ -176,16 +209,22 @@ ADD FOREIGN KEY (`job_role_id`) REFERENCES `JobRole`(`job_role_id`);
 ALTER TABLE `JobRoleSkill`
 ADD FOREIGN KEY (`skill_id`) REFERENCES `Skill`(`skill_id`);
 
+-- Add foreign key to table 'SkillCourse'
+ALTER TABLE `SkillCourse`
+ADD FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`);
+ALTER TABLE `SkillCourse`
+ADD FOREIGN KEY (`skill_id`) REFERENCES `Skill`(`skill_id`);
+
 -- Add foreign key to table 'LearningJourneyCourse'
 ALTER TABLE `LearningJourneyCourse`
 ADD FOREIGN KEY (`learning_journey_id`) REFERENCES `LearningJourney`(`learning_journey_id`);
 ALTER TABLE `LearningJourneyCourse`
 ADD FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`);
 
--- Add foreign key to table 'Registeration'
-ALTER TABLE `Registeration`
+-- Add foreign key to table 'Registration'
+ALTER TABLE `Registration`
 ADD FOREIGN KEY (`course_id`) REFERENCES `Course`(`course_id`);
-ALTER TABLE `Registeration`
+ALTER TABLE `Registration`
 ADD FOREIGN KEY (`staff_id`) REFERENCES `Staff`(`staff_id`);
 
 

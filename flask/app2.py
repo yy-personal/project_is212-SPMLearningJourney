@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 # Mac user ====================================================================
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
                                         '@localhost:3306/ljms'
 # =============================================================================
 
@@ -188,6 +188,23 @@ class JobRoleSkill(db.Model):
     __tablename__ = 'jobroleskill'
     job_role_id = db.Column(db.Integer, db.ForeignKey('jobrole.job_role_id'), primary_key=True)
     skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+
+class SkillCourse(db.Model):
+    __tablename__ = 'skillcourse'
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.course_id'), primary_key=True)
 
     def to_dict(self):
         """
@@ -391,7 +408,7 @@ def delete_skill(id):
     return '', 204
 
 #HARD DELETE
-# @app.route("/skill", methods=['DELETE'])
+# # @app.route("/skill", methods=['DELETE'])
 # def delete_skill():
 #     data = request.get_json()
 #     if not all(key in data.keys() for
@@ -416,7 +433,9 @@ def delete_skill(id):
 #             "message": "Unable to commit to database."
 #         }), 500
 
-######## ROLES ########
+
+
+######## JOB ROLE ########
 # Create A New Job Role (C)
 @app.route("/jobrole", methods=['POST'])
 def create_role():
@@ -538,7 +557,19 @@ def get_learning_journey_skill():
         }
     ), 200
 
-######## JOBROLESKILL ########
+
+######## JobRoleSkill ########
+#get all the skills from that role
+@app.route("/skills_to_jobrole")
+def get_skills_from_jobrole():
+    jobrole_skills_List = JobRoleSkill.query.all()
+    return jsonify(
+        {
+            "data": [jobrole_skills.to_dict()
+                    for jobrole_skills in jobrole_skills_List]
+        }
+    ), 200
+
 # add skils to jobrole 
 @app.route("/skills_to_jobrole", methods=['POST'])
 def add_skill_to_jobrole():
@@ -559,17 +590,176 @@ def add_skill_to_jobrole():
         return jsonify({
             "message": "Unable to commit to database."
         }), 500
-
-#get all the skills from that role
-@app.route("/skills_to_jobrole")
-def get_skills_from_jobrole():
-    jobrole_skills_List = JobRoleSkill.query.all()
+        
+#get selected skills by job_role_id
+@app.route("/skillbyrole/<int:id>", methods=['GET'])
+def read_skill_by_role(id):
+    # chosenSkill = Role.query.filter_by(skill_id=id).first()
+    skillsIds = JobRoleSkill.query.filter_by(job_role_id=id).all()
+    allSkillsForRole = []
+    for i in skillsIds:
+        skill = Skill.query.filter_by(skill_id=i.skill_id).first()
+        if skill != None:
+            allSkillsForRole.append(skill)
+    
     return jsonify(
         {
-            "data": [jobrole_skills.to_dict()
-                    for jobrole_skills in jobrole_skills_List]
+            "data": [skill.to_dict()
+                    for skill in allSkillsForRole]
         }
     ), 200
+
+
+######## COURSES ########
+# Read Courses (R)
+@app.route("/courses")
+def read_course():
+    courseList = Course.query.all()
+    return jsonify(
+        {
+            "data": [course.to_dict()
+                    for course in courseList]
+        }
+    ), 200
+
+# Read Courses (R)
+@app.route("/skillCourse")
+def read_skillCourse():
+    skillCourseList = SkillCourse.query.all()
+    return jsonify(
+        {
+            "data": [skillCours.to_dict()
+                    for skillCours in skillCourseList]
+        }
+    ), 200
+
+######## COURSE SKILL ########
+#read skills by role (D)
+@app.route("/coursebyskill/<int:id>", methods=['GET'])
+def read_course_by_skill(id):
+    # chosenSkill = Role.query.filter_by(skill_id=id).first()
+    CourseIds = SkillCourse.query.filter_by(skill_id=id).all()
+    allCoursesForSkill = []
+    for i in CourseIds:
+        course = Course.query.filter_by(course_id=i.course_id).first()
+        if course != None:
+            allCoursesForSkill.append(course)
+    
+    return jsonify(
+        {
+            "data": [course.to_dict()
+                    for course in allCoursesForSkill]
+        }
+    ), 200
+
+
+######## Learning Journey ########
+# Get all Learning Journey 
+@app.route("/learning_journeys")
+def get_learning_journey():
+    learning_journey_List = LearningJourney.query.all()
+    return jsonify(
+        {
+            "data": [learning_journey.to_dict()
+                    for learning_journey in learning_journey_List]
+        }
+    ), 200
+
+# Create Learning Journey (C)
+@app.route("/learning_journey", methods=['POST'])
+def create_learning_journey():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('staff_id', 'job_role_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    role = LearningJourney(**data)
+    try:
+        db.session.add(role)
+        db.session.commit()
+
+        return jsonify(role.to_dict()), 201
+    except Exception:
+        print(Exception.with_traceback)
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+
+########### Learning Journey Course #####################
+# Get all Learning Journey Course Relationship (R)
+@app.route("/learning_journey_course")
+def get_learning_journey_course():
+    learningJourneyCourseList = LearningJourneyCourse.query.all()
+    return jsonify(
+        {
+            "data": [learningJourneyCourse.to_dict()
+                    for learningJourneyCourse in learningJourneyCourseList]
+        }
+    ), 200
+
+# Create Learning Journey (C)
+@app.route("/learning_journey_addcourse", methods=['POST'])
+def create_learning_journey_course():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+# learning_journey_id, course_id
+            key in ('learning_journey_id', 'course_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    role = LearningJourneyCourse(**data)
+    try:
+        db.session.add(role)
+        db.session.commit()
+
+        return jsonify(role.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+
+########### Learning Journey Skill #####################
+# Get all Learning Journey Skill R/S
+@app.route("/learning_journey_skills")
+def get_learning_journey_skill():
+    learning_journey_skill_List = LearningJourneySkill.query.all()
+    return jsonify(
+        {
+            "data": [learning_journey_skill.to_dict()
+                    for learning_journey_skill in learning_journey_skill_List]
+        }
+    ), 200
+
+# add skill to learning journey 
+@app.route("/learning_journey_addskill", methods=['POST'])
+def create_learning_journey_skill():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+    # learning_journey_id, skill_id,
+
+            key in ('learning_journey_id', 'skill_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    role = LearningJourneySkill(**data)
+    try:
+        db.session.add(role)
+        db.session.commit()
+
+        return jsonify(role.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
 
 
 db.create_all()
