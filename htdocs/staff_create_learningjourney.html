@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+    <title>View Skills Records</title>
+
+    <link rel="stylesheet" href="">
+
+    <!-- Bootstrap libraries -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+
+    <!--Replace with your tailwind.css once created-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Flowbite -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" /> -->
+    <style>
+        .gradient {
+            background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+        }
+
+        .backdrop {
+            background-color: rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+
+
+<body class="leading-normal tracking-normal text-white" style="font-family: 'Source Sans Pro', sans-serif;">
+    <div id="main-container">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul>
+
+        <!-- NAV BAR -->
+        <nav id="header" class="fixed w-full z-30 top-0 text-white gradient">
+            <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
+                <div class="pl-1 flex items-end">
+                    <!-- SMALLER SCREEN -->
+                    <div class="h-20 block lg:hidden pr-4 text-black">
+                        <button id="nav-toggle"
+                            class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                            <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <title>Menu</title>
+                                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- LARGER SCREEN -->
+                    <div class="h-20 w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 lg:bg-transparent text-black p-4 lg:p-0 z-20"
+                        id="nav-content">
+                        <img src='../logo.png' width="135" height="135">
+                        <ul class="list-reset lg:flex justify-end flex-1 items-center">
+                            <li class="mr-3">
+                                <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                    href="#" v-on:onclick="goPage(this)" id="Homelink">Home</a>
+                            </li>
+                            <li class="mr-3">
+                                <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                    href="../htdocs/hr_skills.html" v-on:onclick="goPage(this)" id="Skillslink">Skills</a>
+                            </li>
+                            <li class="mr-3">
+                                <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                    href="../htdocs/hr_roles.html" v-on:onclick="goPage(this)" id="Roleslink">Roles</a>
+                            </li>
+                            <li class="mr-3">
+                                <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4 hidden"
+                                    href="#" v-on:onclick="goPage(this)" id="Courseslink">Courses</a>
+                            </li>
+                        </ul>
+                        <button id="navAction"
+                            class="hidden h-10 mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full p-1 px-5 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                            Action
+                        </button>
+                    </div>
+
+                </div>
+                <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
+        </nav>
+
+        <!-- DISPLAY SKILLS -->
+        <section class="container bg-white py-8 pt-20" id="Skills">
+            <div class="container mx-auto flex flex-wrap pt-4">
+                <h2 class="w-full mt-12 text-5xl font-bold leading-tight text-center text-gray-800 pt-4">
+                    Learning Journey
+                </h2>
+
+                <div class="w-full mb-4">
+                    <div class="h-4 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t font-underline bg-slate-400">
+                    </div>
+                </div>
+
+
+
+                <div class="w-full justify-center items-center flex pb-5">
+                <button id="dropdownDefault"  v-if="selectedRole != null" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                    {{selectedRole.job_role_name}} <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                    <button id="dropdownDefault"  v-else data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                        Please select a role <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                    <!-- Dropdown menu -->
+                    <div id="dropdown" class="hidden z-10 w-60 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                        <ul  class="max-h-60 overflow-auto py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+                        <li id="dropdownDefault" v-for="role in roles"  v-on:click="selectRole(role)">
+                            <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{role.job_role_name}}</a>
+                        </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+
+
+                <!-- 3 parts here -- role, skills -- courses: -->
+
+                <div class="w-full flex flex-row" id="rolesContainer">
+
+                <!-- for loading skills: -->
+                <div class="basis-1/2 w-1/2 h-screen flex flex-col flex-grow flex-shrink h-full shadow " >
+                    <h1 class="w-4/5 text-black text-xl font-bold p-3">Skills</h1>
+                    <!-- FOR LOOP -->
+                    <div class="px-4 grid grid-cols-1 md:grid-cols-1
+                     bg-white rounded-t rounded-b-none overflow-hidden"
+                        >
+                        
+                        <button type="button" 
+                        class="bg-blue-300 m-2 w-fit text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                        v-for="skill in skills" 
+                       v-if="selectedSkills.indexOf(skill.skill_id) != -1"
+                        v-on:click="selectSkill(skill)"
+                        >{{skill.skill_name}}</button>
+
+                        <button type="button" 
+                        class="m-2 w-fit text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                            v-else 
+                            v-on:click="selectSkill(skill)"
+                        >{{skill.skill_name}}</button>
+
+                    </div>
+                </div>
+
+
+                    <div class="basis-3/4 w-full">
+                        <!-- for loading courses2: -->
+                    <div class="w-full pb-6 px-6 flex flex-col flex-grow flex-shrink" v-for="[key, value] of Object.entries(coursesBySkill2)">
+                        <!-- FOR LOOP -->
+                        <div class="w-full p-4 flex-1 bg-red-100 overflow-hidden shadow rounded-xl"
+                            style='padding-top: 20px;'>
+                            <h1 class="m-4 w-4/5 text-black text-xl font-bold">{{key}}</h1>
+                            
+                            <button type="button" 
+                            class="mx-4 w-4/5 text-blue-700 hover:text-white border border-white;;  -700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                            v-for="course in value[1]" 
+                            
+                            v-on:click="selectCourse(course)"
+                            >{{course.course_name}}</button> 
+
+                            <!-- <button type="button" 
+                            class="bg-pink-300 mx-4 w-4/5 text-blue-700 hover:text-white border border-white;;  -700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                            v-else
+                            v-on:click="selectCourse(course)"
+                            >{{course.course_name}}</button>  -->
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                </div>
+
+            </div>
+
+            <div>
+                <!-- <p><label id="error" class="text-danger">{{ error }}</label></p> -->
+                <button type="button"
+                    class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
+            focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4 mx-5"
+                    data-modal-toggle="authentication-modal" style='float: right;'>Create Learning Journey</button>
+            </div>
+
+        </section>
+
+    </div>
+
+    <!--- JAVASCRIPT -->
+    <script>
+        const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~1234567890]/;
+        const vm = new Vue({
+            el: '#main-container',
+            data: {
+                roles: [],
+                selectedRole: null,
+                currPage: "Home",
+                activeClass: "inline-block py-2 px-4 text-black font-bold no-underline",
+                inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
+                skills: [],
+                skills2: ["Skill #1", "Skill #2", "Skill #3"],
+                selectedSkills: [],
+                skillsByRole: [],
+                courses: ["Course #1", "Course #2", "Course #3"],
+                coursesBySkill: null,
+                selectedCourses: [],
+                create_skill_name: "",
+                create_skill_des: "",
+                image: "",
+                error: "",
+                varName: "",
+                varDesc: "",
+                varImg: "",
+                updateID: null,
+                success_create: "",
+                cols: [1,2,3],
+                selectedCourses: [],
+                roleDropDown: false,
+                coursesBySkill2: {},
+                coursesBySkill3: {"Software Testing":[{"skill_description":"Software testing is the process of assessing the functionality of a software program.","skill_id":7,"skill_name":"Software Testing"},[]],
+                "Machine Learning":[{"skill_description":"Machine learning (ML) is a type of artificial intelligence (AI) that allows software applications to become more accurate at predicting outcomes without being explicitly programmed to do so.","skill_id":5,"skill_name":"Machine Learning"},
+                [{"course_category":"Core","course_description":"Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics","course_id":"COR002","course_name":"Lean Six Sigma Green Belt Certification","course_status":"Active","course_type":"Internal"},{"course_category":"Finance","course_description":"Business continuity planning is essential in any business to minimise loss when faced with potential threats and disruptions.","course_id":"FIN003","course_name":"Business Continuity Planning","course_status":"Retired","course_type":"External"},{"course_category":"Core","course_description":"The programme provides the learner with the key foundations of what builds customer confidence in the service industry","course_id":"COR004","course_name":"Service Excellence","course_status":"Pending","course_type":"Internal"}]]}
+            },
+            mounted: async function () {
+                this.getRoles()
+            },
+            methods: {
+                getRoles: async function getRoles() {
+                
+                roles = []
+                var config = {
+                method: 'get',
+                url: 'http://localhost:5010/jobroles',
+                headers: { }
+                };
+
+                await axios(config)
+                .then(function (response) {
+                roles = response.data.data
+                })
+                .catch(function (error) {
+                console.log(error);
+                });
+                console.log("this.job: ", )
+                this.roles = [...roles]
+            },
+
+             selectRole: async function selectRole(selectedRole) {
+
+                    if (selectedRole == null){
+                        console.log("role not selected")
+                    }else{
+                        console.log("role: ", selectedRole.name)
+                    }
+                    this.selectedRole = selectedRole;
+                    console.log("selectedRole: ", selectedRole)
+                    this.roleDropDown = false;
+
+                    this.setRole()
+                },
+
+                 setRole: async function setRole() {
+                    console.log("load skills for: ", this.selectedRole.job_role_id)
+                    results = await this.getSkills(this.selectedRole.job_role_id);
+                    console.log("setRole: ",results)
+                    // this.skills = results;
+                },
+
+                getCoursesBySkillSingle: async function getCoursesBySkillSingle(uniqueid) {
+
+                    coursesBySkill = []
+                    var config = {
+                    method: 'get',
+                    url: `http://localhost:5010/coursebyskill/${uniqueid}`,
+                    headers: { }
+                    };
+
+                    result = await axios(config)
+                    .then(function (response) {
+                    coursesBySkill = response.data.data
+                    return coursesBySkill
+                    })
+                    .catch(function (error) {
+                    console.log(error);
+                    return []
+                    });
+
+
+                    console.log(this.coursesBySkill, "result for getCoursesBySkillSingle:", result)
+                    return result
+
+                    },
+
+                getSkills: async function getSkills(id) {
+                    skills = []
+                    var config = {
+                    method: 'get',
+                    url: `http://localhost:5010/skillbyrole/${id}`,
+                    headers: { }
+                    };
+
+                    await axios(config)
+                    .then(function (response) {
+                    // console.log(JSONf.stringify(response.data));
+                    skills = response.data.data
+                    })
+                    .catch(function (error) {
+                    console.log(error);
+                    });
+                    this.skills = skills
+                },
+
+            selectSkill:  async function selectSkill(selectedSkill) {
+                searchIdx = this.selectedSkills.indexOf(selectedSkill.skill_id)
+                if (searchIdx == -1){
+                    this.selectedSkills.push(selectedSkill.skill_id)
+                }else{
+                    this.selectedSkills.splice(searchIdx, 1); // 2nd parameter means remove one item only
+                }
+            
+                    // console.log("selectedSkills:", this.selectedSkills)
+
+                    if (this.coursesBySkill2.hasOwnProperty(selectedSkill.skill_name)){
+                        delete this.coursesBySkill2[selectedSkill.skill_name]
+                    }else{
+                        
+                        courses = await this.getCoursesBySkillSingle(selectedSkill.skill_id)
+                        console.log("courses:", courses)
+                        this.coursesBySkill2[selectedSkill.skill_name] = [selectedSkill, courses]
+                    }
+                    console.log("------------------", selectedSkill.skill_name, "this.coursesBySkill2: ", this.coursesBySkill2)
+
+                    // clean dictionary:
+                    cleanDict = {}
+                    for (const [key, value] of Object.entries(this.coursesBySkill2)){
+                        cleanDict[key] = value
+                    }
+                    console.log("cleanDict: ", cleanDict)
+                    this.coursesBySkill2 = cleanDict
+                    
+                },
+
+
+                selectCourse:  async function selectCourse(selectedCourse) {
+                   
+                    // this.selectedCourses.push(selectedCourse.course_id)
+
+                    // if course if found in existing selections, remove else add:
+                    searchIdx = this.selectedCourses.indexOf(selectedCourse.skill_id)
+                if (searchIdx == -1){
+                    this.selectedCourses.push(selectedCourse.skill_id)
+                }else{
+                    this.selectedCourses.splice(searchIdx, 1); // 2nd parameter means remove one item only
+                }
+
+                    console.log("this.selectedSkills: ", this.selectedCourses)
+                    console.log("ccc", selectedCourse.course_id, " ----> ", this.selectCourses.indexOf(selectedCourse.course_id))
+                    },
+
+                    createLearningJourneywork: async function createLearningJourneywork(){
+                    console.log("load skills for: ", this.selectedRole)
+
+                    console.log("this.selectedSkills: ", this.selectedSkills)
+                    console.log("this.selectedCourses: ", this.selectedCourses)
+                    console.log("this.selectedRole: ", this.selectedRole)
+
+                    input = this.selectedRole.job_role_id
+                    console.log(input)
+                    let learningjourney = await this.createLearningJourney(input)
+                    console.log("learning journey created!!1: ", learningjourney)
+
+                    for (skill of this.selectedSkills){
+                        console.log("skill: ", skill)
+                        addskillresponse = await this.addSkillToLearningJourney(learningjourney.learning_journey_id, skill)
+                    }
+                    console.log("skills added created: ", addskillresponse)
+
+                    for (course of this.selectCourses){
+                        // console.log("this.selectedCourses: ", this.selectedCourses)
+                        addcourseresponse = this.addCourseToLearningJourney(learning_journey, course)
+                    }
+
+                    // if it fails to reach here, delete the whole learning journey, and ask to redo selection
+                    // test case -- if user doesnt select at least one course for learning journey, it 
+                    // shows error message must at least select one course:
+
+                    // maybe we need 3 user stories for creation of one learning journey:
+
+                },
+
+                // ---------------------------------------------------USED HERE ---------------------------------------------------------------------------------------------------------
+
+                // setSkills: async function setSkills() {
+                //     uniqueids =[]
+                //     for (i of this.selectedSkills){
+                //         if (uniqueids.indexOf(i) == -1){
+                //             uniqueids.push(i)
+                //         }
+                //     }
+                //     console.log(uniqueids, "---> ", this.selectedSkills)
+                //     await this.getCoursesBySkill(uniqueids)
+                //     console.log("this.selectedSkills", this.selectedSkills)
+                    
+                // },
+                // setCourses: async function setCourses() {
+                //     console.log("load skills for: ", this.selectedRole.name)
+                //     results = this.getSkills(this.selectedRole.id);
+                //     // console.log(results)
+                //     this.skills = results;
+                // },
+
+
+
+                // getCoursesBySkill: async function getCoursesBySkill(uniqueids){
+                //     coursesBySkill = []
+                //     console.log(uniqueids)
+                //     for (i of uniqueids){
+                    
+                //     var config = {
+                //     method: 'get',
+                //     url: `http://localhost:5010/coursebyskill/${i}`,
+                //     headers: { }
+                //     };
+
+                //     await axios(config)
+                //     .then(function (response) {
+                //     // console.log(JSON.stringify(response.data));
+                //     console.log("adding for ", i)
+                //     // coursesBySkill += [response.data.data];
+                //     coursesBySkill = [...coursesBySkill, ...response.data.data]
+                //     })
+                //     .catch(function (error) {
+                //     console.log(error);
+                //     });}
+                //     this.coursesBySkill = coursesBySkill
+                //     console.log(this.coursesBySkill)
+                // },
+
+                // deleteSkill: async function (id) {
+                //     //console.log("delete: ", id)
+
+                //     // var axios = require('axios');
+                //     var data = JSON.stringify({
+                //         "id": id
+                //     });
+
+                //     var config = {
+                //         method: 'delete',
+                //         url: 'http://localhost:5010/skill',
+                //         headers: {
+                //             'Content-Type': 'application/json'
+                //         },
+                //         data: data
+                //     };
+                //     await axios(config)
+                //         .then(async function (response) {
+                //             //console.log(JSON.stringify(response.data));
+                //             //   await getSkills();
+                //         })
+                //         .catch(function (error) {
+                //             console.log(error);
+                //         });
+                //     this.getSkills()
+                // },
+
+                // addIDs: function (a_tag) {
+                //     a_tags = document.getElementsByTagName('a');
+                // },
+                // createSkill: function (item) {
+                //     if(this.checkCreateNameValid() == true){
+                //         return 
+                //     }
+                //     var new_skill_name = this.create_skill_name;
+                //     var new_skill_des = this.create_skill_des;
+                //     var new_skill_img = this.image;
+
+                //     var url = 'http://localhost:5010/skills'
+                //     axios.post(url, {
+                //             name: new_skill_name,
+                //             description: new_skill_des,
+                //             image: new_skill_img.split(',')[1]
+                //         })
+                //         .then(response => {
+                //             console.log(response.data)
+                //             this.success_create = "Successfully created a skill!" 
+                //         })
+                //         .catch(error => {
+                //             this.error = error.response.data.message
+                //         });
+                // },
+                // checkCreateNameValid(){
+                //     // If varName consist illegal char = true
+                //     if(specialChars.test(this.create_skill_name) | /\d/.test(this.create_skill_name)){
+                //         // console.log("Invalid input value for skill ID, please do not use any special characters!")
+                //         return true;
+                //     }
+                // },
+                // checkCreateNameTooLong(){
+                //     // If varName consist illegal char = true
+                //     if((this.create_skill_name).length > 100){
+                //         // console.log("Invalid length should not exceed 100!")
+                //         return true;
+                //     }
+                // },
+                // openUpdateModal(skillID) {
+                //     this.updateID = skillID;
+                //     console.log(this.skills)
+                //     for (i in this.skills) {
+                //             if (this.skills[i].id == skillID) {
+                //                 this.varName = this.skills[i].name;
+                //                 this.varDesc = this.skills[i].description;
+                //                 this.varImage = this.skills[i].image 
+                //             }
+                //         }
+                // },
+                // closeUpdateModal(){
+                //     this.updateID = null;
+                // },
+                // checkUpdateNameValid(){
+                //     // If varName consist illegal char = true
+                //     if(specialChars.test(this.varName)){
+                //         // console.log("Invalid input value for skill ID, please do not use any special characters!")
+                //         return true;
+                //     }
+                // },
+                // checkUpdateNameTooLong(){
+                //     // If varName consist illegal char = true
+                //     if((this.varName).length > 100){
+                //         // console.log("Invalid length should not exceed 100!")
+                //         return true;
+                //     }
+                // },
+                // updateSkill: function (skillID) {
+                //     if(this.checkUpdateNameValid() == true){
+                //         return
+                //     }
+                //     console.log(this.image)
+                //     skillsURL = "http://localhost:5010/skills/" + skillID
+                //     console.log(skillsURL)
+                //     fetch(skillsURL, {
+                //         method: 'PUT',
+                //         headers: {
+                //             'Content-Type': 'application/json'
+                //         },
+                //         body: JSON.stringify({
+                //             'name': this.varName,
+                //             'description': this.varDesc,
+                //             // 'image': this.Image,
+                //         })
+                //     }).then(response => {
+                //         console.log(skillID)
+                //         for (i in this.skills) {
+                //             if (this.skills[i].id == skillID) {
+                //                 this.skills[i].name = this.varName
+                //                 this.skills[i].description = this.varDesc
+                //                 // this.skills[i].image = this.Image
+                //                 }
+                //             }
+                //         console.log(this.skills)
+                //         // this.varObj
+                //         this.varName = null
+                //         this.varDesc = null
+                //         this.varImage = null
+                //         return response.json()
+                //     }).then(data =>
+                //         // this is the data we get after putting our data,
+                //         console.log(data)
+                //     )
+                //     this.closeUpdateModal();
+                // },
+                // onChangeFile: function (e) {
+                //     var files = e.target.files || e.dataTransfer.files;
+                //     if (!files.length)
+                //         return;
+                //     this.createImage(files[0]);
+                // },
+                // createImage(file) {
+                //     var image = new Image();
+                //     var reader = new FileReader();
+
+                //     reader.onload = (e) => {
+                //         this.image = e.target.result;
+                //         console.log(this.image)
+                //     };
+                //     reader.readAsDataURL(file);
+                // },
+                // removeImage: function (e) {
+                //     this.image = '';
+                // },
+                // openRoleDropDown: function(){
+                    
+                //     this.roleDropDown = !this.roleDropDown;
+                //     console.log(this.roleDropDown)
+                // }
+                
+            }
+        });
+    </script>
+    <style>
+        button:disabled {
+        background: hwb(0 0% 100% / 0.493);
+        }
+    </style>
+    <!-- flowbite -->
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+</body>
+
+</html>
