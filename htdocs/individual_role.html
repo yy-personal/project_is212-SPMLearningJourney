@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width">
+
+        <title>JobRole</title>
+
+        <link rel="stylesheet" href="">
+
+        <!-- Bootstrap libraries -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap 5 CDN -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+        </script>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+            integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+
+        <!--Replace with your tailwind.css once created-->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+        <!-- VUE 3 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <!--Vue ScrollTo-->
+        <script src="https://unpkg.com/vue-scrollto@2.7.9/vue-scrollto.js"></script>
+        <!-- Flowbite -->
+        <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+        <style>
+            .gradient {
+                background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+            }
+
+            .backdrop {
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+        </style>
+    </head>
+
+</head>
+
+<body>
+
+    <body class="leading-normal tracking-normal text-white" style="font-family: 'Source Sans Pro', sans-serif;">
+        <div id="main-container">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Active</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+
+            <!-- NAV BAR -->
+            <nav id="header" class="fixed w-full z-30 top-0 text-white gradient">
+                <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
+                    <div class="pl-1 flex items-end">
+                        <!-- SMALLER SCREEN -->
+                        <div class="h-20 block lg:hidden pr-4 text-black">
+                            <button id="nav-toggle"
+                                class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                                <svg class="fill-current h-6 w-6" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <title>Menu</title>
+                                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- LARGER SCREEN -->
+                        <div class="h-20 w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 lg:bg-transparent text-black p-4 lg:p-0 z-20"
+                            id="nav-content">
+                            <img src='../logo.png' width="135" height="135">
+                            <ul class="list-reset lg:flex justify-end flex-1 items-center">
+                                <li class="mr-3">
+                                    <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                        href="#" v-on:onclick="goPage(this)" id="Homelink">Home</a>
+                                </li>
+                                <li class="mr-3">
+                                    <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                        href="../htdocs/hr_skills.html" v-on:onclick="goPage(this)"
+                                        id="Skillslink">Skills</a>
+                                </li>
+                                <li class="mr-3">
+                                    <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                        href="../htdocs/hr_roles.html" v-on:onclick="goPage(this)"
+                                        id="Roleslink">Roles</a>
+                                </li>
+                                <li class="mr-3">
+                                    <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4 hidden"
+                                        href="#" v-on:onclick="goPage(this)" id="Courseslink">Courses</a>
+                                </li>
+                            </ul>
+                            <button id="navAction"
+                                class="hidden h-10 mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full p-1 px-5 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                                Action
+                            </button>
+                        </div>
+                    </div>
+                    <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
+                </div>
+            </nav>
+
+            <section class="container bg-white py-8 pt-20" id="Roles">
+                <div
+                    class="mt-20 p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{jobRoleName}}</h5>
+                    <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
+                        {{jobRoleDes}}
+                    </p>
+                    <div class="justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+                        <button v-scroll-to="'#middle'" type="button"
+                            class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            Assign Skills</button>
+                    </div>
+                </div>
+
+                <div id='middle'
+                    class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+                    <!-- SKILLS AVAILABLE -->
+                    <div
+                        class="p-4 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex justify-between items-center mb-4">
+                            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Available Skills
+                            </h5>
+                        </div>
+                        <div class="flow-root">
+                            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <li class="py-3 sm:py-4" v-for="skill in skills">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                                                {{skill.skill_name}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                {{skill.skill_description}}
+                                            </p>
+                                        </div>
+                                        <div
+                                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                            <input type='checkbox' v-model='selectedSkills' :value="skill.skill_name"
+                                                v-model="selectedSkills">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div
+                                class="flex flex-col justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+                                <p class="text-sm font-medium text-red-700 dark:text-red-500">{{error}}</p>
+                                <button v-on:click="assignSkills()" type="button"
+                                    class="mt-3 text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                    Confirm Selection</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SKILLS ASSIGNED -->
+                    <div
+                        class="p-4 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex justify-between items-center mb-4">
+                            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Skills Assigned
+                            </h5>
+                            <!-- <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                                View all
+                            </a> -->
+                        </div>
+                        <div class="flow-root">
+                            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <li class="py-3 sm:py-4" v-for="skill in assignedSkills">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                                                {{skill.skill_name}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                {{skill.skill_description}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <script>
+            const vm = new Vue({
+                el: '#main-container',
+                data: {
+                    jobRoles: [],
+                    jobRole: null,
+                    jobRoleDes: "",
+                    jobRoleName: "",
+                    jobRoleID: null,
+                    skills: [],
+                    selectedSkills: [],
+                    assignedSkills: [],
+                    error: "",
+                },
+                mounted: async function () {
+                    let one = "http://localhost:5010/jobroles";
+                    let two = "http://localhost:5010/skills";
+
+                    const requestOne = axios.get(one);
+                    const requestTwo = axios.get(two);
+
+                    axios.all([requestOne, requestTwo])
+                        .then(axios.spread((...responses) => {
+                            const responseOne = responses[0].data
+                            const responseTwo = responses[1].data
+
+                            //job roles
+                            this.jobRoles = responseOne.data
+                            //console.log(this.jobRoles)
+                            var query = window.location.search.substring(4);
+                            for (each of this.jobRoles) {
+                                if (each.job_role_id == query) {
+                                    this.jobRole = each
+                                    //console.log(this.jobRole)
+                                    this.jobRoleDes = each.job_role_description
+                                    this.jobRoleName = each.job_role_name
+                                    this.jobRoleID = each.job_role_id
+                                }
+                            }
+
+                            //skills
+                            this.skills = responseTwo.data
+
+                            //assigned skills
+                            this.getAssignedSkills()
+
+                        })).catch(errors => {
+                            console.log(errors)
+                        })
+                },
+                methods: {
+                    assignSkills() {
+                        console.log(this.selectedSkills)
+                        var skills = this.skills
+                        var skillIDs = []
+
+                        if (this.selectedSkills.length == 0) {
+                            this.error = "Please select skills to assign"
+                        } else {
+                            this.error = ""
+                            for (each_name of this.selectedSkills) {
+                                for (each_skill of skills) {
+                                    if (each_skill.skill_name == each_name) {
+                                        skillIDs.push(each_skill.skill_id)
+                                    }
+                                }
+                                console.log(skillIDs)
+                                this.selectedSkills = []
+                            }
+
+                            for (each_skill_id of skillIDs) {
+                                console.log(each_skill_id)
+                                var url = "http://localhost:5010/skills_to_jobrole"
+                                var config = {
+                                    job_role_id: this.jobRoleID,
+                                    //ONE SKILL ADDED ONLY
+                                    skill_id: each_skill_id
+                                }
+                                axios.post(url, config)
+                                    .then(response => {
+                                        //console.log(response.data)
+                                        this.getAssignedSkills()
+                                    })
+                                    .catch(error => {
+                                        console.log(error)
+                                    })
+                            }
+                        }
+                    },
+                    getAssignedSkills() {
+                        var url = 'http://localhost:5010/skills_to_jobrole'
+                        axios.get(url)
+                            .then(response => {
+                                var data = response.data.data
+                                //console.log(data)
+                                for (each of data) {
+                                    if (each.job_role_id == this.jobRoleID) {
+                                        for (each_skill of this.skills) {
+                                            if (each.skill_id == each_skill.skill_id) {
+                                                if (!this.assignedSkills.includes(each_skill)) {
+                                                    this.assignedSkills.push(each_skill)
+                                                    console.log(this.assignedSkills)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            })
+                        return this.assignedSkills
+                    },
+                },
+            })
+        </script>
+        <!-- flowbite -->
+        <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+    </body>
+
+</html>
