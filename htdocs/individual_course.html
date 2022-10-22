@@ -129,9 +129,9 @@
             <section class="container bg-white py-8 pt-20" id="Roles">
                 <div
                     class="mt-20 p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                    <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{jobRoleName}}</h5>
+                    <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{courseName}}</h5>
                     <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
-                        {{jobRoleDes}}
+                        {{courseDes}}
                     </p>
                     <div class="justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
                         <button v-scroll-to="'#middle'" type="button"
@@ -215,18 +215,18 @@
             const vm = new Vue({
                 el: '#main-container',
                 data: {
-                    jobRoles: [],
-                    jobRole: null,
-                    jobRoleDes: "",
-                    jobRoleName: "",
-                    jobRoleID: null,
+                    courses: [],
+                    course: null,
+                    courseDes: "",
+                    courseName: "",
+                    courseID: null,
                     skills: [],
                     selectedSkills: [],
                     assignedSkills: [],
                     error: "",
                 },
                 mounted: async function () {
-                    let one = "http://localhost:5010/jobroles";
+                    let one = "http://localhost:5010/courses";
                     let two = "http://localhost:5010/skills";
 
                     const requestOne = axios.get(one);
@@ -237,21 +237,21 @@
                             const responseOne = responses[0].data
                             const responseTwo = responses[1].data
 
-                            //job roles
-                            this.jobRoles = responseOne.data
-                            //console.log(this.jobRoles)
+                            //courses
+                            this.courses = responseOne.data
+                            //console.log(this.courses)
                             var query = window.location.search.substring(4);
-                            for (each of this.jobRoles) {
-                                if (each.job_role_id == query) {
-                                    this.jobRole = each
-                                    //console.log(this.jobRole)
-                                    this.jobRoleDes = each.job_role_description
-                                    this.jobRoleName = each.job_role_name
-                                    this.jobRoleID = each.job_role_id
+                            for (each of this.courses) {
+                                if (each.course_id == query) {
+                                    this.course = each
+                                    //console.log(this.course)
+                                    this.courseDes = each.course_description
+                                    this.courseName = each.course_name
+                                    this.courseID = each.course_id
                                 }
                             }
 
-                            //skills
+                            //courses
                             this.skills = responseTwo.data
 
                             //assigned skills
@@ -283,9 +283,9 @@
 
                             for (each_skill_id of skillIDs) {
                                 console.log(each_skill_id)
-                                var url = "http://localhost:5010/skills_to_jobrole"
+                                var url = "http://localhost:5010/skills_to_course"
                                 var config = {
-                                    job_role_id: this.jobRoleID,
+                                    course_id: this.courseID,
                                     //ONE SKILL ADDED ONLY
                                     skill_id: each_skill_id
                                 }
@@ -301,13 +301,13 @@
                         }
                     },
                     getAssignedSkills() {
-                        var url = 'http://localhost:5010/skills_to_jobrole'
+                        var url = 'http://localhost:5010/skills_to_course'
                         axios.get(url)
                             .then(response => {
                                 var data = response.data.data
                                 //console.log(data)
                                 for (each of data) {
-                                    if (each.job_role_id == this.jobRoleID) {
+                                    if (each.course_id == this.courseID) {
                                         for (each_skill of this.skills) {
                                             if (each.skill_id == each_skill.skill_id) {
                                                 if (!this.assignedSkills.includes(each_skill)) {

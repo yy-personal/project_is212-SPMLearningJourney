@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 # Mac user ====================================================================
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
                                         '@localhost:3306/ljms'
 # =============================================================================
 
@@ -188,6 +188,22 @@ class JobRoleSkill(db.Model):
     __tablename__ = 'jobroleskill'
     job_role_id = db.Column(db.Integer, db.ForeignKey('jobrole.job_role_id'), primary_key=True)
     skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+class SkillCourse(db.Model):
+    __tablename__ = 'skillcourse'
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.course_id'), primary_key=True)
 
     def to_dict(self):
         """
@@ -515,6 +531,7 @@ def read_course():
         }
     ), 200
 
+
 ######## Learning Journey ########
 # Get all Learning Journey 
 @app.route("/learning_journies")
@@ -570,6 +587,40 @@ def get_skills_from_jobrole():
                     for jobrole_skills in jobrole_skills_List]
         }
     ), 200
+
+######## SKILLCOURSE ########
+# add skils to course 
+@app.route("/skills_to_course", methods=['POST'])
+def add_skill_to_course():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('course_id', 'skill_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    course_skill = SkillCourse(**data)
+    try:
+        db.session.add(course_skill)
+        db.session.commit()
+        return jsonify(course_skill.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+#get all the skills from that role
+@app.route("/skills_to_course")
+def get_skills_from_course():
+    course_skills_List = SkillCourse.query.all()
+    return jsonify(
+        {
+            "data": [course_skills.to_dict()
+                    for course_skills in course_skills_List]
+        }
+    ), 200
+
 
 
 db.create_all()
