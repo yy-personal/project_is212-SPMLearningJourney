@@ -111,6 +111,95 @@ class JobRoleSkill(db.Model):
             result[column] = getattr(self, column)
         return result
 
+class Role(db.Model):
+    __tablename__ = 'role'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name  = db.Column(db.String(100))
+    #description = db.Column(db.String(500))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'role'
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        print(result)
+        return result
+
+class Staff(db.Model):
+    __tablename__ = 'staff'
+
+    staff_id = db.Column(db.Integer, primary_key=True)
+    staff_Fname  = db.Column(db.String(50))
+    staff_Lname  = db.Column(db.String(50))
+    department  = db.Column(db.String(50))
+    email  = db.Column(db.String(50))
+    role = db.Column(db.Integer , db.ForeignKey('role.role_id'))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'staff'
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        print(result)
+        return result
+
+
+class JobRole(db.Model):
+    __tablename__ = 'jobrole'
+
+    job_role_id = db.Column(db.Integer, primary_key=True)
+    job_role_name = db.Column(db.String(100))
+    job_role_description = db.Column(db.String(500))
+    job_role_deleted = db.Column(db.Boolean(), default=False, nullable=False)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'jobrole'
+    }
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
+class JobRoleSkill(db.Model):
+    __tablename__ = 'jobroleskill'
+    job_role_id = db.Column(db.Integer, db.ForeignKey('jobrole.job_role_id'), primary_key=True)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
+
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+        in which the keys correspond to database columns
+        """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+        return result
+
 class Skill(db.Model):
     __tablename__ = 'skill'
 
@@ -326,8 +415,6 @@ def delete_skill(id):
 #         return jsonify({
 #             "message": "Unable to commit to database."
 #         }), 500
-    
-
 
 ######## ROLES ########
 # Create A New Job Role (C)
@@ -341,11 +428,11 @@ def create_role():
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
-    role = JobRole(**data)
+    jobrole = JobRole(**data)
     try:
-        db.session.add(role)
+        db.session.add(jobrole)
         db.session.commit()
-        return jsonify(role.to_dict()), 201
+        return jsonify(jobrole.to_dict()), 201
     except Exception:
         return jsonify({
             "message": "Unable to commit to database."
@@ -393,6 +480,7 @@ def delete_role(id):
 # @app.route('/jobrole', methods=['DELETE'])
 # def delete_role():
 #     data = request.get_json()
+#     print(data)
 #     if not all(key in data.keys() for
 #             key in ('job_role_id', 'job_role_id')):
 #         return jsonify({
@@ -447,6 +535,39 @@ def get_learning_journey_skill():
         {
             "data": [learning_journey_skill.to_dict()
                     for learning_journey_skill in learning_journey_skill_List]
+        }
+    ), 200
+
+######## JOBROLESKILL ########
+# add skils to jobrole 
+@app.route("/skills_to_jobrole", methods=['POST'])
+def add_skill_to_jobrole():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('job_role_id', 'skill_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    jobrole_skill = JobRoleSkill(**data)
+    try:
+        db.session.add(jobrole_skill)
+        db.session.commit()
+        return jsonify(jobrole_skill.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+#get all the skills from that role
+@app.route("/skills_to_jobrole")
+def get_skills_from_jobrole():
+    jobrole_skills_List = JobRoleSkill.query.all()
+    return jsonify(
+        {
+            "data": [jobrole_skills.to_dict()
+                    for jobrole_skills in jobrole_skills_List]
         }
     ), 200
 

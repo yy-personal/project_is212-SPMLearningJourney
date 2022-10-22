@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
 
-    <title>View Roles Records</title>
+    <title>View JobRoles Records</title>
 
     <link rel="stylesheet" href="">
     <!-- Bootstrap libraries -->
@@ -36,12 +36,12 @@
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <!--Replace with your tailwind.css once created-->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
-
+    <!-- VUE 3 -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Flowbite -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
-    
+
     <style>
         .gradient {
             background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
@@ -57,27 +57,27 @@
     <div id="main-container">
         <ul class="nav justify-content-end">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Active</a>
+                <a class="nav-link active" href="#">Active</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">Link</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">Link</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
+                <a class="nav-link disabled" href="#">Disabled</a>
             </li>
-          </ul>
-        
+        </ul>
+
         <!-- NAV BAR -->
         <nav id="header" class="fixed w-full z-30 top-0 text-white gradient">
             <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
                 <div class="pl-1 flex items-end">
-                    
+
                     <!-- SMALLER SCREEN -->
                     <div class="h-20 block lg:hidden pr-4 text-black">
-                        <button id="nav-toggle" 
+                        <button id="nav-toggle"
                             class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                             <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <title>Menu</title>
@@ -89,7 +89,7 @@
                     <!-- LARGER SCREEN -->
                     <div class="h-20 w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 lg:bg-transparent text-black p-4 lg:p-0 z-20"
                         id="nav-content">
-                        <img src = '../logo.png' width="135" height="135">
+                        <img src='../logo.png' width="135" height="135">
                         <ul class="list-reset lg:flex justify-end flex-1 items-center">
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
@@ -97,7 +97,8 @@
                             </li>
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                                    href="../htdocs/hr_skills.html" v-on:onclick="goPage(this)" id="Skillslink">Skills</a>
+                                    href="../htdocs/hr_skills.html" v-on:onclick="goPage(this)"
+                                    id="Skillslink">Skills</a>
                             </li>
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
@@ -108,7 +109,7 @@
                                     href="#" v-on:onclick="goPage(this)" id="Courseslink">Courses</a>
                             </li>
                         </ul>
-                        
+
                         <button id="navAction"
                             class="hidden h-10 mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full p-1 px-5 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                             Action
@@ -135,10 +136,10 @@
                     <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-for="role in roles">
 
                         <!-- EACH ROLE -->
-                        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
-                            style='padding-top: 20px;'>
-                            <a href="#" class="flex flex-wrap no-underline hover:no-underline"
-                                v-on:click="addIDs(this)">
+                        <a href="#" class="flex flex-wrap no-underline hover:no-underline"
+                            v-on:click="goToSinglepage(role.job_role_id)">
+                            <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
+                                style='padding-top: 20px;'>
                                 <p class="w-full font-bold text-xl text-gray-800 px-6"
                                     style='margin-bottom: 10px; font-size: 25px;'>
                                     {{role.job_role_name}}
@@ -146,8 +147,8 @@
                                 <p class="text-gray-800 text-base px-6 mb-5">
                                     {{role.job_role_description}}
                                 </p>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
 
                         <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
                             style="text-align: center;">
@@ -244,7 +245,7 @@
                                 </div>
 
                                 <div style="text-align: center;">
-                                    <button type="submit" v-on:click="createRole(this)" :disabled="checkCreateDesTooLong() ||  checkCreateNameTooLong() || checkCreateNameValid() || checkRoleExist() || isEmpty()"
+                                    <button type="submit" v-on:click="createRole(this)" :disabled="checkCreateNameValid|| checkCreateDesTooLong() || checkCreateNameTooLong() || checkRoleExist()"
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
                                 </div>
@@ -278,8 +279,9 @@
                             <!-- OLD -->
                             <form class="space-y-6" action="#">
                                 <div v-if="!checkUpdateNameValid() && !checkUpdateNameTooLong()">
-                                    <label for="role_name" 
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter Updated Role
+                                    <label for="role_name"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter
+                                        Updated Role
                                         Name</label>
                                     <input type="text" name="role_name" id="role_name" v-model="varName"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -287,26 +289,34 @@
                                 </div>
 
                                 <div v-else-if="checkUpdateNameValid()">
-                                    <label for="role_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter Updated Role
+                                    <label for="role_name"
+                                        class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter
+                                        Updated Role
                                         Name</label>
                                     <input type="text" name="role_name" id="role_name" v-model="varName"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Please do not enter any special characters!</p>
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
+                                            class="font-medium"></span> Please do not enter any special characters!</p>
                                 </div>
 
                                 <div v-else-if="checkUpdateNameTooLong()">
-                                    <label for="role_name" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter Updated Role
+                                    <label for="role_name"
+                                        class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Enter
+                                        Updated Role
                                         Name</label>
                                     <input type="text" name="role_name" id="role_name" v-model="varName"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 100 characters!</p>
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span
+                                            class="font-medium"></span> Input length should be lesser than 100
+                                        characters!</p>
                                 </div>
 
                                 <div>
                                     <label for="role_description"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter Updated Role
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter
+                                        Updated Role
                                         Description</label>
                                     <textarea name="role_description" id="role_description" v-model="varDesc"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -315,7 +325,8 @@
                                 </div>
 
                                 <div style="text-align: center;">
-                                    <button type="submit" :disabled="checkUpdateNameValid()|| checkUpdateNameTooLong()" v-on:click="updateRole(updateID)" 
+                                    <button type="submit" :disabled="checkUpdateNameValid()|| checkUpdateNameTooLong()"
+                                        v-on:click="updateRole(updateID)"
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
                                     <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
@@ -371,20 +382,10 @@
                 this.roles = roles2
             },
             methods: {
-                goPage: function (pg) {
-                    //console.log(pg)
-                    //console.log(pg.innerHTML)
-                    document.getElementById(currPage + "link").classList.remove("font-bold")
-
-                    document.getElementById(pg.innerHTML + "link").classList.add("font-bold")
-
-                    console.log("ads", currPage.substring(-4, -1))
-                    document.getElementById(currPage).classList.add("hidden")
-                    document.getElementById(pg.innerHTML).classList.remove("hidden")
-
-                    currPage = pg.innerHTML
+                goToSinglepage: function (id) {
+                    console.log(id)
+                    window.location.assign("./individual_role.html?id=" + id)
                 },
-
                 getRoles: async function getRoles() {
                     // var axios = require('axios');
 
@@ -429,26 +430,42 @@
                     .catch(error => {
                         console.log(error)
                     })
+
+                    // var axios = require('axios');
+                    // var data = JSON.stringify({
+                    //     "job_role_id": id
+                    // });
+
+                    // var config = {
+                    //     method: 'delete',
+                    //     url: 'http://localhost:5010/jobrole',
+                    //     headers: {
+                    //         'Content-Type': 'application/json'
+                    //     },
+                    //     data: data
+                    // };
+
+                    // await axios(config)
+                    //     .then(async function (response) {
+                    //         console.log(JSON.stringify(response.data));
+                    //     })
+                    //     .catch(function (error) {
+                    //         console.log(error);
+                    //     });
+
+                    // Get the updated version of database after deletion successful
+                    //this.getRoles()
                 },
 
-                createRole: function (item) {
-                    if(this.checkCreateNameValid() == true){
-                        return 
-                    }
-                    if(this.create_role_name == null | this.create_role_name == ''){
-                        return
-                    }
-                    if(this.create_role_des == null | this.create_role_des == ''){
-                        return
-                    }
+                createRole: function () {
                     var new_role_name = this.create_role_name;
                     var new_role_des = this.create_role_des;
 
                     var url = 'http://localhost:5010/jobrole'
                     axios.post(url, {
-                        job_role_name: new_role_name,
-                        job_role_description: new_role_des,
-                    })
+                            job_role_name: new_role_name,
+                            job_role_description: new_role_des,
+                        })
                         .then(response => {
                             console.log(response.data)
                         })
@@ -500,26 +517,60 @@
                                 this.varDesc = this.roles[i].job_role_description;
                             }
                         }
+                    }
                 },
-                closeUpdateModal(){
-                    this.updateID = null;
-                },
-                checkUpdateNameValid(){
+                checkCreateNameValid(){
                     // If varName consist illegal char = true
-                    if(specialChars.test(this.varName) | /\d/.test(this.varName)){
+                    if(specialChars.test(this.create_role_name) | /\d/.test(this.create_role_name)){
                         // console.log("Invalid input value for skill ID, please do not use any special characters!")
                         return true;
                     }
                 },
-                checkUpdateNameTooLong(){
+                checkCreateNameTooLong(){
                     // If varName consist illegal char = true
-                    if((this.varName).length > 100){
+                    if((this.create_role_name).length >= 100){
+                        // console.log("Invalid length should not exceed 100!")
+                        return true;
+                    }
+                },
+                checkCreateDesTooLong(){
+                    if((this.create_role_des).length >= 500){
+                        return true;
+                    }
+                },
+                closeCreateModal(){
+                    this.create_role_des = ''
+                    this.create_role_name = ''
+                },
+                openUpdateModal(roleID) {
+                    this.updateID = roleID;
+                    //console.log(this.roles)
+                    for (i in this.roles) {
+                        if (this.roles[i].job_role_id == roleID) {
+                            this.varName = this.roles[i].job_role_name;
+                            this.varDesc = this.roles[i].job_role_description;
+                        }
+                    }
+                },
+                closeUpdateModal() {
+                    this.updateID = null;
+                },
+                checkUpdateNameValid() {
+                    // If varName consist illegal char = true
+                    if (specialChars.test(this.varName)) {
+                        // console.log("Invalid input value for skill ID, please do not use any special characters!")
+                        return true;
+                    }
+                },
+                checkUpdateNameTooLong() {
+                    // If varName consist illegal char = true
+                    if ((this.varName).length > 100) {
                         // console.log("Invalid length should not exceed 100!")
                         return true;
                     }
                 },
                 updateRole: function (roleID) {
-                                        if(this.checkUpdateNameValid() == true){
+                    if (this.checkUpdateNameValid() == true) {
                         return
                     }
                     rolesURL = "http://localhost:5010/jobrole/" + roleID
@@ -553,7 +604,7 @@
                     this.closeUpdateModal();
                 },
             }
-            });
+        );
     </script>
     <!-- flowbite -->
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
