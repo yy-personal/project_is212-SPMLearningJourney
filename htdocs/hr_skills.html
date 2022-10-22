@@ -44,6 +44,9 @@
         .backdrop {
             background-color: rgba(0,0,0,0.4);
         }
+        button:disabled {
+        background: hwb(0 0% 100% / 0.493);
+        }
     </style>
 </head>
 
@@ -87,7 +90,7 @@
                         <ul class="list-reset lg:flex justify-end flex-1 items-center">
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                                    href="#" v-on:onclick="goPage(this)" id="Homelink">Home</a>
+                                    href="../htdocs/hr_ljmsHome.html" v-on:onclick="goPage(this)" id="Homelink">Home</a>
                             </li>
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
@@ -133,27 +136,24 @@
                             style='padding-top: 20px;'>
                             <a href="#" class="flex flex-wrap no-underline hover:no-underline"
                                 v-on:click="addIDs(this)">
-                                <p class="mx-auto pb-8 flex justify-center"><img
-                                        v-bind:src="`data:image/png;base64,${skill.image}`" />
-                                </p> <!-- INSERT IMAGE -->
                                 <p class="w-full font-bold text-xl text-gray-800 px-6"
                                     style='margin-bottom: 10px; font-size: 25px;'>
-                                    {{skill.name}}
+                                    {{skill.skill_name}}
                                 </p>
                                 <p class="text-gray-800 text-base px-6 mb-5">
-                                    {{skill.description}}
+                                    {{skill.skill_description}}
                                 </p>
                             </a>
                         </div>
 
                         <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
                             style="text-align: center;">
-                            <button type="button" v-on:click="openUpdateModal(skill.id)"
+                            <button type="button" v-on:click="openUpdateModal(skill.skill_id)"
                                 class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Update</button>
                             
                             <!-- Delete button -->
-                            <button v-on:click="deleteSkill(skill.id)" type="button"
+                            <button v-on:click="deleteSkill(skill.skill_id)" type="button"
                                 class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Delete</button>
                         </div>
@@ -176,7 +176,7 @@
                 <div class="relative p-4 w-full max-w-md h-full md:h-auto">
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <button type="button"
+                        <button type="button" @click = 'closeCreateModal()'
                             class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
                             data-modal-toggle="authentication-modal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -191,13 +191,23 @@
                             <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Create New Skill</h3>
                             <form class="space-y-6" action="#">
                                 
-                                <div v-if = "!checkCreateNameValid() && !checkCreateNameTooLong()">
+                                <div v-if = "!checkCreateNameValid() && !checkCreateNameTooLong() && !checkSkillExist()">
                                     <label for="skill_name"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
                                         Name</label>
                                     <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
+                                </div>
+
+                                <div v-else-if="checkSkillExist()">
+                                    <label for="skill_name"
+                                        class="block mb-2 text-sm font-medium text-red-600 dark:text-red-500">Skill
+                                        Name</label>
+                                    <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                        required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span>Skill already exist!</p>
                                 </div>
 
                                 <div v-else-if="checkCreateNameValid()">
@@ -207,7 +217,7 @@
                                     <input type="text" name="skill_name" id="skill_name" v-model="create_skill_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required>
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Please do not enter any special characters or numbers!</p>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span>Please do not enter any special characters or numbers!</p>
                                 </div>
 
                                 <div v-else-if="checkCreateNameTooLong()">
@@ -220,7 +230,7 @@
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 100 characters!</p>
                                 </div>
 
-                                <div>
+                                <div v-if="!checkCreateDesTooLong()">
                                     <label for="skill_description"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
                                         Description</label>
@@ -230,20 +240,20 @@
                                     </textarea>
                                 </div>
 
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        for="file_input">Upload Skill Image</label>
-                                    <input
-                                        class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        aria-describedby="file_input_help" id="file_input" type="file"
-                                        v-on:change="onChangeFile">
-                                    <p v-if = "" class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG,
-                                        PNG, JPG or GIF (MAX. 800x400px).</p>
+                                <div v-else-if="checkCreateDesTooLong()">
+                                    <label for="role_des" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Role
+                                        Description</label>
+                                    <input type="text" name="role_des" id="role_des" v-model="create_role_des"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    required>
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium"></span> Input length should be lesser than 500 characters!</p>
                                 </div>
+
+
                                 <!-- Error message button to try -->
                                 
                                 <div style="text-align: center;">
-                                    <button type="submit" v-on:click="createSkill(this)"
+                                    <button type="submit" v-on:click="createSkill(this)" :disabled="checkCreateDesTooLong() ||  checkCreateNameTooLong() || checkCreateNameValid() || checkSkillExist() || isEmpty() "
                                         class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
                                 </div>
@@ -275,11 +285,6 @@
                         <div class="py-6 px-6 lg:px-8">
                             <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update Existing Skill</h3>
                             <!-- OLD -->
-                            <p class="mx-auto flex justify-center"><img
-                                v-bind:src="`data:image/png;base64,${varImage}`" />
-                            </p> 
-                            </br>
-
                             <form class="space-y-6" action="#">
                                 <div v-if="!checkUpdateNameValid() && !checkUpdateNameTooLong()">
                                     <label for="skill_name" 
@@ -368,18 +373,15 @@
         const vm = new Vue({
             el: '#main-container',
             data: {
-                roles: [],
                 currPage: "Home",
                 activeClass: "inline-block py-2 px-4 text-black font-bold no-underline",
                 inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
                 skills: [],
                 create_skill_name: "",
                 create_skill_des: "",
-                image: "",
                 error: "",
                 varName: "",
                 varDesc: "",
-                varImg: "",
                 updateID: null,
                 success_create: "",
             },
@@ -423,30 +425,25 @@
                     this.skills = skills
                 },
                 deleteSkill: async function (id) {
-                    //console.log("delete: ", id)
+                    console.log("delete: ", id)
+                    var url= 'http://localhost:5010/skill/' + id
 
-                    // var axios = require('axios');
-                    var data = JSON.stringify({
-                        "id": id
-                    });
-
-                    var config = {
-                        method: 'delete',
-                        url: 'http://localhost:5010/skill',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: data
-                    };
-                    await axios(config)
-                        .then(async function (response) {
-                            //console.log(JSON.stringify(response.data));
-                            //   await getSkills();
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    this.getSkills()
+                    axios.delete(url)
+                    .then(
+                        response => {
+                            console.log(response.data)
+                            for(i in this.skills){
+                                // console.log(this.roles[i].job_role_id)
+                                // console.log(id)
+                                if(this.skills[i].skill_id == id){
+                                    this.skills.splice(i , 1)
+                                }
+                            }
+                        }
+                    )
+                    .catch(error => {
+                        console.log(error)
+                    })
                 },
 
                 addIDs: function (a_tag) {
@@ -458,21 +455,26 @@
                     }
                     var new_skill_name = this.create_skill_name;
                     var new_skill_des = this.create_skill_des;
-                    var new_skill_img = this.image;
 
-                    var url = 'http://localhost:5010/skills'
+                    var url = 'http://localhost:5010/skill'
                     axios.post(url, {
-                            name: new_skill_name,
-                            description: new_skill_des,
-                            image: new_skill_img.split(',')[1]
+                            skill_name: new_skill_name,
+                            skill_description: new_skill_des,
                         })
                         .then(response => {
-                            console.log(response.data)
+                            //console.log(response.data)
                             this.success_create = "Successfully created a skill!" 
                         })
                         .catch(error => {
                             this.error = error.response.data.message
                         });
+                },
+                checkSkillExist(){
+                    for(each of this.skills){
+                        if(each.skill_name.toLowerCase() == this.create_skill_name.toLowerCase()){
+                            return true;
+                        }
+                    }
                 },
                 checkCreateNameValid(){
                     // If varName consist illegal char = true
@@ -488,14 +490,27 @@
                         return true;
                     }
                 },
+                checkCreateDesTooLong(){
+                    if((this.create_skill_des).length >= 500){
+                        return true;
+                    }
+                },
+                isEmpty(){
+                    if (this.create_skill_des == '' | this.create_skill_name == ''){
+                        return true
+                    }
+                },
+                closeCreateModal(){
+                    this.create_skill_name = ''
+                    this.create_skill_des = ''
+                },
                 openUpdateModal(skillID) {
                     this.updateID = skillID;
                     console.log(this.skills)
                     for (i in this.skills) {
-                            if (this.skills[i].id == skillID) {
-                                this.varName = this.skills[i].name;
-                                this.varDesc = this.skills[i].description;
-                                this.varImage = this.skills[i].image 
+                            if (this.skills[i].skill_id == skillID) {
+                                this.varName = this.skills[i].skill_name;
+                                this.varDesc = this.skills[i].skill_description;
                             }
                         }
                 },
@@ -504,7 +519,7 @@
                 },
                 checkUpdateNameValid(){
                     // If varName consist illegal char = true
-                    if(specialChars.test(this.varName)){
+                    if(specialChars.test(this.varName) | /\d/.test(this.varName)){
                         // console.log("Invalid input value for skill ID, please do not use any special characters!")
                         return true;
                     }
@@ -520,8 +535,7 @@
                     if(this.checkUpdateNameValid() == true){
                         return
                     }
-                    console.log(this.image)
-                    skillsURL = "http://localhost:5010/skills/" + skillID
+                    skillsURL = "http://localhost:5010/skill/" + skillID
                     console.log(skillsURL)
                     fetch(skillsURL, {
                         method: 'PUT',
@@ -529,20 +543,20 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            'name': this.varName,
-                            'description': this.varDesc,
+                            'skill_name': this.varName,
+                            'skill_description': this.varDesc,
                             // 'image': this.Image,
                         })
                     }).then(response => {
-                        console.log(skillID)
+                        //console.log(skillID)
                         for (i in this.skills) {
-                            if (this.skills[i].id == skillID) {
-                                this.skills[i].name = this.varName
-                                this.skills[i].description = this.varDesc
+                            if (this.skills[i].skill_id == skillID) {
+                                this.skills[i].skill_name = this.varName
+                                this.skills[i].skill_description = this.varDesc
                                 // this.skills[i].image = this.Image
                                 }
                             }
-                        console.log(this.skills)
+                        //console.log(this.skills)
                         // this.varObj
                         this.varName = null
                         this.varDesc = null
@@ -554,33 +568,9 @@
                     )
                     this.closeUpdateModal();
                 },
-                onChangeFile: function (e) {
-                    var files = e.target.files || e.dataTransfer.files;
-                    if (!files.length)
-                        return;
-                    this.createImage(files[0]);
-                },
-                createImage(file) {
-                    var image = new Image();
-                    var reader = new FileReader();
-
-                    reader.onload = (e) => {
-                        this.image = e.target.result;
-                        console.log(this.image)
-                    };
-                    reader.readAsDataURL(file);
-                },
-                removeImage: function (e) {
-                    this.image = '';
-                },
             }
         });
     </script>
-    <style>
-        button:disabled {
-        background: hwb(0 0% 100% / 0.493);
-        }
-    </style>
     <!-- flowbite -->
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
 </body>

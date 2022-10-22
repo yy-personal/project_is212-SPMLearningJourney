@@ -11,7 +11,7 @@ USE `ljms`;
 
 -- Table strcuture for table 'Role'
 CREATE TABLE `Role` (
-    `role_id` int PRIMARY KEY,
+    `role_id` int PRIMARY KEY AUTO_INCREMENT,
     `role_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -31,7 +31,8 @@ CREATE TABLE `Staff` (
 CREATE TABLE `JobRole` (
     `job_role_id` int PRIMARY KEY AUTO_INCREMENT,
     `job_role_name` varchar(100) NOT NULL,
-    `job_role_description` varchar(500) NOT NULL
+    `job_role_description` varchar(500) NOT NULL,
+    `job_role_deleted` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -39,7 +40,8 @@ CREATE TABLE `JobRole` (
 CREATE TABLE `Skill` (
     `skill_id` int PRIMARY KEY AUTO_INCREMENT,
     `skill_name` varchar(100) NOT NULL,
-    `skill_description` varchar(500) NOT NULL
+    `skill_description` varchar(500) NOT NULL,
+    `skill_deleted` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -130,6 +132,8 @@ INSERT INTO `Registration` (`reg_id`, `course_id`, `staff_id`, `reg_status`, `co
 (8, 'COR002', 140036, 'Waitlist', NULL),
 (5, 'COR002', 140003, 'Rejected', NULL),
 (245, 'COR001', 130001, 'Registered', 'Completed');
+
+
 -- insert data for table `Role`
 
 INSERT INTO `Role` (`role_id`, `role_name`) VALUES
