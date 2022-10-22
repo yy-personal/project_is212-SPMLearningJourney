@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 # Mac user ====================================================================
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
                                         '@localhost:3306/ljms'
 # =============================================================================
 
@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
 # --------------------------------------------------------------------------------
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_size': 100,
-                                           'pool_recycle': 280}
+                                        'pool_recycle': 280}
 
 db = SQLAlchemy(app)
 
@@ -160,124 +160,10 @@ class Course(db.Model):
         print(result)
         return result
 
-class Staff(db.Model):
-    __tablename__ = 'staff'
-
-    staff_id = db.Column(db.Integer, primary_key=True)
-    staff_Fname  = db.Column(db.String(50))
-    staff_Lname  = db.Column(db.String(50))
-    department  = db.Column(db.String(50))
-    email  = db.Column(db.String(50))
-    role = db.Column(db.Integer , db.ForeignKey('role.role_id'))
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'staff'
-    }
-
-    def to_dict(self):
-        """
-        'to_dict' converts the object into a dictionary,
-        in which the keys correspond to database columns
-        """
-        columns = self.__mapper__.column_attrs.keys()
-        result = {}
-        for column in columns:
-            result[column] = getattr(self, column)
-        print(result)
-        return result
-
-
-class JobRole(db.Model):
-    __tablename__ = 'jobrole'
-
-    job_role_id = db.Column(db.Integer, primary_key=True)
-    job_role_name = db.Column(db.String(100))
-    job_role_description = db.Column(db.String(500))
-    job_role_deleted = db.Column(db.Boolean(), default=False, nullable=False)
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'jobrole'
-    }
-
-    def to_dict(self):
-        """
-        'to_dict' converts the object into a dictionary,
-        in which the keys correspond to database columns
-        """
-        columns = self.__mapper__.column_attrs.keys()
-        result = {}
-        for column in columns:
-            result[column] = getattr(self, column)
-        return result
-
-class JobRoleSkill(db.Model):
-    __tablename__ = 'jobroleskill'
-    job_role_id = db.Column(db.Integer, db.ForeignKey('jobrole.job_role_id'), primary_key=True)
-    skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
-
-    def to_dict(self):
-        """
-        'to_dict' converts the object into a dictionary,
-        in which the keys correspond to database columns
-        """
-        columns = self.__mapper__.column_attrs.keys()
-        result = {}
-        for column in columns:
-            result[column] = getattr(self, column)
-        return result
-
 class SkillCourse(db.Model):
     __tablename__ = 'skillcourse'
     skill_id = db.Column(db.Integer, db.ForeignKey('skill.skill_id'), primary_key=True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.course_id'), primary_key=True)
-
-    def to_dict(self):
-        """
-        'to_dict' converts the object into a dictionary,
-        in which the keys correspond to database columns
-        """
-        columns = self.__mapper__.column_attrs.keys()
-        result = {}
-        for column in columns:
-            result[column] = getattr(self, column)
-        return result
-
-class Skill(db.Model):
-    __tablename__ = 'skill'
-
-    skill_id = db.Column(db.Integer, primary_key=True)
-    skill_name  = db.Column(db.String(100))
-    skill_description = db.Column(db.String(500))
-    skill_deleted = db.Column(db.Boolean(), default=False, nullable=False)
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'skill',
-    }
-
-    def to_dict(self):
-        """
-        'to_dict' converts the object into a dictionary,
-        in which the keys correspond to database columns
-        """
-        columns = self.__mapper__.column_attrs.keys()
-        result = {}
-        for column in columns:
-            result[column] = getattr(self, column)
-        return result
-
-class Course(db.Model):
-    __tablename__ = 'course'
-
-    course_id = db.Column(db.Integer, primary_key=True)
-    course_name = db.Column(db.String(50))
-    course_description = db.Column(db.String(100))
-    course_status = db.Column(db.String(15))
-    course_type = db.Column(db.String(10))
-    course_category = db.Column(db.String(50))
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'course',
-    }
 
     def to_dict(self):
         """
@@ -370,7 +256,6 @@ class LearningJourneyCourse(db.Model):
         return result
 
 
-
 ######## SKILLS ########
 #create skills (C)
 @app.route('/skill' , methods=['POST'])
@@ -458,17 +343,6 @@ def delete_skill(id):
 #             "message": "Unable to commit to database."
 #         }), 500
 
-
-#read skills by role (D)
-@app.route("/skillbyrole/<int:id>", methods=['GET'])
-def read_skill_by_role(id):
-    # chosenSkill = Role.query.filter_by(skill_id=id).first()
-    skillsIds = JobRoleSkill.query.filter_by(job_role_id=id).all()
-    allSkillsForRole = []
-    for i in skillsIds:
-        skill = Skill.query.filter_by(skill_id=i.skill_id).first()
-        if skill != None:
-            allSkillsForRole.append(skill)
 
 
 ######## JOB ROLE ########
@@ -558,43 +432,6 @@ def delete_role(id):
 #             }), 500
 
 
-######## COURSES ########
-# Read Courses (R)
-@app.route("/courses")
-def read_course():
-    courseList = Course.query.all()
-    return jsonify(
-        {
-            "data": [course.to_dict()
-                    for course in courseList]
-        }
-    ), 200
-
-
-######## Learning Journey ########
-# Get all Learning Journey 
-@app.route("/learning_journies")
-def get_learning_journey():
-    learning_journey_List = LearningJourney.query.all()
-    return jsonify(
-        {
-            "data": [learning_journey.to_dict()
-                    for learning_journey in learning_journey_List]
-        }
-    ), 200
-
-# Get all Learning Journey Skill R/S
-@app.route("/learning_journey_skills")
-def get_learning_journey_skill():
-    learning_journey_skill_List = LearningJourneySkill.query.all()
-    return jsonify(
-        {
-            "data": [learning_journey_skill.to_dict()
-                    for learning_journey_skill in learning_journey_skill_List]
-        }
-    ), 200
-
-
 ######## JobRoleSkill ########
 #get all the skills from that role
 @app.route("/skills_to_jobrole")
@@ -646,6 +483,7 @@ def read_skill_by_role(id):
         }
     ), 200
 
+
 ######## SKILLCOURSE ########
 # add skils to course 
 @app.route("/skills_to_course", methods=['POST'])
@@ -693,7 +531,9 @@ def read_course():
         }
     ), 200
 
-# Read Courses (R)
+
+######## COURSE SKILL ########
+# Read skill by Courses 
 @app.route("/skillCourse")
 def read_skillCourse():
     skillCourseList = SkillCourse.query.all()
@@ -704,8 +544,7 @@ def read_skillCourse():
         }
     ), 200
 
-######## COURSE SKILL ########
-#read course by skill (R)
+#read course by skill BY ID(R)
 @app.route("/coursebyskill/<int:id>", methods=['GET'])
 def read_course_by_skill(id):
     # chosenSkill = Role.query.filter_by(skill_id=id).first()

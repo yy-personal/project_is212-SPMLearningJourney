@@ -243,7 +243,7 @@
                                             class="font-medium"></span> Already Exist!</p>
                                 </div> -->
 
-                                <div>
+                                <div v-if = '!checkCreateDesTooLong()'>
                                     <label for="skill_description"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Skill
                                         Description</label>
@@ -488,7 +488,6 @@
                     //         console.log(error);
                     //     });
                     // this.getSkills()
-                },
                 createSkill: function (item) {
                     for(each of this.skills){
                         if (each.skill_name == this.create_skill_name){
@@ -610,7 +609,7 @@
                     )
                     this.closeUpdateModal();
                 },
-            }
+            }}
         );
     </script>
     <!-- flowbite -->
