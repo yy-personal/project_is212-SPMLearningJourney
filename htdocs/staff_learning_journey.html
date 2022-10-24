@@ -41,6 +41,8 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Flowbite -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    <!-- ICON -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
 
     <style>
         .gradient {
@@ -84,9 +86,9 @@
                     </div>
 
                     <!-- LARGER SCREEN -->
-                    <div class="h-20 w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 lg:bg-transparent text-black p-4 lg:p-0 z-20"
+                    <div class="h-10 w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 lg:bg-transparent text-black p-4 lg:p-0 z-20"
                         id="nav-content">
-                        <img src='../logo.png' width="135" height="135">
+                        <img src='../logo.png' width="109" height="109" class = 'mb-2'>
                         <ul class="list-reset lg:flex justify-end flex-1 items-center">
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
@@ -106,6 +108,7 @@
                                     href="#" v-on:onclick="goPage(this)" id="Courseslink">Courses</a>
                             </li>
                         </ul>
+                        <iconify-icon icon="carbon:user-avatar-filled-alt" style="color: white;" width="40" height="40"></iconify-icon>
 
                         <button id="navAction"
                             class="hidden h-10 mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full p-1 px-5 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
