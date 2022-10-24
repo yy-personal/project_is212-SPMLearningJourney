@@ -59,15 +59,15 @@
         <nav id="header" class="fixed w-full z-30 top-0 text-white gradient py-2">
             <div class="container flex flex-wrap justify-between items-center mx-auto">
                 <!-- LOGO -->
-                    <img src='../logo.png' width="109" height="109" class='mb-2'>
+                <img src='../logo.png' width="109" height="109" class='mb-2'>
 
                 <div class="flex items-center md:order-2">
                     <button type="button"
                         class="flex mr-3 text-sm  rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                         id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                         data-dropdown-placement="bottom">
-                        
-                        <iconify-icon icon="carbon:user-avatar-filled-alt" style="color: white;" height = '40' width = '40'>
+
+                        <iconify-icon icon="carbon:user-avatar-filled-alt" style="color: white;" height='40' width='40'>
                         </iconify-icon>
                     </button>
 
@@ -115,9 +115,10 @@
                 </div>
 
                 <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
-                    <ul class="flex flex-col p-2 mt-1 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 ">
+                    <ul
+                        class="flex flex-col p-2 mt-1 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 ">
                         <li>
-                            <a href="../htdocs/hr_ljmsHome.html" 
+                            <a href="../htdocs/hr_ljmsHome.html"
                                 class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</a>
                         </li>
                         <li>
@@ -153,19 +154,24 @@
                     <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-for="course in courses">
 
                         <!-- EACH COURSE -->
-                        <a href="#" class="flex flex-wrap no-underline hover:no-underline"
-                            v-on:click="goToSinglepage(course.course_id)">
-                            <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
-                                style='padding-top: 20px;'>
-                                <p class="w-full font-bold text-xl text-gray-800 px-6"
-                                    style='margin-bottom: 10px; font-size: 25px;'>
-                                    {{course.course_name}}
-                                </p>
-                                <p class="text-gray-800 text-base px-6 mb-5">
-                                    {{course.course_description}}
-                                </p>
-                            </div>
-                        </a>
+
+                        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
+                            style='padding-top: 20px;'>
+                            <p class="w-full font-bold text-xl text-gray-800 px-6"
+                                style='margin-bottom: 10px; font-size: 25px;'>
+                                {{course.course_name}}
+                            </p>
+                            <p class="text-gray-800 text-base px-6 mb-5">
+                                {{course.course_description}}
+                            </p>
+                        </div>
+
+                        <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
+                            style="text-align: center;">
+                            <button v-on:click="goToSinglepage(course.course_id)" type="button"
+                                class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Assign Skills</button>
+                        </div>
                     </div>
                 </div>
             </div>

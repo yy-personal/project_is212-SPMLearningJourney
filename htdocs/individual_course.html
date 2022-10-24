@@ -64,67 +64,85 @@
 
     <body class="leading-normal tracking-normal text-white" style="font-family: 'Source Sans Pro', sans-serif;">
         <div id="main-container">
-            <ul class="nav justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Active</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-            </ul>
-
             <!-- NAV BAR -->
-            <nav id="header" class="fixed w-full z-30 top-0 text-white gradient">
-                <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
-                    <div class="pl-1 flex items-end">
-                        <!-- SMALLER SCREEN -->
-                        <div class="h-20 block lg:hidden pr-4 text-black">
-                            <button id="nav-toggle"
-                                class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-                                <svg class="fill-current h-6 w-6" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <title>Menu</title>
-                                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        <!-- LARGER SCREEN -->
-                        <div class="h-20 w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 lg:bg-transparent text-black p-4 lg:p-0 z-20"
-                            id="nav-content">
-                            <img src='../logo.png' width="135" height="135">
-                            <ul class="list-reset lg:flex justify-end flex-1 items-center">
-                                <li class="mr-3">
-                                    <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                                        href="../htdocs/hr_ljmsHome.html" id="Homelink">Home</a>
+            <nav id="header" class="fixed w-full z-30 top-0 text-white gradient py-2">
+                <div class="container flex flex-wrap justify-between items-center mx-auto">
+                    <!-- LOGO -->
+                        <img src='../logo.png' width="109" height="109" class='mb-2'>
+    
+                    <div class="flex items-center md:order-2">
+                        <button type="button"
+                            class="flex mr-3 text-sm  rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                            id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+                            data-dropdown-placement="bottom">
+                            
+                            <iconify-icon icon="carbon:user-avatar-filled-alt" style="color: white;" height = '40' width = '40'>
+                            </iconify-icon>
+                        </button>
+    
+                        <!-- PROFILE Dropdown menu -->
+                        <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                            id="user-dropdown">
+                            <div class="py-3 px-4">
+                                <span class="block text-sm text-gray-900 dark:text-white">Anna Lim</span>
+                                <span
+                                    class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">anna_lim@hr.com</span>
+                            </div>
+                            <ul class="py-1" aria-labelledby="user-menu-button">
+                                <li>
+                                    <a href="#"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
                                 </li>
-                                <li class="mr-3">
-                                    <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                                        href="../htdocs/hr_skills.html" 
-                                        id="Skillslink">Skills</a>
+                                <li>
+                                    <a href="#"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
                                 </li>
-                                <li class="mr-3">
-                                    <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                                        href="../htdocs/hr_roles.html"  id="Roleslink">Roles</a>
+                                <li>
+                                    <a href="#"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
                                 </li>
-                                <li class="mr-3">
-                                    <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                                        href="../htdocs/hr_courses.html"  id="Courseslink">Courses</a>
+                                <li>
+                                    <a href="#"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
+                                        out</a>
                                 </li>
                             </ul>
-                            <button id="navAction"
-                                class="hidden h-10 mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full p-1 px-5 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-                                Action
-                            </button>
                         </div>
+    
+                        <button data-collapse-toggle="mobile-menu-2" type="button"
+                            class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                            aria-controls="mobile-menu-2" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+    
                     </div>
-                    <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
+    
+                    <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
+                        <ul class="flex flex-col p-2 mt-1 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 ">
+                            <li>
+                                <a href="../htdocs/hr_ljmsHome.html" 
+                                    class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</a>
+                            </li>
+                            <li>
+                                <a href="../htdocs/hr_skills.html"
+                                    class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Skills</a>
+                            </li>
+                            <li>
+                                <a href="../htdocs/hr_roles.html"
+                                    class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Roles</a>
+                            </li>
+                            <li>
+                                <a href="../htdocs/hr_courses.html"
+                                    class="text-lg block py-2 pr-4 pl-3 text-blue-700 rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Courses</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
 
