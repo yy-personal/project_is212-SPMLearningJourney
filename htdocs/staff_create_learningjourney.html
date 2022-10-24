@@ -36,6 +36,9 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Flowbite -->
     <!-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" /> -->
+    <!--ICON-->
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+    
     <style>
         .gradient {
             background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
@@ -87,19 +90,20 @@
                         <ul class="list-reset lg:flex justify-end flex-1 items-center">
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                                    href="#" v-on:onclick="goPage(this)" id="Homelink">Home</a>
+                                    href="#" id="Homelink">Home</a>
                             </li>
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                                    href="../htdocs/hr_skills.html" v-on:onclick="goPage(this)" id="Skillslink">Skills</a>
+                                    href="#" 
+                                    id="Skillslink">Skills</a>
                             </li>
                             <li class="mr-3">
                                 <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                                    href="../htdocs/hr_roles.html" v-on:onclick="goPage(this)" id="Roleslink">Roles</a>
+                                    href="#"  id="Roleslink">Roles</a>
                             </li>
                             <li class="mr-3">
-                                <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4 hidden"
-                                    href="#" v-on:onclick="goPage(this)" id="Courseslink">Courses</a>
+                                <a class="inline-block text-white no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
+                                    href="#"  id="Courseslink">Courses</a>
                             </li>
                         </ul>
                         <button id="navAction"
@@ -127,9 +131,9 @@
 
 
                 <div class="w-full justify-center items-center flex pb-5">
-                <button id="dropdownDefault"  v-if="selectedRole != null" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                <button id="dropdownDefault"  v-if="selectedRole != null" data-dropdown-toggle="dropdown" class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                     {{selectedRole.job_role_name}} <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
-                    <button id="dropdownDefault"  v-else data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                    <button id="dropdownDefault"  v-else data-dropdown-toggle="dropdown" class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                         Please select a role <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
                     <!-- Dropdown menu -->
                     <div id="dropdown" class="hidden z-10 w-60 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
