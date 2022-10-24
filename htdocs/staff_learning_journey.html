@@ -177,8 +177,10 @@
                                                 v-if="eachLearningJourneySkill.learning_journey_id == eachLearningJourney.learning_journey_id">
                                                 <template v-for="eachSkill in skills"
                                                     v-if="eachSkill.skill_id == eachLearningJourneySkill.skill_id">
-                                                    Skill<br>
-                                                    -Course
+
+                                                    {{eachSkill.skill_name}}<br>
+                                                    -CourseName Here
+                                                    
                                                 </template>
                                             </li>
                                         </ul>
@@ -204,9 +206,9 @@
                             <label  class="sr-only">Select tab</label>
                             <select 
                                 class="bg-gray-50 border-0 border-b border-gray-200 text-gray-900 sm:text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option>Statistics</option>
-                                <option>Services</option>
-                                <option>FAQ</option>
+                                <option>aaa dd</option>
+                                <option>bbb dd</option>
+                                <option>ccc dd</option>
                             </select>
                         </div>
                         <ul class="hidden text-sm font-medium text-center text-gray-500 rounded-lg divide-x divide-gray-200 sm:flex dark:divide-gray-600 dark:text-gray-400"
@@ -214,17 +216,17 @@
                             <li class="w-full">
                                 <button id="stats-tab" data-tabs-target="#stats" type="button" role="tab"
                                     aria-controls="stats" aria-selected="true"
-                                    class="inline-block p-4 w-full bg-gray-50 rounded-tl-lg hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500">Statistics</button>
+                                    class="inline-block p-4 w-full bg-gray-50 rounded-tl-lg hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500">aa</button>
                             </li>
                             <li class="w-full">
                                 <button id="about-tab" data-tabs-target="#about" type="button" role="tab"
                                     aria-controls="about" aria-selected="false"
-                                    class="inline-block p-4 w-full bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300">Services</button>
+                                    class="inline-block p-4 w-full bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300">bb</button>
                             </li>
                             <li class="w-full">
                                 <button id="faq-tab" data-tabs-target="#faq" type="button" role="tab"
                                     aria-controls="faq" aria-selected="false"
-                                    class="inline-block p-4 w-full bg-gray-50 rounded-tr-lg hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300">FAQ</button>
+                                    class="inline-block p-4 w-full bg-gray-50 rounded-tr-lg hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300">cc</button>
                             </li>
                         </ul>
                         <div id="fullWidthTabContent" class="border-t border-gray-200 dark:border-gray-600">
@@ -250,14 +252,10 @@
                                     data-active-classes="bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                     data-inactive-classes="text-gray-500 dark:text-gray-400">
                                 </div>
-                                <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">We
-                                    fuck this </h2>
+                                <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">test </h2>
                             </div>
                         </div>
                     </div>
-
-
-
                 </template>
 
 
