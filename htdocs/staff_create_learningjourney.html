@@ -212,15 +212,15 @@
                             <button type="button" 
                             class="mx-4 w-4/5 text-blue-700 hover:text-white border border-white;;  -700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
                             v-for="course in value[1]" 
-                            
+                            v-if="selectedCourses.indexOf(course.course_id) == -1"
                             v-on:click="selectCourse(course)"
                             >{{course.course_name}}</button> 
 
-                            <!-- <button type="button" 
+                            <button type="button" 
                             class="bg-pink-300 mx-4 w-4/5 text-blue-700 hover:text-white border border-white;;  -700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
                             v-else
                             v-on:click="selectCourse(course)"
-                            >{{course.course_name}}</button>  -->
+                            >{{course.course_name}}</button> 
 
                         </div>
                     </div>
@@ -234,10 +234,10 @@
 
             <div>
                 <!-- <p><label id="error" class="text-danger">{{ error }}</label></p> -->
-                <button type="button"
+                <button v-on:click="createLearningJourneywork" type="button"
                     class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
             focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4 mx-5"
-                    data-modal-toggle="authentication-modal" style='float: right;'>Create Learning Journey</button>
+                    style='float: right;'>Create Learning Journey</button>
             </div>
 
         </section>
@@ -272,7 +272,6 @@
                 updateID: null,
                 success_create: "",
                 cols: [1,2,3],
-                selectedCourses: [],
                 roleDropDown: false,
                 coursesBySkill2: {},
                 coursesBySkill3: {"Software Testing":[{"skill_description":"Software testing is the process of assessing the functionality of a software program.","skill_id":7,"skill_name":"Software Testing"},[]],
@@ -383,10 +382,10 @@
                     }else{
                         
                         courses = await this.getCoursesBySkillSingle(selectedSkill.skill_id)
-                        console.log("courses:", courses)
+                        // console.log("courses:", courses)
                         this.coursesBySkill2[selectedSkill.skill_name] = [selectedSkill, courses]
                     }
-                    console.log("------------------", selectedSkill.skill_name, "this.coursesBySkill2: ", this.coursesBySkill2)
+                    // console.log("------------------", selectedSkill.skill_name, "this.coursesBySkill2: ", this.coursesBySkill2)
 
                     // clean dictionary:
                     cleanDict = {}
@@ -398,44 +397,157 @@
                     
                 },
 
-
                 selectCourse:  async function selectCourse(selectedCourse) {
-                   
-                    // this.selectedCourses.push(selectedCourse.course_id)
+                        // this.selectedCourses.push(selectedCourse.course_id)
 
-                    // if course if found in existing selections, remove else add:
-                    searchIdx = this.selectedCourses.indexOf(selectedCourse.skill_id)
-                if (searchIdx == -1){
-                    this.selectedCourses.push(selectedCourse.skill_id)
-                }else{
-                    this.selectedCourses.splice(searchIdx, 1); // 2nd parameter means remove one item only
-                }
+                        // if course if found in existing selections, remove else add:
+                        searchIdx = this.selectedCourses.indexOf(selectedCourse.course_id)
+                    if (searchIdx == -1){
+                        this.selectedCourses.push(selectedCourse.course_id)
+                    }else{
+                        this.selectedCourses.splice(searchIdx, 1); // 2nd parameter means remove one item only
+                    }
 
                     console.log("this.selectedSkills: ", this.selectedCourses)
-                    console.log("ccc", selectedCourse.course_id, " ----> ", this.selectCourses.indexOf(selectedCourse.course_id))
+                    console.log("ccc", selectedCourse.course_id, " ----> ", this.selectedCourses.indexOf(selectedCourse.course_id))
                     },
 
-                    createLearningJourneywork: async function createLearningJourneywork(){
-                    console.log("load skills for: ", this.selectedRole)
+                    createLearningJourney: async function createLearningJourney(role_id){
+                        var data = JSON.stringify({
+                        "job_role_id": role_id,
+                        "staff_id": 130001
+                        });
+
+                        var config = {
+                        method: 'post',
+                        url: 'http://localhost:5010/learning_journey',
+                        headers: { 
+                            'Content-Type': 'application/json'
+                        },
+                        data : data
+                        };
+
+                        result = await axios(config)
+                        .then(function (response) {
+                        console.log(JSON.stringify(response.data));
+                        return response.data
+                        })
+                        .catch(function (error) {
+                        console.log(error);
+                        return "err"
+                        });
+
+                        return result
+
+
+                    },
+
+                    addSkillToLearningJourney: async function addSkillToLearningJourney(learning_journey_id, skill_id){
+                        var data = JSON.stringify({
+                        "learning_journey_id": learning_journey_id,
+                        "skill_id": skill_id
+                        });
+
+                        var config = {
+                        method: 'post',
+                        url: 'http://localhost:5010/learning_journey_addskill',
+                        headers: { 
+                            'Content-Type': 'application/json'
+                        },
+                        data : data
+                        };
+
+                        result = await axios(config)
+                        .then(function (response) {
+                        console.log(JSON.stringify(response.data));
+                        return response.data
+                        })
+                        .catch(function (error) {
+                        console.log(error);
+                        return "err"
+                        });
+                        return result
+
+                    },
+
+                    addCourseToLearningJourney: async function createLearningJourneywork(learning_journey_id, course_id){
+                        var data = JSON.stringify({
+                        "learning_journey_id": 1,
+                        "course_id": "COR001"
+                        });
+
+                        var config = {
+                        method: 'post',
+                        url: 'http://localhost:5010/learning_journey_addcourse',
+                        headers: { 
+                            'Content-Type': 'application/json'
+                        },
+                        data : data
+                        };
+
+                        result = await axios(config)
+                        .then(function (response) {
+                        console.log(JSON.stringify(response.data));
+                        return response.data
+                        })
+                        .catch(function (error) {
+                        console.log(error);
+                        return "err"
+                        });
+
+                        return result
+
+
+                    },
+                    
+
+                createLearningJourneywork: async function createLearningJourneywork(){
+
+                    error_msg = "NO ERROR MSG"
+                    addskillresponse = []
+                    addcourseresponse = []
+                    console.log("createLearningJourneywork load skills for: ", this.selectedRole)
 
                     console.log("this.selectedSkills: ", this.selectedSkills)
                     console.log("this.selectedCourses: ", this.selectedCourses)
-                    console.log("this.selectedRole: ", this.selectedRole)
 
                     input = this.selectedRole.job_role_id
                     console.log(input)
                     let learningjourney = await this.createLearningJourney(input)
                     console.log("learning journey created!!1: ", learningjourney)
 
+                    if (learningjourney == "err"){
+                        error_msg = "Learning Journey could not be created please refresh and try again later."
+                    }
+
                     for (skill of this.selectedSkills){
                         console.log("skill: ", skill)
-                        addskillresponse = await this.addSkillToLearningJourney(learningjourney.learning_journey_id, skill)
+                        addskillresponse.push(await this.addSkillToLearningJourney(learningjourney.learning_journey_id, skill))
+                        // // simulate addskillresponse failure:
+                        // addskillresponse.push("err");
                     }
                     console.log("skills added created: ", addskillresponse)
 
-                    for (course of this.selectCourses){
+                    if (addskillresponse.indexOf("err") > -1){
+                        error_msg = "Skills could not be added and thus Learning Journey could not be created please refresh and try again later."
+                    }
+
+                    for (course of this.selectedCourses){
                         // console.log("this.selectedCourses: ", this.selectedCourses)
-                        addcourseresponse = this.addCourseToLearningJourney(learning_journey, course)
+                        addcourseresponse.push(this.addCourseToLearningJourney(learningjourney.learning_journey_id, course.course_id))
+                    }
+
+
+                    if (addcourseresponse.indexOf("err") > -1){
+                        error_msg = "Courses could not be added and thus Learning Journey could not be created please refresh and try again later."
+                    }
+
+
+                    console.log("error_msg:", error_msg)
+
+                    if ( error_msg != "NO ERROR MSG"){
+                        console.log("delete on cascade learning journey!:")
+
                     }
 
                     // if it fails to reach here, delete the whole learning journey, and ask to redo selection

@@ -598,6 +598,56 @@ def create_learning_journey():
             "message": "Unable to commit to database."
         }), 500
 
+
+# # DELETE Learning Journey (C)
+# @app.route("/learning_journey", methods=['DELETE'])
+# def delete_learning_journey():
+#     data = request.get_json()
+#     print(data)
+#     if not all(key in data.keys() for
+#             key in ('staff_id', 'job_role_id',
+#                     )):
+#         return jsonify({
+#             "message": "Incorrect JSON object provided."
+#         }), 500
+#     role = LearningJourney(**data)
+#     try:
+#         db.session.add(role)
+#         db.session.commit()
+
+#         return jsonify(role.to_dict()), 201
+#     except Exception:
+#         print(Exception.with_traceback)
+#         return jsonify({
+#             "message": "Unable to commit to database."
+#         }), 500
+
+# HARD DELETE Learning Journey (D)
+@app.route('/learning_journey', methods=['DELETE'])
+def delete_learning_journey():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('learning_journey_id', 'learning_journey_id')):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    try:
+        try:
+            learning_journey = LearningJourney.query.filter_by(learning_journey_id=data["learning_journey_id"]).one()
+        except Exception:
+            return jsonify({
+                "message": f"Unable to find role with id: {data['learning_journey_id']}."
+            }), 500
+        db.session.delete(learning_journey)
+        db.session.commit()
+
+        return jsonify(data), 201
+    except Exception:
+            return jsonify({
+                "message": "Unable to commit to database."
+            }), 500
+
 ########### Learning Journey Course #####################
 # Get all Learning Journey Course Relationship (R)
 @app.route("/learning_journey_course")
