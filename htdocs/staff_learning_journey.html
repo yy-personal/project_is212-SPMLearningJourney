@@ -171,7 +171,7 @@
             <!-- DISPLAY LEARNING JOURNEY -->
             <div class='container'>
                 <div class='row' v-for='(each, idx) of learningJourneyRole'>
-                    
+
                     <!-- EACH LEARNING JOURNEY -->
                     <div
                         class="mb-10 p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -187,8 +187,62 @@
                         </div>
 
                         <!-- DISPLAY COURSES AND SKILLS -->
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
+                            <thead
+                                class="text-large text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6">
+                                        Skills
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Courses
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Course Completion Status
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                    v-for='eachSkill in getSkillName(each[0].learning_journey_id)'>
+                                    <th scope="row"
+                                        class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{eachSkill[0]}}
+                                    </th>
+                                    <td scope="row"
+                                        class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <template v-for='eachskillcourse in skillCourse'
+                                            v-if="eachskillcourse.skill_id == eachSkill[1]">
+                                            <template v-for='eachCourse in getCourseName(each[0].learning_journey_id)'
+                                                v-if="eachCourse[1] == eachskillcourse.course_id">
+                                                {{eachCourse[0]}}
+                                                <br>
+                                            </template>
+                                        </template>
+                                    </td>
+                                    <td class="py-4 px-6 text-center">
+                                        <iconify-icon icon="akar-icons:circle-check-fill" style="color: lime;"
+                                            width="32" height="32"></iconify-icon>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-auto  p-6" style="text-align: center;">
+                            <button v-on:click="goToSinglepage(each[0].learning_journey_id)" type="button"
+                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Add Course</button>
+                                <br>
+                            <button v-on:click="goToSinglepage(each[0].learning_journey_id)" type="button"
+                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                See More  </button>
+                        </div>
+
+                        <!-- 
                         <div class="overflow-x-auto relative">
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                                 <thead
                                     class="text-large text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -199,14 +253,15 @@
                                         <th scope="col" class="py-3 px-6">
                                             Course ID
                                         </th>
-                                        <th scope="col" class="py-3 px-6" >
-                                            Completion Status 
+                                        <th scope="col" class="py-3 px-6">
+                                            Completion Status
                                         </th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" v-for = 'eachCourse in getCourseName(each[0].learning_journey_id)'>
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                        v-for='eachCourse in getCourseName(each[0].learning_journey_id)'>
                                         <th scope="row"
                                             class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{eachCourse[0]}}
@@ -214,45 +269,23 @@
                                         <td class="py-4 px-6">
                                             {{eachCourse[1]}}
                                         </td>
-                                        <td class="py-4 px-6 text-center" v-if = "eachCourse[1][0] == 'C'" >
-                                            <iconify-icon icon="akar-icons:circle-check-fill" style="color: lime;" width="32" height="32"></iconify-icon>
+                                        <td class="py-4 px-6 text-center" v-if="eachCourse[1][0] == 'C'">
+                                            <iconify-icon icon="akar-icons:circle-check-fill" style="color: lime;"
+                                                width="32" height="32"></iconify-icon>
                                         </td>
-                                        <td class="py-4 px-6" v-else-if = "eachCourse[1][0] != 'C'">
-                                            
+                                        <td class="py-4 px-6" v-else-if="eachCourse[1][0] != 'C'">
+
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-
-                                <thead
-                                    class="text-large text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="py-3 px-6">
-                                            Skills
-                                        </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" v-for = 'eachSkill in getSkillName(each[0].learning_journey_id)'>
-                                        <th scope="row"
-                                            class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{eachSkill[0]}}
-                                        </th>
-                                    </tr>
-                                </tbody>
-                            </table>
-
                             <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
                                 style="text-align: center;">
                                 <button v-on:click="goToSinglepage(each[0].learning_journey_id)" type="button"
                                     class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                    See More</button>
+                                    Add Courses</button>
                             </div>
-
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
@@ -264,7 +297,7 @@
 
 
 
-<!--    
+    <!--    
     <div class="container bg-white mt-20">
         <div class="container mx-auto flex flex-wrap pt-4">
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg flex h-screen justify-center items-center">
@@ -357,6 +390,7 @@
                 skills: [],
                 courses: [],
                 learningJourneyRole: [],
+                skillCourse: [],
 
             },
             async mounted() {
@@ -371,6 +405,7 @@
                     this.loadSkills()
                     this.loadJobRoles()
                     this.loadCourses()
+                    this.loadskillCourses()
                     // this.loadJobRoleSkill()
 
                 },
@@ -421,7 +456,9 @@
                                     if (this.learningJourney[each].job_role_id == this.jobRoles[each2]
                                         .job_role_id) {
                                         this.learningJourneyRole.push(
-                                            [this.learningJourney[each], this.jobRoles[each2].job_role_name]
+                                            [this.learningJourney[each], this.jobRoles[each2]
+                                                .job_role_name
+                                            ]
                                         )
                                     }
                                 }
@@ -469,30 +506,42 @@
                         });
 
                 },
+                async loadskillCourses() {
+                    var url = this.url + `/skillCourse`
+                    axios.get(url)
+                        .then(response => {
+                            this.skillCourse = response.data.data
+                            console.log(this.skillCourse)
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                        });
+
+                },
                 goToSinglepage: function (id) {
                     //console.log(id)
                     window.location.assign("./individual_learning_journey.html?id=" + id)
                 },
-                getCourseName(learning_journey_id){
+                getCourseName(learning_journey_id) {
                     var course_names = []
-                    for (eachLearningJourney of this.learningJourneyCourse){
-                        if (eachLearningJourney.learning_journey_id == learning_journey_id){
-                            for (eachCourse of this.courses){
-                                if(eachCourse.course_id == eachLearningJourney.course_id){
-                                    course_names.push([eachCourse.course_name , eachCourse.course_id])
+                    for (eachLearningJourney of this.learningJourneyCourse) {
+                        if (eachLearningJourney.learning_journey_id == learning_journey_id) {
+                            for (eachCourse of this.courses) {
+                                if (eachCourse.course_id == eachLearningJourney.course_id) {
+                                    course_names.push([eachCourse.course_name, eachCourse.course_id])
                                 }
                             }
                         }
                     }
                     return (course_names)
                 },
-                getSkillName(learning_journey_id){
+                getSkillName(learning_journey_id) {
                     var skill_names = []
-                    for (eachLearningJourney of this.learningJourneySkill){
-                        if (eachLearningJourney.learning_journey_id == learning_journey_id){
-                            for (eachSkill of this.skills){
-                                if(eachSkill.skill_id == eachLearningJourney.skill_id){
-                                    skill_names.push([eachSkill.skill_name , eachSkill.skill_id])
+                    for (eachLearningJourney of this.learningJourneySkill) {
+                        if (eachLearningJourney.learning_journey_id == learning_journey_id) {
+                            for (eachSkill of this.skills) {
+                                if (eachSkill.skill_id == eachLearningJourney.skill_id) {
+                                    skill_names.push([eachSkill.skill_name, eachSkill.skill_id])
                                 }
                             }
                         }
