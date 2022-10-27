@@ -15,7 +15,7 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-    </script>
+        </script>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -297,8 +297,9 @@
                         <span class="sr-only">Close modal</span>
                     </button>
 
-                    <div class="py-6 px-6 lg:px-8">
-                        <h3 class=" text-center text-xl font-bold text-gray-900 dark:text-white underline">Add Courses</h3>
+                    <div class="py-6 px-6 lg:px-8 align-items: center">
+                        <h3 class=" text-center text-xl font-bold text-gray-900 dark:text-white underline">Add Courses
+                        </h3>
                         <div id='middle'
                             class="p-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
                             <!-- SKILLS AVAILABLE -->
@@ -311,21 +312,21 @@
                                 </div>
                                 <div class="flow-root">
                                     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                        <li class="py-3 sm:py-4" v-for="skill in skills">
+                                        <li class="py-3 sm:py-4" v-for="eachSkill in addCourseModalSkills">
                                             <div class="flex items-center space-x-4">
                                                 <div class="flex-1 min-w-0">
                                                     <p
                                                         class="text-sm font-semibold text-gray-900 truncate dark:text-white">
-                                                        {{skill.skill_name}}
+                                                        {{eachSkill.skill_name}}
                                                     </p>
                                                     <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                        {{skill.skill_description}}
+                                                        {{eachSkill.skill_description}}
                                                     </p>
                                                 </div>
                                                 <div
                                                     class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                    <input type='checkbox' v-model='selectedSkills'
-                                                        :value="skill.skill_name" v-model="selectedSkills">
+                                                    <input type='checkbox' :value="eachSkill.skill_id"
+                                                        v-model="selectedSkillModalSkillsId" @change="confirmSkill()">
                                                 </div>
                                             </div>
                                         </li>
@@ -333,10 +334,8 @@
 
                                     <div
                                         class="flex flex-col justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-                                        <p class="text-sm font-medium text-red-700 dark:text-red-500">{{error}}</p>
-                                        <button v-on:click="assignSkills()" type="button"
-                                            class="mt-3 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                            Confirm Selection</button>
+                                        <p class="text-sm font-medium text-red-700 dark:text-red-500"></p>
+
                                     </div>
                                 </div>
                             </div>
@@ -347,29 +346,54 @@
                                 <div class="flex justify-between items-center mb-4">
                                     <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Courses
                                     </h5>
-                                    <!-- <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-                                        View all
-                                    </a> -->
                                 </div>
-                                <div class="flow-root">
+                                <!-- <div class="flow-root">
                                     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                        <li class="py-3 sm:py-4" v-for="skill in assignedSkills">
+                                        <li class="py-3 sm:py-4" v-for="courseObjects in addCourseConfirmSkill_CourseDisplay">
                                             <div class="flex items-center space-x-4">
                                                 <div class="flex-1 min-w-0">
                                                     <p
                                                         class="text-sm font-semibold text-gray-900 truncate dark:text-white">
-                                                        {{skill.skill_name}}
-                                                    </p>
-                                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                        {{skill.skill_description}}
+                                                        {{courseObjects.course_id}} - {{courseObjects.course_name}}
                                                     </p>
                                                 </div>
                                             </div>
                                         </li>
                                     </ul>
+                                </div> -->
+                                <div class="flow-root">
+                                    <template v-for="a in selectedSkillModalSkillsId">
+                                        <template v-for="b in addCourseModalSkills" v-if="a==b.skill_id">
+                                            <h2 class="text-xl font-extrabold text-dark">{{b.skill_name}}</h2>
+                                            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700"
+                                                v-for="courseObjects in addCourseConfirmSkill_CourseDisplay" v-if="courseObjects.skill_name==b.skill_name">
+                                                <li class="py-3 sm:py-4">
+                                                    <div class="flex items-center space-x-4">
+                                                        <div class="flex-1 min-w-0">
+                                                            <p
+                                                                class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                                                                {{courseObjects.course_id}}-{{courseObjects.course_name}}
+                                                            </p>
+                                                        </div>
+                                                        <div
+                                                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                            <input type='checkbox' :value="courseObjects.course_id"
+                                                                v-model="selectedCourseModal">
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </template>
+                                    </template>
+
                                 </div>
                             </div>
+
                         </div>
+                        <button v-on:click="testDataObject()" type="button"
+                            class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2  content-between">
+                            Confirm Selection
+                        </button>
                     </div>
                 </div>
             </div>
@@ -379,84 +403,6 @@
 
 
 
-    <!--    
-    <div class="container bg-white mt-20">
-        <div class="container mx-auto flex flex-wrap pt-4">
-            <div class="overflow-x-auto relative shadow-md sm:rounded-lg flex h-screen justify-center items-center">
-                <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100">
-                    <thead class="text-xs text-white uppercase bg-blue-600 border-b border-blue-400 dark:text-white">
-                        <tr>
-                            <th scope="col" class="py-3 px-6 bg-blue-500">
-                                Staff ID
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                Learning Journey ID
-                            </th>
-                            <th scope="col" class="py-3 px-6 bg-blue-500">
-                                Job Role
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                Skill
-                            </th>
-                            <th scope="col" class="py-3 px-6 bg-blue-500">
-                                Courses
-                            </th>
-
-                        </tr>
-                    </thead>
-                    <template v-for="eachLearningJourney in learningJourney">
-                        <tbody>
-                            <tr class="bg-blue-600 border-b border-blue-400">
-                                <th scope="row"
-                                    class="py-4 px-6 font-medium text-blue-50 whitespace-nowrap bg-blue-500 dark:text-blue-100">
-                                    {{eachLearningJourney.staff_id}}
-                                </th>
-                                <td class="py-4 px-6">
-                                    {{eachLearningJourney.learning_journey_id}}
-                                </td>
-                                <td class="py-4 px-6 bg-blue-500">
-
-                                    <template v-for="eachJobRole in jobRoles"
-                                        v-if="eachJobRole.job_role_id == eachLearningJourney.job_role_id">
-                                        {{eachJobRole.job_role_name}}
-                                    </template>
-                                </td>
-                                <td class="py-4 px-6">
-                                    <ul v-for="eachLearningJourneySkill in learningJourneySkill">
-                                        <li
-                                            v-if="eachLearningJourneySkill.learning_journey_id == eachLearningJourney.learning_journey_id">
-                                            <template v-for="eachSkill in skills"
-                                                v-if="eachSkill.skill_id == eachLearningJourneySkill.skill_id">
-                                                {{eachSkill.skill_name}}
-                                            </template>
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td class="py-4 px-6 bg-blue-500">
-                                    <ul v-for="eachLearningJourneySkill in learningJourneySkill">
-                                        <li
-                                            v-if="eachLearningJourneySkill.learning_journey_id == eachLearningJourney.learning_journey_id">
-                                            <template v-for="eachSkill in skills"
-                                                v-if="eachSkill.skill_id == eachLearningJourneySkill.skill_id">
-
-                                                {{eachSkill.skill_name}}<br>
-                                                -CourseName Here
-
-                                            </template>
-                                        </li>
-                                    </ul>
-
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-                    </template>
-                </table>
-            </div>
-        </div>
-
-    </div> -->
 
 
     <!--- JAVASCRIPT -->
@@ -475,6 +421,13 @@
                 skillCourse: [],
                 learningjourneyID: null,
 
+                //after 'Add Course' Modal pops out
+                addCourseModalSkills: [],
+                selectedSkillModalSkillsId: [],
+                addCourseConfirmSkill_CourseDisplay: [],
+                selectedCourseModal: [],
+                ObjToPOST: [],
+
             },
             async mounted() {
                 this.loadAll()
@@ -489,7 +442,7 @@
                     this.loadJobRoles()
                     this.loadCourses()
                     this.loadskillCourses()
-                    // this.loadJobRoleSkill()
+                    this.loadJobRoleSkill()
 
                 },
                 async loadLearningJourney() {
@@ -521,7 +474,7 @@
                         .then(response => {
                             //console.log(response)
                             this.learningJourneyCourse = response.data.data
-                            console.log(this.learningJourneyCourse)
+                            // console.log(this.learningJourneyCourse)
                         })
                         .catch(error => {
                             console.log(error.response)
@@ -547,7 +500,7 @@
                                 }
                             }
 
-                            console.log(this.learningJourneyRole)
+                            // console.log(this.learningJourneyRole)
                             //console.log(this.selectedQuery)
 
                         })
@@ -556,7 +509,7 @@
                         });
                 },
                 async loadJobRoleSkill() {
-                    var url = this.url + `/job_role_skill`
+                    var url = this.url + `/skills_to_jobrole`
                     axios.get(url)
                         .then(response => {
                             // console.log(response)
@@ -572,6 +525,8 @@
                         .then(response => {
                             // console.log(response)
                             this.skills = response.data.data
+                            // console.log(this.skills)
+
                         })
                         .catch(error => {
                             console.log(error.response)
@@ -594,7 +549,7 @@
                     axios.get(url)
                         .then(response => {
                             this.skillCourse = response.data.data
-                            console.log(this.skillCourse)
+                            // console.log(this.skillCourse)
                         })
                         .catch(error => {
                             console.log(error.response)
@@ -631,44 +586,108 @@
                     }
                     return (skill_names)
                 },
+                // Open up modal and fill in Skills tab according to job id from learning journey
                 openUpdateModal(learning_journey_id) {
-                    this.learningjourneyID = learning_journey_id;
+                    this.learningjourneyID = learning_journey_id
+                    var selectedModalJobRoleId
+                    var selectedJobRoleSkillId = []
+                    // var selectedModalSkillsDisplay = []
+
+                    for (i in this.learningJourney) {
+                        if (this.learningJourney[i]["learning_journey_id"] == learning_journey_id) {
+                            selectedModalJobRoleId = this.learningJourney[i]["job_role_id"]
+                            // console.log(selectedModalJobRoleId)
+                        }
+                    }
+                    for (j in this.jobRoleSkill) {
+                        if (this.jobRoleSkill[j]["job_role_id"] == selectedModalJobRoleId) {
+                            // console.log(this.jobRoleSkill[j]["skill_id"])
+                            selectedJobRoleSkillId.push(this.jobRoleSkill[j]["skill_id"])
+                        }
+                    }
+
+                    for (k in this.skills) {
+                        // console.log(this.skills)
+                        for (ki in selectedJobRoleSkillId) {
+                            // console.log(selectedJobRoleSkillId[ki])
+                            if (this.skills[k]['skill_id'] == selectedJobRoleSkillId[ki]) {
+                                var eachObject = { "skill_id": this.skills[k]['skill_id'], "skill_name": this.skills[k]['skill_name'], "skill_description": this.skills[k]['skill_description'] }
+                                this.addCourseModalSkills.push(eachObject)
+                            }
+
+                        }
+                    }
+                    // console.log("Selected modal lj id " + this.learningjourneyID)
+                    // console.log("selected modal skills id " + selectedJobRoleSkillId)
+                    // console.log("selected modal skills and stuff to display ")
+                    for (a in this.addCourseModalSkills) {
+                        console.log(this.addCourseModalSkills[a])
+                    }
+                },
+                confirmSkill() {
+                    this.addCourseConfirmSkill_CourseDisplay = []
+                    // console.log(this.selectedSkillModalSkillsId)
+                    // console.log(this.skillCourse)
+                    for (i in this.selectedSkillModalSkillsId) {
+                        for (j in this.skillCourse) {
+                            if (this.skillCourse[j]["skill_id"] == this.selectedSkillModalSkillsId[i]) {
+                                // console.log(this.skillCourse[j]["course_id"])
+                                for (k in this.courses) {
+                                    if (this.skillCourse[j]["course_id"] == this.courses[k]["course_id"]) {
+                                        var temp_skill_id
+                                        var temp_skill_name
+                                        this.addCourseModalSkills
+                                        for (a in this.addCourseModalSkills) {
+                                            if (this.skillCourse[j]["skill_id"] == this.addCourseModalSkills[a]["skill_id"]) {
+                                                temp_skill_id = this.addCourseModalSkills[a]["skill_id"]
+                                                temp_skill_name = this.addCourseModalSkills[a]["skill_name"]
+                                            }
+
+                                        }
+
+                                        // console.log(this.courses[k]["course_name"])
+                                        var elements = {
+                                            "skill_id": temp_skill_id,
+                                            "skill_name": temp_skill_name,
+                                            "course_id": this.skillCourse[j]["course_id"],
+                                            "course_name": this.courses[k]["course_name"]
+                                        }
+                                        this.addCourseConfirmSkill_CourseDisplay.push(elements)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // console.log(this.addCourseConfirmSkill_CourseDisplay)
+                },
+                testDataObject(){
+                    var allInfo = this.addCourseConfirmSkill_CourseDisplay
+                    var selectedInfo_course_id = this.selectedCourseModal
+                    for(i in allInfo){
+                        for(j in selectedInfo_course_id){
+                            // console.log(selectedInfo_course_id[j]) courseid
+                            if(selectedInfo_course_id[j]==allInfo[i]["course_id"]){
+                                var elements = {
+                                    "skill_id": allInfo[i]["skill_id"],
+                                    "skill_name": allInfo[i]["skill_name"],
+                                    "course_id": allInfo[i]["course_id"],
+                                    "course_name": allInfo[i]["course_name"]
+                                }
+                                this.ObjToPOST.push(elements)
+                            }
+                        }
+                    }
+                    console.log(this.ObjToPOST)
+
                 },
                 closeUpdateModal() {
                     this.learningjourneyID = null;
-                },
-                // getLJcourse(course_id){
-                //     for (each of this.courses){
-                //         if(each.course_id == course_id){
-                //             this.courseLJ.push(each.course_name)
-                //         }
-                //     }
-                //     console.log(this.courseLJ)
-                // },
-                // // getLJskill(skill_id){
-                //     for (each of this.skills){
-                //         if(each.skill_id == skill_id){
-                //             this.skillLJ.push(each.skill_name)
-                //         }
-                //     }
-                //     console.log(this.skillLJ)
-                // },
-                // getCourseSkillFromLJ(learning_journey_id){
-                //     for(i in this.learningJourneyCourse){
-                //         if(this.learningJourneyCourse[i].learning_journey_id == learning_journey_id){
-                //             this.getLJcourse(this.learningJourneyCourse[i].course_id)
-                //         }
+                    this.addCourseModalSkills = []
+                    this.selectedSkillModalSkillsId = []
+                    this.addCourseConfirmSkill_CourseDisplay = []
 
-                //     }
-                //     for(i in this.learningJourneySkill){
-                //         if(this.learningJourneySkill[i].learning_journey_id == learning_journey_id){
-                //             this.getLJskill(this.learningJourneySkill[i].skill_id)
-                //         }
-
-                //     }
-                //     this.learningJourneyCourse
-                //     console.log(this.learningJourneySkill)
-                // }
+                }
+                
 
             }
 
