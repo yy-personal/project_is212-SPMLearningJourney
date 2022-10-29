@@ -444,9 +444,10 @@
                     console.log("delete: ", id)
                     var url = 'http://localhost:5010/jobrole/' + id
 
-                    axios.delete(url)
-                        .then(
-                            response => {
+                    var status = "success";
+
+                    await axios.delete(url)
+                        .then(function (response) {
                                 console.log(response.data)
                                 for (i in this.roles) {
                                     // console.log(this.roles[i].job_role_id)
@@ -457,9 +458,18 @@
                                 }
                             }
                         )
-                        .catch(error => {
+                        .catch(function (error) {
                             console.log(error)
+                            status = "failure";
                         })
+
+                    if(status == "success"){
+                        // alert that deletion is successful
+                        alert("Soft Deletion is successful!");
+                    }
+                    else{
+                        alert("Soft Deletion unsuccessful, please try again.");
+                    }
 
                     // var axios = require('axios');
                     // var data = JSON.stringify({
