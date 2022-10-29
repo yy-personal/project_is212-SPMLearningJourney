@@ -15,7 +15,7 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-        </script>
+    </script>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -60,7 +60,7 @@
     <div id="main-container">
 
         <!-- NAV BAR -->
-        <nav id="header" class="fixed w-full z-30 top-0 text-white gradient py-2 ">
+        <nav id="header" class="fixed w-full z-30 top-0 text-white gradient py-2 mb-10">
             <div class="container flex flex-wrap justify-between items-center mx-auto">
                 <!-- LOGO -->
                 <img src='../logo.png' width="109" height="109" class='mb-2'>
@@ -366,12 +366,13 @@
                                         <template v-for="b in addCourseModalSkills" v-if="a==b.skill_id">
                                             <h2 class="text-xl font-extrabold text-dark">{{b.skill_name}}</h2>
                                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700"
-                                                v-for="courseObjects in addCourseConfirmSkill_CourseDisplay" v-if="courseObjects.skill_name==b.skill_name">
+                                                v-for="courseObjects in addCourseConfirmSkill_CourseDisplay"
+                                                v-if="courseObjects.skill_name==b.skill_name">
                                                 <li class="py-3 sm:py-4">
                                                     <div class="flex items-center space-x-4">
                                                         <div class="flex-1 min-w-0">
                                                             <p
-                                                                class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                                                                class="text-sm font-base text-gray-500 truncate dark:text-white">
                                                                 {{courseObjects.course_id}}-{{courseObjects.course_name}}
                                                             </p>
                                                         </div>
@@ -383,6 +384,7 @@
                                                     </div>
                                                 </li>
                                             </ul>
+                                            <hr>
                                         </template>
                                     </template>
 
@@ -390,10 +392,11 @@
                             </div>
 
                         </div>
-                        <button v-on:click="testDataObject()" type="button"
-                            class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2  content-between">
-                            Confirm Selection
-                        </button>
+                        <div class="mt-auto  p-6" style="text-align: center;">
+                            <button v-on:click="testDataObject()" type="button"
+                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Confirm Selection</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -611,7 +614,11 @@
                         for (ki in selectedJobRoleSkillId) {
                             // console.log(selectedJobRoleSkillId[ki])
                             if (this.skills[k]['skill_id'] == selectedJobRoleSkillId[ki]) {
-                                var eachObject = { "skill_id": this.skills[k]['skill_id'], "skill_name": this.skills[k]['skill_name'], "skill_description": this.skills[k]['skill_description'] }
+                                var eachObject = {
+                                    "skill_id": this.skills[k]['skill_id'],
+                                    "skill_name": this.skills[k]['skill_name'],
+                                    "skill_description": this.skills[k]['skill_description']
+                                }
                                 this.addCourseModalSkills.push(eachObject)
                             }
 
@@ -638,7 +645,9 @@
                                         var temp_skill_name
                                         this.addCourseModalSkills
                                         for (a in this.addCourseModalSkills) {
-                                            if (this.skillCourse[j]["skill_id"] == this.addCourseModalSkills[a]["skill_id"]) {
+                                            if (this.skillCourse[j]["skill_id"] == this.addCourseModalSkills[a][
+                                                    "skill_id"
+                                                ]) {
                                                 temp_skill_id = this.addCourseModalSkills[a]["skill_id"]
                                                 temp_skill_name = this.addCourseModalSkills[a]["skill_name"]
                                             }
@@ -660,13 +669,13 @@
                     }
                     // console.log(this.addCourseConfirmSkill_CourseDisplay)
                 },
-                testDataObject(){
+                testDataObject() {
                     var allInfo = this.addCourseConfirmSkill_CourseDisplay
                     var selectedInfo_course_id = this.selectedCourseModal
-                    for(i in allInfo){
-                        for(j in selectedInfo_course_id){
+                    for (i in allInfo) {
+                        for (j in selectedInfo_course_id) {
                             // console.log(selectedInfo_course_id[j]) courseid
-                            if(selectedInfo_course_id[j]==allInfo[i]["course_id"]){
+                            if (selectedInfo_course_id[j] == allInfo[i]["course_id"]) {
                                 var elements = {
                                     "skill_id": allInfo[i]["skill_id"],
                                     "skill_name": allInfo[i]["skill_name"],
@@ -677,7 +686,37 @@
                             }
                         }
                     }
+
                     console.log(this.ObjToPOST)
+                    let skillCourse = []
+                    let errors = []
+                    var url_1 = this.url + `/learning_journey_addskill`
+                    var url_2 = this.url + `/learning_journey_addcourse`
+
+                    for (each of this.ObjToPOST) {
+                        var skill_id = each.skill_id
+                        var course_id = each.course_id
+                        
+                        axios.all([
+                        axios.post(url_1 , {
+                            learning_journey_id : this.learningjourneyID,
+                            skill_id : skill_id
+                        }),
+                        axios.post(url_2, {
+                            learning_journey_id: this.learningjourneyID,
+                            course_id: course_id
+                        })
+                    ]) 
+                    .then(axios.spread((response_1 , response_2) => {
+                        console.log('response_1' , response_1)
+
+                        console.log('response_2' , response_2)
+
+                    })) ;
+                    }
+
+                    this.closeUpdateModal()
+                    window.location.reload();
 
                 },
                 closeUpdateModal() {
@@ -687,7 +726,7 @@
                     this.addCourseConfirmSkill_CourseDisplay = []
 
                 }
-                
+
 
             }
 
