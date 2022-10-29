@@ -79,22 +79,18 @@
                     <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                         id="user-dropdown">
                         <div class="py-3 px-4">
-                            <span class="block text-sm text-gray-900 dark:text-white">Anna Lim</span>
+                            <span class="block text-sm text-gray-900 dark:text-white">Tommy Lim</span>
                             <span
-                                class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">anna_lim@hr.com</span>
+                                class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">tommy_lim@staff.com</span>
                         </div>
                         <ul class="py-1" aria-labelledby="user-menu-button">
                             <li>
-                                <a href="#"
-                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                                <a href="../htdocs/staff_learning_journey.html"
+                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Learning Journy</a>
                             </li>
                             <li>
                                 <a href="#"
                                     class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
                             </li>
                             <li>
                                 <a href="#"
@@ -225,54 +221,6 @@
                                 class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Add Course</button>
                         </div>
-
-                        <!-- 
-                        <div class="overflow-x-auto relative">
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-
-                                <thead
-                                    class="text-large text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="py-3 px-6">
-                                            Courses
-                                        </th>
-                                        <th scope="col" class="py-3 px-6">
-                                            Course ID
-                                        </th>
-                                        <th scope="col" class="py-3 px-6">
-                                            Completion Status
-                                        </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                                        v-for='eachCourse in getCourseName(each[0].learning_journey_id)'>
-                                        <th scope="row"
-                                            class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{eachCourse[0]}}
-                                        </th>
-                                        <td class="py-4 px-6">
-                                            {{eachCourse[1]}}
-                                        </td>
-                                        <td class="py-4 px-6 text-center" v-if="eachCourse[1][0] == 'C'">
-                                            <iconify-icon icon="akar-icons:circle-check-fill" style="color: lime;"
-                                                width="32" height="32"></iconify-icon>
-                                        </td>
-                                        <td class="py-4 px-6" v-else-if="eachCourse[1][0] != 'C'">
-
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
-                                style="text-align: center;">
-                                <button v-on:click="goToSinglepage(each[0].learning_journey_id)" type="button"
-                                    class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                    Add Courses</button>
-                            </div>
-                        </div> -->
-
                     </div>
                 </div>
 
@@ -558,10 +506,6 @@
                             console.log(error.response)
                         });
 
-                },
-                goToSinglepage: function (id) {
-                    //console.log(id)
-                    window.location.assign("./individual_learning_journey.html?id=" + id)
                 },
                 getCourseName(learning_journey_id) {
                     var course_names = []
