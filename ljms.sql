@@ -4,6 +4,7 @@ SET time_zone = "+00:00";
 
 -- Database: `ljms`
 --
+drop database if exists `ljms`;
 CREATE DATABASE IF NOT EXISTS `ljms` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `ljms`;
 
@@ -11,7 +12,7 @@ USE `ljms`;
 
 -- Table strcuture for table 'Role'
 CREATE TABLE `Role` (
-    `role_id` int PRIMARY KEY,
+    `role_id` int PRIMARY KEY AUTO_INCREMENT,
     `role_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -31,7 +32,8 @@ CREATE TABLE `Staff` (
 CREATE TABLE `JobRole` (
     `job_role_id` int PRIMARY KEY AUTO_INCREMENT,
     `job_role_name` varchar(100) NOT NULL,
-    `job_role_description` varchar(500) NOT NULL
+    `job_role_description` varchar(500) NOT NULL,
+    `job_role_deleted` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -39,7 +41,8 @@ CREATE TABLE `JobRole` (
 CREATE TABLE `Skill` (
     `skill_id` int PRIMARY KEY AUTO_INCREMENT,
     `skill_name` varchar(100) NOT NULL,
-    `skill_description` varchar(500) NOT NULL
+    `skill_description` varchar(500) NOT NULL,
+    `skill_deleted` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -130,6 +133,8 @@ INSERT INTO `Registration` (`reg_id`, `course_id`, `staff_id`, `reg_status`, `co
 (8, 'COR002', 140036, 'Waitlist', NULL),
 (5, 'COR002', 140003, 'Rejected', NULL),
 (245, 'COR001', 130001, 'Registered', 'Completed');
+
+
 -- insert data for table `Role`
 
 INSERT INTO `Role` (`role_id`, `role_name`) VALUES
@@ -155,14 +160,20 @@ INSERT INTO `LearningJourney` (`learning_journey_id`, `staff_id`, `job_role_id`)
 (2, 140001, 2),
 (3, 140036, 3);
 
+INSERT INTO `LearningJourneySkill` (`learning_journey_id`, `skill_id`) VALUES
+(1, 3),
+(1, 4);
+
+INSERT INTO `LearningJourneyCourse` (`learning_journey_id`, `course_id`) VALUES
+(1, 'COR001'),
+(1, 'COR002');
 
 INSERT INTO `JobRoleSkill` (`job_role_id`, `skill_id`) VALUES
 (1, 3),
 (1, 4),
 (2, 4),
 (3, 5),
-(3, 7),
-(3, 3);
+(3, 7);
 
 INSERT INTO `SkillCourse` (`skill_id`, `course_id`) VALUES
 (3, 'COR001'),
