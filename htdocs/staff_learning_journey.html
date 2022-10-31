@@ -182,9 +182,9 @@
                                     <th scope="col" class="py-3 px-6 sm:text-sm">
                                         Courses
                                     </th>
-                                    <th scope="col" class="py-3 px-6 sm:text-sm">
+                                    <!-- <th scope="col" class="py-3 px-6 sm:text-sm">
                                         Skill Completion Status
-                                    </th>
+                                    </th> -->
                                 </tr>
                             </thead>
 
@@ -195,7 +195,7 @@
                                         {{eachSkill[0]}}
                                     </th>
                                     <td scope="row" class="pt-3 px-6 font-medium text-gray-900  dark:text-white">
-                                        <ul>
+                                        <ul class="space-y-1 max-w-md list-disc list-inside text-gray-900">
                                             <template v-for='eachskillcourse in skillCourse'
                                                 v-if="eachskillcourse.skill_id == eachSkill[1]">
                                                 <template
@@ -207,10 +207,10 @@
                                             </template>
                                         </ul>
                                     </td>
-                                    <td class="py-4 px-6 text-center">
+                                    <!-- <td class="py-4 px-6 text-center">
                                         <iconify-icon icon="akar-icons:circle-check-fill" style="color: lime;"
                                             width="32" height="32"></iconify-icon>
-                                    </td>
+                                    </td> -->
 
                                 </tr>
                             </tbody>
@@ -273,6 +273,8 @@
                                                 </div>
                                                 <div
                                                     class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                    <!-- <input checked type='checkbox'  v-if="eachSkill.skill_id && eachSkill[0]" :value="eachSkill.skill_id" v-model="selectedSkillModalSkillsId" @change="confirmSkill()" > -->
+                                                    <!-- <input checked type='checkbox' :value="eachSkill.skill_id" v-model="selectedSkillModalSkillsId" @change="confirmSkill()" > -->
                                                     <input type='checkbox' :value="eachSkill.skill_id"
                                                         v-model="selectedSkillModalSkillsId" @change="confirmSkill()">
                                                 </div>
@@ -394,7 +396,6 @@
                     this.loadCourses()
                     this.loadskillCourses()
                     this.loadJobRoleSkill()
-
                 },
                 async loadLearningJourney() {
                     var url = this.url + `/learning_journeys`
@@ -655,20 +656,26 @@
                         console.log('response_1' , response_1)
 
                         console.log('response_2' , response_2)
-
-                    })) ;
+                    })) 
                     }
-
                     this.closeUpdateModal()
-                    window.location.reload();
-
+                    setTimeout(() => window.location.reload(), 1000)
+                },
+                clearAll(){
+                    this.learningJourney= [],
+                    this.learningJourneySkill= [],
+                    this.learningJourneyCourse= [],
+                    this.jobRoles= [],
+                    this.skills= [],
+                    this.courses= [],
+                    this.learningJourneyRole= [],
+                    this.skillCourse= []
                 },
                 closeUpdateModal() {
                     this.learningjourneyID = null;
                     this.addCourseModalSkills = []
                     this.selectedSkillModalSkillsId = []
                     this.addCourseConfirmSkill_CourseDisplay = []
-
                 }
 
 
