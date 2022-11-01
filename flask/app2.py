@@ -21,7 +21,6 @@ db = SQLAlchemy(app)
 
 CORS(app)
 
-
 class Role(db.Model):
     __tablename__ = 'role'
 
@@ -532,6 +531,7 @@ def read_course():
     ), 200
 
 
+
 ######## COURSE SKILL ########
 # Read skill by Courses 
 @app.route("/skillCourse")
@@ -634,30 +634,14 @@ def create_learning_journey_course():
         }), 500
 
 # Remove course from Learning Journey 
-@app.route("/learning_journey_removecourse", methods=['DELETE'])
-def remove_learning_journey_course():
-    data = request.get_json()
-    print(data)
-    if not all(key in data.keys() for
-            key in ('learning_journey_id', 'course_id',
-                    )):
-        return jsonify({
-            "message": "Incorrect JSON object provided."
-        }), 500
-    try:
-        try:
-            lJCourse = LearningJourneyCourse.query.filter_by(learning_journey_id=data["learning_journey_id"], course_id=data["course_id"])
-        except Exception:
-            return jsonify({
-            "message": f"Unable to find {data['course_id']} course with id: {data['learning_journey_id']}"
-            }), 500
-        db.session.delete(lJCourse)
-        db.session.commit()
-        return jsonify(data), 201
-    except Exception:
-        return jsonify({
-            "message": "Unable to commit to database."
-        }), 500
+@app.route("/learning_journey_removecourse/<int:learning_journey_id>/<string:course_id>", methods=['DELETE'])
+def remove_learning_journey_course(learning_journey_id , course_id):
+  
+    LJcourse =  db.session.query(LearningJourneyCourse).get((learning_journey_id, course_id))
+    
+    db.session.delete(LJcourse)
+    db.session.commit()
+    return '', 204
 
 
 ########### Learning Journey Skill #####################
