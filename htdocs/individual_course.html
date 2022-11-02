@@ -170,7 +170,7 @@
                         </div>
                         <div class="flow-root">
                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <li class="py-3 sm:py-4" v-for="skill in skills">
+                                <li class="py-3 sm:py-4" v-for="skill in editedSkills">
                                     <div class="flex items-center space-x-4">
                                         <div class="flex-1 min-w-0">
                                             <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
@@ -242,6 +242,7 @@
                     skills: [],
                     selectedSkills: [],
                     assignedSkills: [],
+                    editedSkills: [],
                     error: "",
                 },
                 mounted: async function () {
@@ -331,10 +332,18 @@
                                             if (each.skill_id == each_skill.skill_id) {
                                                 if (!this.assignedSkills.includes(each_skill)) {
                                                     this.assignedSkills.push(each_skill)
+                                                    this.editedSkills.splice(this.editedSkills.indexOf(each_skill) , 1)
                                                     console.log(this.assignedSkills)
                                                 }
                                             }
                                         }
+                                    }
+                                }
+
+                                for (each of this.skills) {
+                                    if (!this.assignedSkills.includes(each) && !this.editedSkills.includes(
+                                            each)) {
+                                        this.editedSkills.push(each)
                                     }
                                 }
                             })
