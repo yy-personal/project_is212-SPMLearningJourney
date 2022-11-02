@@ -1,33 +1,63 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+#This is an optional tag. This will be the workflow name appearing on the Actions tab of your git repo
+name: Demo Workflow
 
-name: Python application
+#Specifies the trigger for this workflow. This workflow will be triggered on push event, 
+#that is every time someone pushes a change to the repository or merges a pull request. 
+#This is triggered by a push to every branch; for examples of syntax that runs only on 
+#pushes to specific branches, paths, or tags, see "Workflow syntax for GitHub Actions."
+on: [push]
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
-
+#Groups together all the jobs that run in the Demo Workflow workflow.
 jobs:
+  #Defines a job named build. The child keys will define properties of the job.
   build:
-
+    #Configures the job to run on the latest version of an Ubuntu Linux runner.
     runs-on: ubuntu-latest
 
+    #Groups together all the steps that run in the check-bats-version job. 
+    #Each item nested under this section is a separate action or shell script.
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Test with pytest
-      run: |
-        pytest tests.py -v
+      #The uses keyword specifies that this step will run v3 of the actions/checkout action. 
+      #This is an action that checks out your repository onto the runner, 
+      #allowing you to run scripts or other actions against your code (such as build and test tools). 
+      #You should use the checkout action any time your workflow will run against the repository's code.
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.x
+        #This step uses the actions/setup-python@v4 action to install the 
+        #specified version of the python (this example uses v3.x which is the latest minor version in 3.x series). 
+        #This puts both the python commands in your PATH.
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        #The run keyword tells the job to execute a command on the runner.
+        #installs pip and flake 8 also if requirements.txt is present then installs all the dependencies specified there
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install flake8 pytest flask flask_sqlalchemy flask_cors flask_testing
+          #TODO: Install flak8 using pip command here
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
+      - name: Lint with flake8
+        #runs flake8 over the code
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Test with unittest
+        #runs the unittest
+        run: |
+          #TODO: Add the command to run all the unittest here.
+          pytest unit_tests.py
+
+      - name: Test with integration testing
+        #runs the unittest
+        run: |
+          #TODO: Add the command to run all the unittest here.
+          pytest integration_tests.py unit_test.py
