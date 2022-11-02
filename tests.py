@@ -7,7 +7,7 @@ Copyright (c) 2019 - present AppSeed.us
 import pytest
 import json
 import time
-# from api import app
+from api import app
 
 import random
 import string
