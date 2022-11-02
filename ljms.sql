@@ -71,7 +71,8 @@ CREATE TABLE `Registration` (
 CREATE TABLE `LearningJourney` (
     `learning_journey_id` int PRIMARY KEY AUTO_INCREMENT,
     `staff_id` int NOT NULL,
-    `job_role_id` int NOT NULL 
+    `job_role_id` int NOT NULL,
+    `learning_journey_deleted` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

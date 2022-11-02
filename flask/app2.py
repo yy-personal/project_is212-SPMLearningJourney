@@ -317,6 +317,16 @@ def delete_skill(id):
     db.session.commit()
     return '', 204
 
+
+#delete skills (D)
+#SOFT DELETE
+@app.route("/learningjourney/<int:id>", methods=['DELETE'])
+def delete_learningjourney(id):
+    learningJourney = LearningJourney.query.get_or_404(id)
+    learningJourney.skill_deleted = True
+    db.session.commit()
+    return '', 204
+
 #HARD DELETE
 # # @app.route("/skill", methods=['DELETE'])
 # def delete_skill():
