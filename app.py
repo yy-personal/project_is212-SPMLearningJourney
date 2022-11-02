@@ -541,7 +541,7 @@ def create_consultation():
 @app.route('/skill' , methods=['POST'])
 def create_skill():
     data = request.get_json()
-    # print(data)
+    print("data: ", data)
     if not all(key in data.keys() for
             key in ('skill_name', 'skill_description',
                     )):
@@ -552,6 +552,7 @@ def create_skill():
     try:
         db.session.add(skill)
         db.session.commit()
+        print("addedddd")
         return jsonify(skill.to_dict()), 201
     except Exception:
         return jsonify({

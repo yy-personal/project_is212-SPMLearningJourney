@@ -54,4 +54,5 @@ jobs:
         #runs the unittest
         run: |
           #TODO: Add the command to run all the unittest here.
-          pytest integration_tests.py unit_test.py
+          # pytest -o log_cli=true integration_tests.py unit_test.py
+          pytest -o log_cli=true integration_tests.py

@@ -129,7 +129,7 @@ class TestApp(flask_testing.TestCase):
 
 # STARTING HERE ALL OUR TEST CASES:
 
-# CREATE LEARNING JOURNEY:
+# CREATE SKILL:
 class TestCreateSkill(TestApp):
     def test_read_skill(self):
         data = {'skill_name': 'JavaScript', 'skill_description': 'JavaScript is a lightweight interpreted programming language.'}
@@ -138,9 +138,9 @@ class TestCreateSkill(TestApp):
         db.session.commit()
 
         response = self.client.get("/skills")
-
+        print("response.json['data']:", response.json["data"])
         self.assertEqual(response.status_code, 200)
-        # self.assertEqual(response.json, [
+        # self.assertEqual(response.json["data"], [
         # {
         #     "skill_deleted": True,
         #     "skill_description": "JavaScript is a lightweight interpreted programming language.",
