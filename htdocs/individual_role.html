@@ -44,9 +44,9 @@
         <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
 
         <style>
-          .gradient {
-            background: linear-gradient(90deg, #82cde8 0%, #78cea9 100%);
-        }
+            .gradient {
+                background: linear-gradient(90deg, #82cde8 0%, #78cea9 100%);
+            }
 
             .backdrop {
                 background-color: rgba(0, 0, 0, 0.4);
@@ -68,18 +68,19 @@
             <nav id="header" class="fixed w-full z-30 top-0 text-white gradient py-2">
                 <div class="container flex flex-wrap justify-between items-center mx-auto">
                     <!-- LOGO -->
-                        <img src='../logo.png' width="109" height="109" class='mb-2'>
-    
+                    <img src='../logo.png' width="109" height="109" class='mb-2'>
+
                     <div class="flex items-center md:order-2">
                         <button type="button"
                             class="flex mr-3 text-sm  rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                             id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                             data-dropdown-placement="bottom">
-                            
-                            <iconify-icon icon="carbon:user-avatar-filled-alt" style="color: white;" height = '40' width = '40'>
+
+                            <iconify-icon icon="carbon:user-avatar-filled-alt" style="color: white;" height='40'
+                                width='40'>
                             </iconify-icon>
                         </button>
-    
+
                         <!-- PROFILE Dropdown menu -->
                         <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                             id="user-dropdown">
@@ -108,7 +109,7 @@
                                 </li>
                             </ul>
                         </div>
-    
+
                         <button data-collapse-toggle="mobile-menu-2" type="button"
                             class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                             aria-controls="mobile-menu-2" aria-expanded="false">
@@ -120,13 +121,15 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </button>
-    
+
                     </div>
-    
-                    <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
-                        <ul class="flex flex-col p-2 mt-1 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 ">
+
+                    <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
+                        id="mobile-menu-2">
+                        <ul
+                            class="flex flex-col p-2 mt-1 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 ">
                             <li>
-                                <a href="../htdocs/hr_ljmsHome.html" 
+                                <a href="../htdocs/hr_ljmsHome.html"
                                     class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</a>
                             </li>
                             <li>
@@ -171,7 +174,7 @@
                         </div>
                         <div class="flow-root">
                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <li class="py-3 sm:py-4" v-for="skill in skills">
+                                <li class="py-3 sm:py-4" v-for="skill in editedSkills">
                                     <div class="flex items-center space-x-4">
                                         <div class="flex-1 min-w-0">
                                             <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
@@ -244,6 +247,7 @@
                     selectedSkills: [],
                     assignedSkills: [],
                     error: "",
+                    editedSkills: []
                 },
                 mounted: async function () {
                     let one = "http://localhost:5010/jobroles";
@@ -273,6 +277,7 @@
 
                             //skills
                             this.skills = responseTwo.data
+                            //onsole.log(this.skills)
 
                             //assigned skills
                             this.getAssignedSkills()
@@ -284,6 +289,11 @@
                 methods: {
                     assignSkills() {
                         console.log(this.selectedSkills)
+                        // for (i in this.skills) {
+                        //     if (this.selectedSkills.includes(this.skills[i].skill_name)) {
+                        //         this.skills.splice(i,1)
+                        //     }
+                        // }
                         var skills = this.skills
                         var skillIDs = []
 
@@ -313,6 +323,7 @@
                                     .then(response => {
                                         //console.log(response.data)
                                         this.getAssignedSkills()
+
                                     })
                                     .catch(error => {
                                         console.log(error)
@@ -332,10 +343,16 @@
                                             if (each.skill_id == each_skill.skill_id) {
                                                 if (!this.assignedSkills.includes(each_skill)) {
                                                     this.assignedSkills.push(each_skill)
-                                                    console.log(this.assignedSkills)
+                                                    this.editedSkills.splice(this.editedSkills.indexOf(each_skill) , 1)
                                                 }
                                             }
                                         }
+                                    }
+                                }
+                                for (each of this.skills) {
+                                    if (!this.assignedSkills.includes(each) && !this.editedSkills.includes(
+                                            each)) {
+                                        this.editedSkills.push(each)
                                     }
                                 }
                             })
