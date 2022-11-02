@@ -38,9 +38,10 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
 
     <style>
-       .gradient {
+        .gradient {
             background: linear-gradient(90deg, #82cde8 0%, #78cea9 100%);
         }
+
         button:disabled {
             background: hwb(0 0% 100% / 0.493);
         }
@@ -151,32 +152,32 @@
                     <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-for="role in roles">
 
                         <!-- EACH ROLE -->
-                            <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
-                                style='padding-top: 20px;'>
-                                <p class="w-full font-bold text-xl text-gray-800 px-6"
-                                    style='margin-bottom: 10px; font-size: 25px;'>
-                                    {{role.job_role_name}}
-                                </p>
-                                <p class="text-gray-800 text-base px-6 mb-5">
-                                    {{role.job_role_description}}
-                                </p>
-                            </div>
+                        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
+                            style='padding-top: 20px;'>
+                            <p class="w-full font-bold text-xl text-gray-800 px-6"
+                                style='margin-bottom: 10px; font-size: 25px;'>
+                                {{role.job_role_name}}
+                            </p>
+                            <p class="text-gray-800 text-base px-6 mb-5">
+                                {{role.job_role_description}}
+                            </p>
+                        </div>
 
-                            <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
-                                style="text-align: center;">
-                                <button v-on:click="goToSinglepage(role.job_role_id)" type="button"
-                                    class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                    Assign Skills</button>
+                        <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
+                            style="text-align: center;">
+                            <button v-on:click="goToSinglepage(role.job_role_id)" type="button"
+                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Assign Skills</button>
 
-                                <button v-on:click="openUpdateModal(role.job_role_id)" type="button"
-                                    class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                    Update</button>
+                            <button v-on:click="openUpdateModal(role.job_role_id)" type="button"
+                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Update</button>
 
-                                <button v-on:click="deleteRole(role.job_role_id)" type="button"
-                                    class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                    Delete</button>
-                                
-                            </div>
+                            <button v-on:click="deleteRole(role.job_role_id)" type="button"
+                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Delete</button>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -357,7 +358,7 @@
                                 <div style="text-align: center;">
                                     <button type="submit" :disabled="checkUpdateNameValid()|| checkUpdateNameTooLong()"
                                         v-on:click="updateRole(updateID)"
-                                        class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                        class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
                                     <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                                     Not registered? <a href="#"
@@ -510,6 +511,11 @@
                         }
                     }
                 },
+                isEmpty() {
+                    if (this.create_role_des == '' | this.create_role_name == '') {
+                        return true
+                    }
+                },
                 checkCreateNameValid() {
                     // If varName consist illegal char = true
                     if (specialChars.test(this.create_role_name) | /\d/.test(this.create_role_name)) {
@@ -529,11 +535,6 @@
                         return true;
                     }
                 },
-                isEmpty() {
-                    if (this.create_role_des == '' | this.create_role_name == '') {
-                        return true
-                    }
-                },
                 closeCreateModal() {
                     this.create_role_des = ''
                     this.create_role_name = ''
@@ -547,92 +548,59 @@
                             this.varDesc = this.roles[i].job_role_description;
                         }
                     }
-                }
-            },
-            checkCreateNameValid() {
-                // If varName consist illegal char = true
-                if (specialChars.test(this.create_role_name) | /\d/.test(this.create_role_name)) {
-                    // console.log("Invalid input value for skill ID, please do not use any special characters!")
-                    return true;
-                }
-            },
-            checkCreateNameTooLong() {
-                // If varName consist illegal char = true
-                if ((this.create_role_name).length >= 100) {
-                    // console.log("Invalid length should not exceed 100!")
-                    return true;
-                }
-            },
-            checkCreateDesTooLong() {
-                if ((this.create_role_des).length >= 500) {
-                    return true;
-                }
-            },
-            closeCreateModal() {
-                this.create_role_des = ''
-                this.create_role_name = ''
-            },
-            openUpdateModal(roleID) {
-                this.updateID = roleID;
-                //console.log(this.roles)
-                for (i in this.roles) {
-                    if (this.roles[i].job_role_id == roleID) {
-                        this.varName = this.roles[i].job_role_name;
-                        this.varDesc = this.roles[i].job_role_description;
+                },
+                closeUpdateModal() {
+                    this.updateID = null;
+                },
+                checkUpdateNameValid() {
+                    // If varName consist illegal char = true
+                    if (specialChars.test(this.varName)) {
+                        // console.log("Invalid input value for skill ID, please do not use any special characters!")
+                        return true;
                     }
-                }
-            },
-            closeUpdateModal() {
-                this.updateID = null;
-            },
-            checkUpdateNameValid() {
-                // If varName consist illegal char = true
-                if (specialChars.test(this.varName)) {
-                    // console.log("Invalid input value for skill ID, please do not use any special characters!")
-                    return true;
-                }
-            },
-            checkUpdateNameTooLong() {
-                // If varName consist illegal char = true
-                if ((this.varName).length > 100) {
-                    // console.log("Invalid length should not exceed 100!")
-                    return true;
-                }
-            },
-            updateRole: function (roleID) {
-                if (this.checkUpdateNameValid() == true) {
-                    return
-                }
-                rolesURL = "http://localhost:5010/jobrole/" + roleID
-                //console.log(rolesURL)
-                fetch(rolesURL, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        'job_role_name': this.varName,
-                        'job_role_description': this.varDesc,
-                    })
-                }).then(response => {
-                    //console.log(roleID)
-                    for (i in this.roles) {
-                        if (this.roles[i].job_role_id == roleID) {
-                            this.roles[i].job_role_name = this.varName
-                            this.roles[i].job_role_description = this.varDesc
+                },
+                checkUpdateNameTooLong() {
+                    // If varName consist illegal char = true
+                    if ((this.varName).length > 100) {
+                        // console.log("Invalid length should not exceed 100!")
+                        return true;
+                    }
+                },
+                updateRole: function (roleID) {
+                    if (this.checkUpdateNameValid() == true) {
+                        return
+                    }
+                    rolesURL = "http://localhost:5010/jobrole/" + roleID
+                    //console.log(rolesURL)
+                    fetch(rolesURL, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'job_role_name': this.varName,
+                            'job_role_description': this.varDesc,
+                        })
+                    }).then(response => {
+                        //console.log(roleID)
+                        for (i in this.roles) {
+                            if (this.roles[i].job_role_id == roleID) {
+                                this.roles[i].job_role_name = this.varName
+                                this.roles[i].job_role_description = this.varDesc
+                            }
                         }
-                    }
-                    //console.log(this.roles)
-                    // this.varObj
-                    this.varName = null
-                    this.varDesc = null
-                    return response.json()
-                }).then(data =>
-                    // this is the data we get after putting our data,
-                    console.log(data)
-                )
-                this.closeUpdateModal();
-            },
+                        //console.log(this.roles)
+                        // this.varObj
+                        this.varName = null
+                        this.varDesc = null
+                        return response.json()
+                    }).then(data =>
+                        // this is the data we get after putting our data,
+                        console.log(data)
+                    )
+                    this.closeUpdateModal();
+                },
+            }
         });
     </script>
     <!-- flowbite -->
