@@ -269,6 +269,7 @@ def create_skill():
             "message": "Incorrect JSON object provided."
         }), 500
     skill = Skill(**data)
+    print(data)
     try:
         db.session.add(skill)
         db.session.commit()
