@@ -312,20 +312,14 @@ def update_skill(id):
 #SOFT DELETE
 @app.route("/skill/<int:id>", methods=['DELETE'])
 def delete_skill(id):
+    print("deleting skill")
     skill = Skill.query.get_or_404(id)
+    print("skill found: ", skill)
     skill.skill_deleted = True
     db.session.commit()
     return '', 204
 
 
-#delete skills (D)
-#SOFT DELETE
-@app.route("/learningjourney/<int:id>", methods=['DELETE'])
-def delete_learningjourney(id):
-    learningJourney = LearningJourney.query.get_or_404(id)
-    learningJourney.skill_deleted = True
-    db.session.commit()
-    return '', 204
 
 #HARD DELETE
 # # @app.route("/skill", methods=['DELETE'])
@@ -609,28 +603,15 @@ def create_learning_journey():
         }), 500
 
 
-# # DELETE Learning Journey (C)
-# @app.route("/learning_journey", methods=['DELETE'])
-# def delete_learning_journey():
-#     data = request.get_json()
-#     print(data)
-#     if not all(key in data.keys() for
-#             key in ('staff_id', 'job_role_id',
-#                     )):
-#         return jsonify({
-#             "message": "Incorrect JSON object provided."
-#         }), 500
-#     role = LearningJourney(**data)
-#     try:
-#         db.session.add(role)
-#         db.session.commit()
-
-#         return jsonify(role.to_dict()), 201
-#     except Exception:
-#         print(Exception.with_traceback)
-#         return jsonify({
-#             "message": "Unable to commit to database."
-#         }), 500
+#delete skills (D)
+#SOFT DELETE
+@app.route("/learningjourney/<int:id>", methods=['DELETE'])
+def delete_learningjourney(id):
+    learningJourney = LearningJourney.query.get_or_404(id)
+    print("gotit: ", learningJourney)
+    learningJourney.learning_journey_deleted = True
+    db.session.commit()
+    return '', 204
 
 # HARD DELETE Learning Journey (D)
 @app.route('/learning_journey', methods=['DELETE'])

@@ -151,6 +151,12 @@
                     <div class="h-4 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t font-underline bg-slate-400">
                     </div>
                 </div>
+                
+                <div class="flex justify-center w-full">
+                    <div v-if="deleteError.length != 0" class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                        <span class="font-medium">Alert:</span> {{deleteError}}
+                    </div>
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 bg-orange-200 " id="rolesContainer">
                     <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-for="skill in skills">
@@ -433,6 +439,7 @@
                 updateID: null,
                 success_create: "",
                 OpenCreateModal: true, 
+                deleteError: ""
             },
             mounted: async function () {
                 this.getSkills()
@@ -463,7 +470,7 @@
                         .then(function (response) {
                             //console.log(JSON.stringify(response.data.data));
                             skills = response.data.data
-                            //console.log(skills);
+                            // console.log(JSON.stringify(response.data.data));
                             coursesDivs = ""
                             this.skills = skills
                             // coursesContainer.innerHTML = coursesDivs
@@ -471,7 +478,10 @@
                         .catch(function (error) {
                             console.log(error);
                         })
-                    this.skills = skills
+                        
+                    
+                    this.skills = skills.concat([{"skill_deleted":false,"skill_description":"Software testing is the process of assessing the functionality of a software program.","skill_id":9,"skill_name":"Software Testing 2"}]);
+                    // console.log("skills: ",this.skills)
                 },
                 deleteSkill: async function (id) {
                     console.log("delete: ", id)
@@ -492,6 +502,7 @@
                     )
                     .catch(error => {
                         console.log(error)
+                        this.deleteError = "Unable to delete!"
                     })
                 },
 
