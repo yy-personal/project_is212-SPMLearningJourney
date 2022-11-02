@@ -297,7 +297,10 @@
                         var skills = this.skills
                         var skillIDs = []
 
-                        if (this.selectedSkills.length == 0) {
+                        if(this.editedSkills.length == 0){
+                            this.error = "No skills available for selection!"
+                        }
+                        else if (this.selectedSkills.length == 0) {
                             this.error = "Please select skills to assign"
                         } else {
                             this.error = ""
