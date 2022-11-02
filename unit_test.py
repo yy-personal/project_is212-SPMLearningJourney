@@ -110,6 +110,21 @@ class TestConsultation(unittest.TestCase):
             }
         )
 
+class TestCreateLearningJourney(unittest.TestCase):
+    def test_to_dict(self):
+        c1 = Consultation(diagnosis='Nosebleed',
+                          prescription='Tissue paper for nose',
+                          charge=55, doctor_id=8, patient_id=9)
+        self.assertEqual(c1.to_dict(), {
+            'id': None,
+            'diagnosis': 'Nosebleed',
+            'prescription': 'Tissue paper for nose',
+            'charge': 55,
+            'doctor_id': 8,
+            'patient_id': 9
+            }
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

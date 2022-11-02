@@ -1,7 +1,10 @@
 import unittest
 import flask_testing
+import pytest
 import json
-from app import app, db, Doctor, Patient
+from app import app, db, Doctor, Patient, LearningJourney, LearningJourneyCourse,\
+Role, Staff, JobRole, Skill, JobRoleSkill, Course, SkillCourse, Registration, LearningJourneySkill
+
 
 
 class TestApp(flask_testing.TestCase):
@@ -20,108 +23,144 @@ class TestApp(flask_testing.TestCase):
         db.session.remove()
         db.drop_all()
 
+# # SAMPLE TEST CASE DONT TOUCH FOR NOW:
+# @pytest.mark.skip(reason="no way of currently testing this")
+# class TestCreateConsultation(TestApp):
+#     def test_create_consultation(self):
+#         d1 = Doctor(name='Imran', title='Dr',
+#                     reg_num='UKM123', hourly_rate=30)
+#         p1 = Patient(name='Phris Coskitt', title='HRH',
+#                      contact_num='+65 8888 8888', ewallet_balance=15)
+#         db.session.add(d1)
+#         db.session.add(p1)
+#         db.session.commit()
 
-class TestCreateConsultation(TestApp):
-    def test_create_consultation(self):
-        d1 = Doctor(name='Imran', title='Dr',
-                    reg_num='UKM123', hourly_rate=30)
-        p1 = Patient(name='Phris Coskitt', title='HRH',
-                     contact_num='+65 8888 8888', ewallet_balance=15)
-        db.session.add(d1)
-        db.session.add(p1)
-        db.session.commit()
+#         request_body = {
+#             'doctor_id': d1.id,
+#             'patient_id': p1.id,
+#             'diagnosis': 'Itchy armpits',
+#             'prescription': 'Better deodrant',
+#             'length': 15
+#         }
 
+#         response = self.client.post("/consultations",
+#                                     data=json.dumps(request_body),
+#                                     content_type='application/json')
+#         self.assertEqual(response.json, {
+#             'id': 1,
+#             'doctor_id': 1,
+#             'patient_id': 2,
+#             'diagnosis': 'Itchy armpits',
+#             'prescription': 'Better deodrant',
+#             'charge': 7.5
+#         })
+
+#     def test_create_consultation_invalid_doctor(self):
+#         p1 = Patient(name='Hyacinth Bucket', title='Mrs',
+#                      contact_num='+65 8888 8888', ewallet_balance=15)
+#         db.session.add(p1)
+#         db.session.commit()
+
+#         request_body = {
+#             'doctor_id': p1.id,
+#             'patient_id': p1.id,
+#             'diagnosis': 'Itchy armpits',
+#             'prescription': 'Better deodrant',
+#             'length': 15
+#         }
+
+#         response = self.client.post("/consultations",
+#                                     data=json.dumps(request_body),
+#                                     content_type='application/json')
+#         self.assertEqual(response.status_code, 500)
+#         self.assertEqual(response.json, {
+#             'message': 'Doctor not valid.'
+#         })
+
+#     def test_create_consultation_invalid_patient(self):
+#         d1 = Doctor(name='Imran', title='Dr',
+#                     reg_num='UKM123', hourly_rate=30)
+#         db.session.add(d1)
+#         db.session.commit()
+
+#         request_body = {
+#             'doctor_id': d1.id,
+#             'patient_id': d1.id,
+#             'diagnosis': 'Itchy armpits',
+#             'prescription': 'Better deodrant',
+#             'length': 15
+#         }
+
+#         response = self.client.post("/consultations",
+#                                     data=json.dumps(request_body),
+#                                     content_type='application/json')
+#         self.assertEqual(response.status_code, 500)
+#         self.assertEqual(response.json, {
+#             'message': 'Patient not valid.'
+#         })
+
+#     def test_create_consultation_insufficient_balance(self):
+#         d1 = Doctor(name='Imran', title='Dr',
+#                     reg_num='UKM123', hourly_rate=30)
+#         p1 = Patient(name='Hyacinth Bucket', title='Mrs',
+#                      contact_num='+65 8888 8888', ewallet_balance=15)
+#         db.session.add(d1)
+#         db.session.add(p1)
+#         db.session.commit()
+
+#         request_body = {
+#             'doctor_id': d1.id,
+#             'patient_id': p1.id,
+#             'diagnosis': 'Itchy armpits',
+#             'prescription': 'Better deodrant',
+#             'length': 60
+#         }
+
+#         response = self.client.post("/consultations",
+#                                     data=json.dumps(request_body),
+#                                     content_type='application/json')
+#         self.assertEqual(response.status_code, 500)
+#         self.assertEqual(response.json, {
+#             'message': 'Patient does not have enough e-wallet funds.'
+#         })
+
+
+
+
+# STARTING HERE ALL OUR TEST CASES:
+
+# CREATE LEARNING JOURNEY:
+class TestCreateSkill(TestApp):
+    def test_read_skill(self):
+
+        response = self.client.get("/skills")
+
+        self.assertEqual(response.json["data"], [])
+
+    def test_create_skill(self):
         request_body = {
-            'doctor_id': d1.id,
-            'patient_id': p1.id,
-            'diagnosis': 'Itchy armpits',
-            'prescription': 'Better deodrant',
-            'length': 15
+            "skill_name": "JavaScript",
+            "skill_description": "JavaScript is a lightweight interpreted programming language."
         }
 
-        response = self.client.post("/consultations",
+
+        response = self.client.post("/skill",
                                     data=json.dumps(request_body),
-                                    content_type='application/json')
-        self.assertEqual(response.json, {
-            'id': 1,
-            'doctor_id': 1,
-            'patient_id': 2,
-            'diagnosis': 'Itchy armpits',
-            'prescription': 'Better deodrant',
-            'charge': 7.5
-        })
+                                    content_type='application/json'
+                                    )
 
-    def test_create_consultation_invalid_doctor(self):
-        p1 = Patient(name='Hyacinth Bucket', title='Mrs',
-                     contact_num='+65 8888 8888', ewallet_balance=15)
-        db.session.add(p1)
-        db.session.commit()
+        response = self.client.get("/skills",
+                                    # data=json.dumps(request_body),
+                                    # content_type='application/json'
+                                    )
+        print("response is: ", response.json["data"])
 
-        request_body = {
-            'doctor_id': p1.id,
-            'patient_id': p1.id,
-            'diagnosis': 'Itchy armpits',
-            'prescription': 'Better deodrant',
-            'length': 15
-        }
-
-        response = self.client.post("/consultations",
-                                    data=json.dumps(request_body),
-                                    content_type='application/json')
-        self.assertEqual(response.status_code, 500)
-        self.assertEqual(response.json, {
-            'message': 'Doctor not valid.'
-        })
-
-    def test_create_consultation_invalid_patient(self):
-        d1 = Doctor(name='Imran', title='Dr',
-                    reg_num='UKM123', hourly_rate=30)
-        db.session.add(d1)
-        db.session.commit()
-
-        request_body = {
-            'doctor_id': d1.id,
-            'patient_id': d1.id,
-            'diagnosis': 'Itchy armpits',
-            'prescription': 'Better deodrant',
-            'length': 15
-        }
-
-        response = self.client.post("/consultations",
-                                    data=json.dumps(request_body),
-                                    content_type='application/json')
-        self.assertEqual(response.status_code, 500)
-        self.assertEqual(response.json, {
-            'message': 'Patient not valid.'
-        })
-
-    def test_create_consultation_insufficient_balance(self):
-        d1 = Doctor(name='Imran', title='Dr',
-                    reg_num='UKM123', hourly_rate=30)
-        p1 = Patient(name='Hyacinth Bucket', title='Mrs',
-                     contact_num='+65 8888 8888', ewallet_balance=15)
-        db.session.add(d1)
-        db.session.add(p1)
-        db.session.commit()
-
-        request_body = {
-            'doctor_id': d1.id,
-            'patient_id': p1.id,
-            'diagnosis': 'Itchy armpits',
-            'prescription': 'Better deodrant',
-            'length': 60
-        }
-
-        response = self.client.post("/consultations",
-                                    data=json.dumps(request_body),
-                                    content_type='application/json')
-        self.assertEqual(response.status_code, 500)
-        self.assertEqual(response.json, {
-            'message': 'Patient does not have enough e-wallet funds.'
-        })
-
-
-
+        self.assertEqual(response.json["data"], [{
+    "skill_deleted": False,
+    "skill_description": "yayyyy",
+    "skill_id": 8,
+    "skill_name": "cherylskill3"
+}])
 
 
 if __name__ == '__main__':

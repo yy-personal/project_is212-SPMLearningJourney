@@ -285,101 +285,6 @@ class LearningJourneyCourse(db.Model):
 
 
 
-######## SKILLS ########
-#create skills (C)
-@app.route('/skill' , methods=['POST'])
-def create_skill():
-    data = request.get_json()
-    # print(data)
-    if not all(key in data.keys() for
-            key in ('skill_name', 'skill_description',
-                    )):
-        return jsonify({
-            "message": "Incorrect JSON object provided."
-        }), 500
-    skill = Skill(**data)
-    try:
-        db.session.add(skill)
-        db.session.commit()
-        return jsonify(skill.to_dict()), 201
-    except Exception:
-        return jsonify({
-            "message": "Unable to commit to database."
-        }), 500
-
-
-# Read Existing Skills (R)
-@app.route("/skills")
-def read_skill():
-    skillList = Skill.query.all()
-    return jsonify(
-        {
-            "data": [skill.to_dict()
-                    for skill in skillList]
-        }
-    ), 200
-
-# Update Existing Skills (U)
-@app.route("/skill/<int:id>", methods=['PUT'])
-def update_skill(id):
-    chosenSkill = Skill.query.filter_by(skill_id=id).first()
-    if chosenSkill:
-        data = request.get_json() 
-        if data['skill_name']:
-            chosenSkill.name = data['skill_name']
-        if data['skill_description']:
-            chosenSkill.description = data['skill_description']
-        db.session.commit()
-        return jsonify(
-            {
-                "code": 200,
-                # "data": chosenSkill.json()
-            }
-        )
-
-#delete skills (D)
-#SOFT DELETE
-@app.route("/skill/<int:id>", methods=['DELETE'])
-def delete_skill(id):
-    skill = Skill.query.get_or_404(id)
-    skill.skill_deleted = True
-    db.session.commit()
-    return '', 204
-
-
-######## JOB ROLE ########
-# Create A New Job Role (C)
-@app.route("/jobrole", methods=['POST'])
-def create_role():
-    data = request.get_json()
-    print(data)
-    if not all(key in data.keys() for
-            key in ('job_role_name', 'job_role_description',
-                    )):
-        return jsonify({
-            "message": "Incorrect JSON object provided."
-        }), 500
-    jobrole = JobRole(**data)
-    try:
-        db.session.add(jobrole)
-        db.session.commit()
-        return jsonify(jobrole.to_dict()), 201
-    except Exception:
-        return jsonify({
-            "message": "Unable to commit to database."
-        }), 500
-
-# Read Existing Roles (R)
-@app.route("/jobroles")
-def read_role():
-    roleList = JobRole.query.all()
-    return jsonify(
-        {
-            "data": [role.to_dict()
-                    for role in roleList]
-        }
-    ), 200
-
 
 class Person(db.Model):
     __tablename__ = 'person'
@@ -629,6 +534,102 @@ def create_consultation():
         return jsonify({
             "message": "Unable to commit to database."
         }), 500
+
+
+######## SKILLS ########
+#create skills (C)
+@app.route('/skill' , methods=['POST'])
+def create_skill():
+    data = request.get_json()
+    # print(data)
+    if not all(key in data.keys() for
+            key in ('skill_name', 'skill_description',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    skill = Skill(**data)
+    try:
+        db.session.add(skill)
+        db.session.commit()
+        return jsonify(skill.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+
+# Read Existing Skills (R)
+@app.route("/skills")
+def read_skill():
+    skillList = Skill.query.all()
+    return jsonify(
+        {
+            "data": [skill.to_dict()
+                    for skill in skillList]
+        }
+    ), 200
+
+# Update Existing Skills (U)
+@app.route("/skill/<int:id>", methods=['PUT'])
+def update_skill(id):
+    chosenSkill = Skill.query.filter_by(skill_id=id).first()
+    if chosenSkill:
+        data = request.get_json() 
+        if data['skill_name']:
+            chosenSkill.name = data['skill_name']
+        if data['skill_description']:
+            chosenSkill.description = data['skill_description']
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                # "data": chosenSkill.json()
+            }
+        )
+
+#delete skills (D)
+#SOFT DELETE
+@app.route("/skill/<int:id>", methods=['DELETE'])
+def delete_skill(id):
+    skill = Skill.query.get_or_404(id)
+    skill.skill_deleted = True
+    db.session.commit()
+    return '', 204
+
+
+######## JOB ROLE ########
+# Create A New Job Role (C)
+@app.route("/jobrole", methods=['POST'])
+def create_role():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('job_role_name', 'job_role_description',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    jobrole = JobRole(**data)
+    try:
+        db.session.add(jobrole)
+        db.session.commit()
+        return jsonify(jobrole.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+# Read Existing Roles (R)
+@app.route("/jobroles")
+def read_role():
+    roleList = JobRole.query.all()
+    return jsonify(
+        {
+            "data": [role.to_dict()
+                    for role in roleList]
+        }
+    ), 200
 
 
 if __name__ == '__main__':
