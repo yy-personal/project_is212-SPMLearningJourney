@@ -208,11 +208,18 @@
                                             </template>
                                         </ul>
                                     </td>
+<<<<<<< HEAD
                                     <td class="py-4 px-6 text-center">
                                         <!-- <iconify-icon icon="akar-icons:circle-check-fill" style="color: lime;"
                                             width="32" height="32"></iconify-icon> -->
                                         <iconify-icon icon="ci:pie-chart-75" width="35" height="35"></iconify-icon>
                                     </td>
+=======
+                                    <!-- <td class="py-4 px-6 text-center">
+                                        <iconify-icon icon="akar-icons:circle-check-fill" style="color: lime;"
+                                            width="32" height="32"></iconify-icon>
+                                    </td> -->
+>>>>>>> parent of 5e306ed (Only show unselected course)
 
                                 </tr>
                             </tbody>
@@ -276,12 +283,17 @@
                                                         {{eachSkill.skill_description}}
                                                     </p>
                                                 </div>
-                                                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                    
+                                                <div
+                                                    class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                                                     <!-- <input checked type='checkbox'  v-if="eachSkill.skill_id && eachSkill[0]" :value="eachSkill.skill_id" v-model="selectedSkillModalSkillsId" @change="confirmSkill()" > -->
                                                     <!-- <input checked type='checkbox' :value="eachSkill.skill_id" v-model="selectedSkillModalSkillsId" @change="confirmSkill()" > -->
+<<<<<<< HEAD
                                                     <input checked type='checkbox' :value="eachSkill.skill_id"
                                                         v-model="selectedSkillModalSkillsId" @change="confirmSkill()" />
+=======
+                                                    <input type='checkbox' :value="eachSkill.skill_id"
+                                                        v-model="selectedSkillModalSkillsId" @change="confirmSkill()">
+>>>>>>> parent of 5e306ed (Only show unselected course)
                                                 </div>
                                             </div>
                                         </li>
@@ -306,34 +318,24 @@
                                     <template v-for="a in selectedSkillModalSkillsId">
                                         <template v-for="b in addCourseModalSkills" v-if="a==b.skill_id">
                                             <h2 class="text-xl font-extrabold text-dark">{{b.skill_name}}</h2>
-
                                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700"
                                                 v-for="courseObjects in addCourseConfirmSkill_CourseDisplay"
                                                 v-if="courseObjects.skill_name==b.skill_name">
-                                                <!-- Verify if this course is already inside user current courses -->
-                                                <!-- <template
-                                                    v-for='eachCourse in getCourseName(each[0].learning_journey_id)'
-                                                    v-if="eachCourse[1] == eachskillcourse.course_id">
-                                                    <li>{{eachCourse[0]}}</li>
-                                                    <br>
-                                                </template> -->
-                                                <template v-if="pageCourseListForModalToDeduct.includes(courseObjects.course_id)==false">
-                                                        <li class="py-3 sm:py-4">
-                                                            <div class="flex items-center space-x-4">
-                                                                <div class="flex-1 min-w-0">
-                                                                    <p
-                                                                        class="text-sm font-base text-gray-500 truncate dark:text-white">
-                                                                        {{courseObjects.course_id}}-{{courseObjects.course_name}}
-                                                                    </p>
-                                                                </div>
-                                                                <div
-                                                                    class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                                    <input type='checkbox' :value="courseObjects.course_id"
-                                                                        v-model="selectedCourseModal">
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                </template>
+                                                <li class="py-3 sm:py-4">
+                                                    <div class="flex items-center space-x-4">
+                                                        <div class="flex-1 min-w-0">
+                                                            <p
+                                                                class="text-sm font-base text-gray-500 truncate dark:text-white">
+                                                                {{courseObjects.course_id}}-{{courseObjects.course_name}}
+                                                            </p>
+                                                        </div>
+                                                        <div
+                                                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                            <input type='checkbox' :value="courseObjects.course_id"
+                                                                v-model="selectedCourseModal">
+                                                        </div>
+                                                    </div>
+                                                </li>
                                             </ul>
                                             <hr>
                                         </template>
@@ -450,6 +452,7 @@
                 selectedCourseModal: [],
                 ObjToPOST: [],
 
+<<<<<<< HEAD
                 pageCourseListForModalToDeduct: [],
                 
                 // after 'Remove Course' Modal pops out 
@@ -459,6 +462,8 @@
                 courseDisplay: []
 
 
+=======
+>>>>>>> parent of 5e306ed (Only show unselected course)
             },
             async mounted() {
                 this.loadAll()
@@ -598,8 +603,6 @@
                             }
                         }
                     }
-                    // console.log(course_names)
-
                     return (course_names)
                 },
                 getSkillName(learning_journey_id) {
@@ -613,7 +616,6 @@
                             }
                         }
                     }
-                    
                     return (skill_names)
                 },
                 // Open up modal and fill in Skills tab according to job id from learning journey
@@ -655,19 +657,10 @@
                     // console.log("selected modal skills id " + selectedJobRoleSkillId)
                     // console.log("selected modal skills and stuff to display ")
                     for (a in this.addCourseModalSkills) {
-                        // console.log(this.addCourseModalSkills[a])
+                        console.log(this.addCourseModalSkills[a])
                     }
-
-                    // For elimination purpose //
-                    for (l in this.learningJourneyCourse){
-                        if(this.learningJourneyCourse[l]['learning_journey_id'] == learning_journey_id){ // learningID in 'learningJourneyCourse is same as selected 'learning_journey_id' from for loop on top //
-                            // console.log(this.learningJourneyCourse[l]['course_id'])
-                            this.pageCourseListForModalToDeduct.push(this.learningJourneyCourse[l]['course_id'])
-                        }
-                        
-                    }
-                    // console.log(this.pageCourseListForModalToDeduct)
                 },
+<<<<<<< HEAD
                 // ***
                 openDeleteModal(learning_journey_id) {
                     this.learningjourneyID = learning_journey_id
@@ -739,6 +732,8 @@
                     this.closeDeleteModal()
                     window.location.reload();
                 },
+=======
+>>>>>>> parent of 5e306ed (Only show unselected course)
                 confirmSkill() {
                     this.addCourseConfirmSkill_CourseDisplay = []
                     // console.log(this.selectedSkillModalSkillsId)
@@ -825,21 +820,21 @@
                     setTimeout(() => window.location.reload(), 1000)
                 },
                 clearAll(){
-                    this.learningJourney= []
-                    this.learningJourneySkill= []
-                    this.learningJourneyCourse= []
-                    this.jobRoles= []
-                    this.skills= []
-                    this.courses= []
-                    this.learningJourneyRole= []
+                    this.learningJourney= [],
+                    this.learningJourneySkill= [],
+                    this.learningJourneyCourse= [],
+                    this.jobRoles= [],
+                    this.skills= [],
+                    this.courses= [],
+                    this.learningJourneyRole= [],
                     this.skillCourse= []
-                    this.pageCourseListForModalToDeduct = []
                 },
                 closeUpdateModal() {
-                    this.learningjourneyID = null
+                    this.learningjourneyID = null;
                     this.addCourseModalSkills = []
                     this.selectedSkillModalSkillsId = []
                     this.addCourseConfirmSkill_CourseDisplay = []
+<<<<<<< HEAD
                     this.pageCourseListForModalToDeduct = []
                 },
                 closeDeleteModal() {
@@ -849,6 +844,8 @@
                     this.notRemoved = true;
                     this.removeCoursesId = [];
                     this.courseDisplay = []
+=======
+>>>>>>> parent of 5e306ed (Only show unselected course)
                 }
 
 
