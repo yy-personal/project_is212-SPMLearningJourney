@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 # Mac user ====================================================================
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
                                         '@localhost:3306/ljms'
 # =============================================================================
 

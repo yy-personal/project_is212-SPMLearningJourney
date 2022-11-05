@@ -435,7 +435,7 @@
                 },
                 async loadLearningJourney() {
                     var url = this.url + `/learning_journeys`
-                    axios.get(url)
+                    await axios.get(url)
                         .then(response => {
                             // console.log(response)
                             staff_LJ = []
@@ -457,7 +457,7 @@
                 },
                 async loadLearningJourneySkill() {
                     var url = this.url + `/learning_journey_skills`
-                    axios.get(url)
+                    await axios.get(url)
                         .then(response => {
                             // console.log(response)
                             this.learningJourneySkill = response.data.data
@@ -468,7 +468,7 @@
                 },
                 async loadLearningJourneyCourse() {
                     var url = this.url + `/learning_journey_course`
-                    axios.get(url)
+                    await axios.get(url)
                         .then(response => {
                             //console.log(response)
                             this.learningJourneyCourse = response.data.data
@@ -480,7 +480,7 @@
                 },
                 async loadJobRoles() {
                     var url = this.url + `/jobroles`
-                    axios.get(url)
+                    await axios.get(url)
                         .then(response => {
                             // console.log(response)
                             this.jobRoles = response.data.data
@@ -508,7 +508,7 @@
                 },
                 async loadJobRoleSkill() {
                     var url = this.url + `/skills_to_jobrole`
-                    axios.get(url)
+                    await axios.get(url)
                         .then(response => {
                             // console.log(response)
                             this.jobRoleSkill = response.data.data
@@ -519,7 +519,7 @@
                 },
                 async loadSkills() {
                     var url = this.url + `/skills`
-                    axios.get(url)
+                    await axios.get(url)
                         .then(response => {
                             // console.log(response)
                             this.skills = response.data.data
@@ -532,7 +532,7 @@
                 },
                 async loadCourses() {
                     var url = this.url + `/courses`
-                    axios.get(url)
+                    await axios.get(url)
                         .then(response => {
                             // console.log(response)
                             this.courses = response.data.data
@@ -544,7 +544,7 @@
                 },
                 async loadskillCourses() {
                     var url = this.url + `/skillCourse`
-                    axios.get(url)
+                    await axios.get(url)
                         .then(response => {
                             this.skillCourse = response.data.data
                             // console.log(this.skillCourse)
@@ -672,7 +672,7 @@
                     }
                     // console.log(this.addCourseConfirmSkill_CourseDisplay)
                 },
-                testDataObject() {
+                async testDataObject() {
                     var allInfo = this.addCourseConfirmSkill_CourseDisplay
                     var selectedInfo_course_id = this.selectedCourseModal
                     for (i in allInfo) {
@@ -700,12 +700,12 @@
                         var skill_id = each.skill_id
                         var course_id = each.course_id
                         
-                        axios.all([
-                        axios.post(url_1 , {
+                        await axios.all([
+                        await axios.post(url_1 , {
                             learning_journey_id : this.learningjourneyID,
                             skill_id : skill_id
                         }),
-                        axios.post(url_2, {
+                        await axios.post(url_2, {
                             learning_journey_id: this.learningjourneyID,
                             course_id: course_id
                         })
@@ -717,7 +717,7 @@
                     })) 
                     }
                     this.closeUpdateModal()
-                    setTimeout(() => window.location.reload(), 1000)
+                    window.location.reload()
                 },
                 clearAll(){
                     this.learningJourney= []
