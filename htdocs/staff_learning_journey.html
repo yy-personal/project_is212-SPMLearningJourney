@@ -343,6 +343,25 @@
                                                             </div>
                                                         </li>
                                                 </template>
+                                                <template v-else>
+                                                    <li class="py-3 sm:py-4">
+                                                        <div class="flex items-center space-x-4">
+                                                            <div class="flex-1 min-w-0">
+                                                                <p
+                                                                    class="text-sm font-base text-gray-500 truncate dark:text-white">
+                                                                    {{courseObjects.course_id}}-{{courseObjects.course_name}}
+                                                                </p>
+                                                            </div>
+                                                            <div
+                                                                class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                                <p
+                                                                    class="text-sm font-base text-gray-500 truncate dark:text-white">
+                                                                    Added
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                            </template>
                                             </ul>
                                             <hr>
                                         </template>
