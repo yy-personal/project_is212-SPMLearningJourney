@@ -15,7 +15,7 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-        </script>
+    </script>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -86,8 +86,7 @@
                         <ul class="py-1" aria-labelledby="user-menu-button">
                             <li>
                                 <a href="../htdocs/staff_learning_journey.html"
-                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Learning
-                                    Journy</a>
+                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Learning Journy</a>
                             </li>
                             <li>
                                 <a href="#"
@@ -156,78 +155,76 @@
 
 
             <!-- DISPLAY LEARNING JOURNEY -->
-            <template>
-                <div class='container'>
-                    <div class='row mx-8' v-for='(each, idx) of learningJourneyRole'>
+            <div class='container'>
+                <div class='row mx-8' v-for='(each, idx) of learningJourneyRole'>
 
-                        <!-- EACH LEARNING JOURNEY -->
-                        <div
-                            class="mb-10 p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                            <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white mb-3">{{each[1]}}</h5>
-                            <!-- <div class="flex justify-between mb-1">
-                                <span class="text-lg font-semibold text-black dark:text-white">Work in
-                                    Progress</span>
-                                <span class="text-lg font-bold text-black dark:text-white">40%</span>
+                    <!-- EACH LEARNING JOURNEY -->
+                    <div
+                        class="mb-10 p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white mb-3">{{each[1]}}</h5>
+                        <!-- <div class="flex justify-between mb-1">
+                            <span class="text-lg font-semibold text-black dark:text-white">Work in
+                                Progress</span>
+                            <span class="text-lg font-bold text-black dark:text-white">40%</span>
+                        </div>
+                        <div class="mb-4 w-full h-4 bg-gray-200 rounded-full dark:bg-gray-700">
+                            <div class="h-4 bg-blue-600 rounded-full dark:bg-red-500" style="width: 40%">
                             </div>
-                            <div class="mb-4 w-full h-4 bg-gray-200 rounded-full dark:bg-gray-700">
-                                <div class="h-4 bg-blue-600 rounded-full dark:bg-red-500" style="width: 40%">
-                                </div>
-                            </div> -->
+                        </div> -->
 
-                            <!-- DISPLAY COURSES AND SKILLS -->
-                            <table class="table-fixed w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
-                                <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="py-3 px-6 sm:text-sm">
-                                            Skills
-                                        </th>
-                                        <th scope="col" class="py-3 px-6 sm:text-sm">
-                                            Courses
-                                        </th>
-                                        <!-- <th scope="col" class="py-3 px-6 sm:text-sm">
-                                            Skill Completion Status
-                                        </th> -->
-                                    </tr>
-                                </thead>
+                        <!-- DISPLAY COURSES AND SKILLS -->
+                        <table class="table-fixed w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
+                            <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6 sm:text-sm">
+                                        Skills
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 sm:text-sm">
+                                        Courses
+                                    </th>
+                                    <!-- <th scope="col" class="py-3 px-6 sm:text-sm">
+                                        Skill Completion Status
+                                    </th> -->
+                                </tr>
+                            </thead>
 
-                                <tbody>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                                        v-for='eachSkill in getSkillName(each[0].learning_journey_id)'>
-
-                                        <th scope="row" class="py-2 px-6 font-medium text-gray-900  dark:text-white">
-                                            {{eachSkill[0]}}
-                                        </th>
-                                        <td scope="row" class="pt-3 px-6 font-medium text-gray-900  dark:text-white">
-                                            <ul class="space-y-1 max-w-md list-disc list-inside text-gray-900">
-                                                <template v-for='eachskillcourse in skillCourse'
-                                                    v-if="eachskillcourse.skill_id == eachSkill[1]">
-                                                    <template
-                                                        v-for='eachCourse in getCourseName(each[0].learning_journey_id)'
-                                                        v-if="eachCourse[1] == eachskillcourse.course_id">
-                                                        <li>{{eachCourse[0]}}</li>
-                                                        <br>
-                                                    </template>
+                            <tbody>
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                    v-for='eachSkill in getSkillName(each[0].learning_journey_id)'>
+                                    
+                                    <th scope="row" class="py-2 px-6 font-medium text-gray-900  dark:text-white">
+                                        {{eachSkill[0]}}
+                                    </th>
+                                    <td scope="row" class="pt-3 px-6 font-medium text-gray-900  dark:text-white">
+                                        <ul class="space-y-1 max-w-md list-disc list-inside text-gray-900">
+                                            <template v-for='eachskillcourse in skillCourse'
+                                                v-if="eachskillcourse.skill_id == eachSkill[1]">
+                                                <template
+                                                    v-for='eachCourse in getCourseName(each[0].learning_journey_id)'
+                                                    v-if="eachCourse[1] == eachskillcourse.course_id">
+                                                    <li>{{eachCourse[0]}}</li>
+                                                    <br>
                                                 </template>
-                                            </ul>
-                                        </td>
-                                        <!-- <td class="py-4 px-6 text-center">
-                                            <iconify-icon icon="akar-icons:circle-check-fill" style="color: lime;"
-                                                width="32" height="32"></iconify-icon>
-                                        </td> -->
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            </template>
+                                        </ul>
+                                    </td>
+                                    <!-- <td class="py-4 px-6 text-center">
+                                        <iconify-icon icon="akar-icons:circle-check-fill" style="color: lime;"
+                                            width="32" height="32"></iconify-icon>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
 
-                            <div class="mt-auto  p-6" style="text-align: center;">
-                                <button v-on:click="openUpdateModal(each[0].learning_journey_id)" type="button"
-                                    class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                    Add Course</button>
-                            </div>
+                        <div class="mt-auto  p-6" style="text-align: center;">
+                            <button v-on:click="openUpdateModal(each[0].learning_journey_id)" type="button"
+                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Add Course</button>
                         </div>
                     </div>
-
                 </div>
-            </template>
+
+            </div>
         </div>
 
         <div v-if="learningjourneyID != null" id="authentication-modal" tabindex="-1" aria-hidden="true"
@@ -274,14 +271,12 @@
                                                         {{eachSkill.skill_description}}
                                                     </p>
                                                 </div>
-                                                <div
-                                                    class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-
+                                                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                    
                                                     <!-- <input checked type='checkbox'  v-if="eachSkill.skill_id && eachSkill[0]" :value="eachSkill.skill_id" v-model="selectedSkillModalSkillsId" @change="confirmSkill()" > -->
                                                     <!-- <input checked type='checkbox' :value="eachSkill.skill_id" v-model="selectedSkillModalSkillsId" @change="confirmSkill()" > -->
                                                     <input checked type='checkbox' :value="eachSkill.skill_id"
-                                                        v-model="selectedSkillModalSkillsId" @change="confirmSkill()"
-                                                        checked />
+                                                        v-model="selectedSkillModalSkillsId" @change="confirmSkill()" checked />
                                                 </div>
                                             </div>
                                         </li>
@@ -331,55 +326,22 @@
                                                     <li>{{eachCourse[0]}}</li>
                                                     <br>
                                                 </template> -->
-                                                <template
-                                                    v-if="pageCourseListForModalToDeduct.includes(courseObjects.course_id)">
-                                                    <li class="py-3 sm:py-4">
-                                                        <div class="flex items-center space-x-4">
-                                                            <div class="flex-1 min-w-0">
-                                                                <p
-                                                                    class="text-sm font-base text-gray-500 truncate dark:text-white">
-                                                                    {{courseObjects.course_id}}-{{courseObjects.course_name}}
-                                                                </p>
-                                                            </div>
-                                                            <div
-                                                                class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                                <input type='checkbox' :value="courseObjects.course_id"
-                                                                    v-model="selectedCourseModal">
-                                                            </div>
-                                                            <!-- <div
+                                                <template v-if="pageCourseListForModalToDeduct.includes(courseObjects.course_id)==false">
+                                                        <li class="py-3 sm:py-4">
+                                                            <div class="flex items-center space-x-4">
+                                                                <div class="flex-1 min-w-0">
+                                                                    <p
+                                                                        class="text-sm font-base text-gray-500 truncate dark:text-white">
+                                                                        {{courseObjects.course_id}}-{{courseObjects.course_name}}
+                                                                    </p>
+                                                                </div>
+                                                                <div
                                                                     class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                                    <input type='checkbox' class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm unchecked:bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" :value="courseObjects.course_id"
-                                                                        v-model="selectedCourseModal" checked>
-                                                                </div> -->
-                                                            <!-- <div class="flex items-center">
-                                                                    <input disabled checked id="disabled-checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" :value="courseObjects.course_id"
-                                                                    v-model="selectedCourseModal" >
-                                                                </div> -->
-                                                            <!-- <div class="flex opacity-40">
-                                                                    <input type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-disabled-checked-checkbox" checked disabled :value="courseObjects.course_id"
-                                                                    v-model="selectedCourseModal">
-                                                                    <label for="hs-disabled-checked-checkbox" class="text-sm text-gray-500 ml-3 dark:text-gray-400"></label>
-                                                                </div> -->
-
-                                                        </div>
-                                                    </li>
-                                                </template>
-                                                <template v-else>
-                                                    <li class="py-3 sm:py-4">
-                                                        <div class="flex items-center space-x-4">
-                                                            <div class="flex-1 min-w-0">
-                                                                <p
-                                                                    class="text-sm font-base text-gray-500 truncate dark:text-white">
-                                                                    {{courseObjects.course_id}}-{{courseObjects.course_name}}
-                                                                </p>
+                                                                    <input type='checkbox' :value="courseObjects.course_id"
+                                                                        v-model="selectedCourseModal">
+                                                                </div>
                                                             </div>
-                                                            <div
-                                                                class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                                <input type='checkbox' :value="courseObjects.course_id"
-                                                                    v-model="selectedCourseModal">
-                                                            </div>
-                                                        </div>
-                                                    </li>
+                                                        </li>
                                                 </template>
                                             </ul>
                                             <hr>
@@ -430,7 +392,7 @@
                 ObjToPOST: [],
 
                 pageCourseListForModalToDeduct: [],
-
+                
 
 
             },
@@ -586,7 +548,7 @@
                             }
                         }
                     }
-
+                    
                     return (skill_names)
                 },
                 // Open up modal and fill in Skills tab according to job id from learning journey
@@ -630,12 +592,12 @@
                     }
 
                     // For elimination purpose //
-                    for (l in this.learningJourneyCourse) {
-                        if (this.learningJourneyCourse[l]['learning_journey_id'] == learning_journey_id) { // learningID in 'learningJourneyCourse is same as selected 'learning_journey_id' from for loop on top //
+                    for (l in this.learningJourneyCourse){
+                        if(this.learningJourneyCourse[l]['learning_journey_id'] == learning_journey_id){ // learningID in 'learningJourneyCourse is same as selected 'learning_journey_id' from for loop on top //
                             // console.log(this.learningJourneyCourse[l]['course_id'])
                             this.pageCourseListForModalToDeduct.push(this.learningJourneyCourse[l]['course_id'])
                         }
-
+                        
                     }
                     // console.log(this.pageCourseListForModalToDeduct)
                 },
@@ -655,8 +617,8 @@
                                         this.addCourseModalSkills
                                         for (a in this.addCourseModalSkills) {
                                             if (this.skillCourse[j]["skill_id"] == this.addCourseModalSkills[a][
-                                                "skill_id"
-                                            ]) {
+                                                    "skill_id"
+                                                ]) {
                                                 temp_skill_id = this.addCourseModalSkills[a]["skill_id"]
                                                 temp_skill_name = this.addCourseModalSkills[a]["skill_name"]
                                             }
@@ -705,35 +667,35 @@
                     for (each of this.ObjToPOST) {
                         var skill_id = each.skill_id
                         var course_id = each.course_id
-
+                        
                         axios.all([
-                            axios.post(url_1, {
-                                learning_journey_id: this.learningjourneyID,
-                                skill_id: skill_id
-                            }),
-                            axios.post(url_2, {
-                                learning_journey_id: this.learningjourneyID,
-                                course_id: course_id
-                            })
-                        ])
-                            .then(axios.spread((response_1, response_2) => {
-                                console.log('response_1', response_1)
+                        axios.post(url_1 , {
+                            learning_journey_id : this.learningjourneyID,
+                            skill_id : skill_id
+                        }),
+                        axios.post(url_2, {
+                            learning_journey_id: this.learningjourneyID,
+                            course_id: course_id
+                        })
+                    ]) 
+                    .then(axios.spread((response_1 , response_2) => {
+                        console.log('response_1' , response_1)
 
-                                console.log('response_2', response_2)
-                            }))
+                        console.log('response_2' , response_2)
+                    })) 
                     }
                     this.closeUpdateModal()
                     setTimeout(() => window.location.reload(), 1000)
                 },
-                clearAll() {
-                    this.learningJourney = []
-                    this.learningJourneySkill = []
-                    this.learningJourneyCourse = []
-                    this.jobRoles = []
-                    this.skills = []
-                    this.courses = []
-                    this.learningJourneyRole = []
-                    this.skillCourse = []
+                clearAll(){
+                    this.learningJourney= []
+                    this.learningJourneySkill= []
+                    this.learningJourneyCourse= []
+                    this.jobRoles= []
+                    this.skills= []
+                    this.courses= []
+                    this.learningJourneyRole= []
+                    this.skillCourse= []
                     this.pageCourseListForModalToDeduct = []
                 },
                 closeUpdateModal() {
