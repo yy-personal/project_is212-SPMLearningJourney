@@ -24,6 +24,16 @@ class TestSkill(unittest.TestCase):
             }
         )
 
+    def test_update_skill(self):
+        s1 = Skill(skill_name="JavaScript", skill_description="JavaScript is a lightweight interpreted programming language.", skill_deleted= False)
+        self.assertEqual(s1.skill_name, "JavaScript")
+        self.assertEqual(s1.skill_description, "JavaScript is a lightweight interpreted programming language.")
+        s1.update_skill("UpdatedSkill", "UpdatedSkillDescription")
+        self.assertEqual(s1.skill_name, "UpdatedSkill")
+        self.assertEqual(s1.skill_description, "UpdatedSkillDescription")
+
+        
+
 class TestLearningJourneySkill(unittest.TestCase):
     def test_to_dict(self):
         ljs1 = LearningJourneySkill(learning_journey_id=1, skill_id=3)

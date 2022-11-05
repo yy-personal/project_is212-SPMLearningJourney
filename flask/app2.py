@@ -120,7 +120,7 @@ class Skill(db.Model):
     skill_deleted = db.Column(db.Boolean(), default=False, nullable=False)
 
     __mapper_args__ = {
-        'polymorphic_identity': 'role'
+        'polymorphic_identity': 'skill'
     }
 
     def to_dict(self):
@@ -133,6 +133,13 @@ class Skill(db.Model):
         for column in columns:
             result[column] = getattr(self, column)
         return result
+
+    def update_skill(self, inputSkillName, inputSkillDescription):
+        if(inputSkillName or inputSkillDescription):
+            self.skill_name = inputSkillName
+            self.skill_description = inputSkillDescription
+        else:
+            raise Exception("Invalid value for skill update")
 
 class Course(db.Model):
     __tablename__ = 'course'
