@@ -226,9 +226,10 @@
                     error: "",
                 },
                 mounted: async function () {
-                    let one = "http://localhost:5010/courses";
-                    let two = "http://localhost:5010/skills";
-
+                    //let one = "http://localhost:5010/courses";
+                    let one = "http://192.168.10.114:5010/courses";
+                    //let two = "http://localhost:5010/skills";
+                    let two = "http://192.168.10.114:5010/skills";
                     const requestOne = axios.get(one);
                     const requestTwo = axios.get(two);
 
@@ -283,7 +284,8 @@
 
                             for (each_skill_id of skillIDs) {
                                 console.log(each_skill_id)
-                                var url = "http://localhost:5010/skills_to_course"
+                                //var url = "http://localhost:5010/skills_to_course"
+                                var url = "http://192.168.10.114:5010/skills_to_course"
                                 var config = {
                                     course_id: this.courseID,
                                     //ONE SKILL ADDED ONLY
@@ -301,7 +303,9 @@
                         }
                     },
                     getAssignedSkills() {
-                        var url = 'http://localhost:5010/skills_to_course'
+                        //var url = 'http://localhost:5010/skills_to_course'
+                        var url = 'http://192.168.10.114:5010/skills_to_course'
+
                         axios.get(url)
                             .then(response => {
                                 var data = response.data.data
