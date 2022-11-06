@@ -656,6 +656,128 @@ class TestDeleteLearningJourney(TestApp):
             'message': 'Incorrect JSON object provided.'
         })
                             
+# CREATE SKILL:
+class TestSkillsToRole(TestApp):
+
+    # similar to above one: test_selects_interested_role
+    def test_assign_skills_to_role(self):
+        data = {
+            'job_role_name': "job1", 
+            'job_role_description': "job description 1",
+        }
+       
+        role = JobRole(**data)
+        db.session.add(role)
+        db.session.commit()
+
+        skill1_data = {
+            'skill_name': "skill_name1", 
+            'skill_description': "skill_description 1",
+        }
+       
+        skill1 = Skill(**skill1_data)
+        db.session.add(skill1)
+        db.session.commit()
+
+        skill2_data = {
+            'skill_name': "skill_name2", 
+            'skill_description': "skill_description 2",
+        }
+       
+        skill1 = Skill(**skill1_data)
+        db.session.add(skill1)
+        db.session.commit()
+
+        request_body = {
+                'job_role_id': 1,
+                'skill_id': 1
+            }
+        response = self.client.post("/skills_to_jobrole",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        request_body = {
+                'job_role_id': 1,
+                'skill_id': 2
+            }
+        response = self.client.post("/skills_to_jobrole",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+            
+        response = self.client.get("/skillbyrole/1")
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {
+            'data': [{
+                'skill_deleted': False,
+                'skill_description': 'skill_description 1',
+                'skill_id': 1,
+                'skill_name': 'skill_name1'
+            }, {
+                'skill_deleted': False,
+                'skill_description': 'skill_description 1',
+                'skill_id': 2,
+                'skill_name': 'skill_name1'
+            }]
+        })
+
+    # cannot test this?
+    def test_assign_invalid_skills_to_role(self):
+        data = {
+            'job_role_name': "job1", 
+            'job_role_description': "job description 1",
+        }
+       
+        role = JobRole(**data)
+        db.session.add(role)
+        db.session.commit()
+
+        request_body = {
+                'job_role_id': 1,
+                'skill_id': None
+            }
+        response = self.client.post("/skills_to_jobrole",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+        print("jons", response.json)
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(response.json, {
+                'message': 'Unable to commit to database.'
+            })
+
+    # cannot test this?
+    def test_assign_invalid_0_skills_to_role(self):
+        data = {
+            'job_role_name': "job1", 
+            'job_role_description': "job description 1",
+        }
+       
+        role = JobRole(**data)
+        db.session.add(role)
+        db.session.commit()
+        # shdnt be added:
+        request_body = {
+                'job_role_id': 1,
+                'skill_id': 9
+            }
+        response = self.client.post("/skills_to_jobrole",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+        # print("jons", response.json)
+        self.assertEqual(response.status_code, 201)
+        # self.assertEqual(response.json, {
+        #         'message': 'Unable to commit to database.'
+        #     })
+
+        self.assertEqual(response.json, {
+            'job_role_id': 1,
+            'skill_id': 9
+        })
+
 
 
 if __name__ == '__main__':
