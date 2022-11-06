@@ -69,7 +69,7 @@ class Role(db.Model):
         result = {}
         for column in columns:
             result[column] = getattr(self, column)
-        print(result)
+        # print(result)
         return result
 
 class Staff(db.Model):
@@ -210,7 +210,7 @@ class Course(db.Model):
         result = {}
         for column in columns:
             result[column] = getattr(self, column)
-        print(result)
+        # print(result)
         return result
 
 class SkillCourse(db.Model):
@@ -691,6 +691,318 @@ def delete_role(id):
     db.session.commit()
     return '', 204
 
+######## JobRoleSkill ########
+#get all the skills from that role
+@app.route("/skills_to_jobrole")
+def get_skills_from_jobrole():
+    jobrole_skills_List = JobRoleSkill.query.all()
+    return jsonify(
+        {
+            "data": [jobrole_skills.to_dict()
+                    for jobrole_skills in jobrole_skills_List]
+        }
+    ), 200
+
+# add skils to jobrole 
+@app.route("/skills_to_jobrole", methods=['POST'])
+def add_skill_to_jobrole():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('job_role_id', 'skill_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    jobrole_skill = JobRoleSkill(**data)
+    try:
+        db.session.add(jobrole_skill)
+        db.session.commit()
+        return jsonify(jobrole_skill.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+#get selected skills by job_role_id
+@app.route("/skillbyrole/<int:id>", methods=['GET'])
+def read_skill_by_role(id):
+    # chosenSkill = Role.query.filter_by(skill_id=id).first()
+    skillsIds = JobRoleSkill.query.filter_by(job_role_id=id).all()
+    allSkillsForRole = []
+    for i in skillsIds:
+        skill = Skill.query.filter_by(skill_id=i.skill_id).first()
+        if skill != None:
+            allSkillsForRole.append(skill)
+    
+    return jsonify(
+        {
+            "data": [skill.to_dict()
+                    for skill in allSkillsForRole]
+        }
+    ), 200
+
+
+######## SKILLCOURSE ########
+# add skils to course 
+@app.route("/skills_to_course", methods=['POST'])
+def add_skill_to_course():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('course_id', 'skill_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    course_skill = SkillCourse(**data)
+    try:
+        db.session.add(course_skill)
+        db.session.commit()
+        return jsonify(course_skill.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+#get all the skills from that role
+@app.route("/skills_to_course")
+def get_skills_from_course():
+    course_skills_List = SkillCourse.query.all()
+    return jsonify(
+        {
+            "data": [course_skills.to_dict()
+                    for course_skills in course_skills_List]
+        }
+    ), 200
+
+
+######## COURSES ########
+# Read Courses (R)
+@app.route("/courses")
+def read_course():
+    courseList = Course.query.all()
+    return jsonify(
+        {
+            "data": [course.to_dict()
+                    for course in courseList]
+        }
+    ), 200
+
+
+######## COURSE SKILL ########
+# Read skill by Courses 
+@app.route("/skillCourse")
+def read_skillCourse():
+    skillCourseList = SkillCourse.query.all()
+    return jsonify(
+        {
+            "data": [skillCours.to_dict()
+                    for skillCours in skillCourseList]
+        }
+    ), 200
+
+#read course by skill BY ID(R)
+@app.route("/coursebyskill/<int:id>", methods=['GET'])
+def read_course_by_skill(id):
+    # chosenSkill = Role.query.filter_by(skill_id=id).first()
+    CourseIds = SkillCourse.query.filter_by(skill_id=id).all()
+    allCoursesForSkill = []
+    for i in CourseIds:
+        course = Course.query.filter_by(course_id=i.course_id).first()
+        if course != None:
+            allCoursesForSkill.append(course)
+    
+    return jsonify(
+        {
+            "data": [course.to_dict()
+                    for course in allCoursesForSkill]
+        }
+    ), 200
+
+
+
+# NOT ADDED ENDPOINTS:
+
+# Create A New Course (C)
+@app.route("/course", methods=['POST'])
+def create_course():
+    data = request.get_json()
+    # print(data)
+    if not all(key in data.keys() for
+            key in ('course_name', 'course_description', 'course_status', 'course_type', 'course_category',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    course = Course(**data)
+    try:
+        db.session.add(course)
+        db.session.commit()
+        # print(f"expecteddd{jobrole.to_dict()}")
+        return jsonify(course.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+######## Learning Journey ########
+# Get all Learning Journey 
+@app.route("/learning_journeys")
+def get_learning_journey():
+    learning_journey_List = LearningJourney.query.all()
+    return jsonify(
+        {
+            "data": [learning_journey.to_dict()
+                    for learning_journey in learning_journey_List]
+        }
+    ), 200
+
+
+# Create Learning Journey (C)
+@app.route("/learning_journey", methods=['POST'])
+def create_learning_journey():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('staff_id', 'job_role_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    role = LearningJourney(**data)
+    try:
+        db.session.add(role)
+        db.session.commit()
+
+        return jsonify(role.to_dict()), 201
+    except Exception:
+        print(Exception.with_traceback)
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+
+# # DELETE Learning Journey (C)
+# @app.route("/learning_journey", methods=['DELETE'])
+# def delete_learning_journey():
+#     data = request.get_json()
+#     print(data)
+#     if not all(key in data.keys() for
+#             key in ('staff_id', 'job_role_id',
+#                     )):
+#         return jsonify({
+#             "message": "Incorrect JSON object provided."
+#         }), 500
+#     role = LearningJourney(**data)
+#     try:
+#         db.session.add(role)
+#         db.session.commit()
+
+#         return jsonify(role.to_dict()), 201
+#     except Exception:
+#         print(Exception.with_traceback)
+#         return jsonify({
+#             "message": "Unable to commit to database."
+#         }), 500
+
+# HARD DELETE Learning Journey (D)
+@app.route('/learning_journey', methods=['DELETE'])
+def delete_learning_journey():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+            key in ('learning_journey_id', 'learning_journey_id')):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    try:
+        try:
+            learning_journey = LearningJourney.query.filter_by(learning_journey_id=data["learning_journey_id"]).one()
+        except Exception:
+            return jsonify({
+                "message": f"Unable to find role with id: {data['learning_journey_id']}."
+            }), 500
+        db.session.delete(learning_journey)
+        db.session.commit()
+
+        return jsonify(data), 201
+    except Exception:
+            return jsonify({
+                "message": "Unable to commit to database."
+            }), 500
+
+########### Learning Journey Course #####################
+# Get all Learning Journey Course Relationship (R)
+@app.route("/learning_journey_course")
+def get_learning_journey_course():
+    learningJourneyCourseList = LearningJourneyCourse.query.all()
+    return jsonify(
+        {
+            "data": [learningJourneyCourse.to_dict()
+                    for learningJourneyCourse in learningJourneyCourseList]
+        }
+    ), 200
+
+# Create Learning Journey ADD COURSE (C)
+@app.route("/learning_journey_addcourse", methods=['POST'])
+def create_learning_journey_course():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+# learning_journey_id, course_id
+            key in ('learning_journey_id', 'course_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    role = LearningJourneyCourse(**data)
+    try:
+        db.session.add(role)
+        db.session.commit()
+
+        return jsonify(role.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+
+########### Learning Journey Skill #####################
+# Get all Learning Journey Skill R/S
+@app.route("/learning_journey_skills")
+def get_learning_journey_skill():
+    learning_journey_skill_List = LearningJourneySkill.query.all()
+    return jsonify(
+        {
+            "data": [learning_journey_skill.to_dict()
+                    for learning_journey_skill in learning_journey_skill_List]
+        }
+    ), 200
+
+# add skill to learning journey 
+@app.route("/learning_journey_addskill", methods=['POST'])
+def create_learning_journey_skill():
+    data = request.get_json()
+    print(data)
+    if not all(key in data.keys() for
+    # learning_journey_id, skill_id,
+
+            key in ('learning_journey_id', 'skill_id',
+                    )):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+    role = LearningJourneySkill(**data)
+    try:
+        db.session.add(role)
+        db.session.commit()
+
+        return jsonify(role.to_dict()), 201
+    except Exception:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -382,7 +382,8 @@ class TestCreateJobRole(TestApp):
         
 # CREATE SKILL:
 class TestCreateLearningJourney(TestApp):
-    def test_selects_interested_role(self):
+
+    def test_read_jobrole(self):
         data = {
             'job_role_name': "job1", 
             'job_role_description': "job description 1",
@@ -404,6 +405,187 @@ class TestCreateLearningJourney(TestApp):
                 'job_role_name': 'job1'
             }]
         })
+
+
+    def test_selects_interested_role(self):
+        pass
+        data = {
+            'job_role_name': "job1", 
+            'job_role_description': "job description 1",
+        }
+       
+        role = JobRole(**data)
+        db.session.add(role)
+        db.session.commit()
+
+        skill1_data = {
+            'skill_name': "skill_name1", 
+            'skill_description': "skill_description 1",
+        }
+       
+        skill1 = Skill(**skill1_data)
+        db.session.add(skill1)
+        db.session.commit()
+
+        request_body = {
+                'job_role_id': 1,
+                'skill_id': 1
+            }
+        response = self.client.post("/skills_to_jobrole",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+            
+        response = self.client.get("/skillbyrole/1")
+        
+        # print(f"response.json: {response.json}")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json,{
+                'data': [{
+                    'skill_deleted': False,
+                    'skill_description': 'skill_description 1',
+                    'skill_id': 1,
+                    'skill_name': 'skill_name1'
+                }]
+            })
+
+
+    def test_selects_interested_skill(self):
+
+        skill1_data = {
+            'skill_name': "skill_name1", 
+            'skill_description': "skill_description 1",
+        }
+       
+        skill1 = Skill(**skill1_data)
+        db.session.add(skill1)
+        db.session.commit()
+
+        course1_data = {
+            'course_name': "course_name1", 
+            'course_description': "course_description 1",
+            'course_status': "course_status 1",
+            'course_type': "course_type 1",
+            'course_category': "course_category 1"
+        }
+       
+        course1 = Course(**course1_data)
+        db.session.add(course1)
+        db.session.commit()
+
+
+        request_body = {
+               'course_id': 1, 
+               'skill_id': 1
+            }
+        response = self.client.post("/skills_to_course",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+            
+        response = self.client.get("/coursebyskill/1")
+        
+        print(f"response.json: {response.json}")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json,{
+                'data': [{
+                    'course_category': 'course_category 1',
+                    'course_description': 'course_description 1',
+                    'course_id': 1,
+                    'course_name': 'course_name1',
+                    'course_status': 'course_status 1',
+                    'course_type': 'course_type 1'
+                }]
+            })
+
+
+
+    def test_create_learning_journey(self):
+        # to create role skill course that are all connected before:
+        self.test_selects_interested_skill()
+        request_body = {
+            "staff_id": 1,
+            "job_role_id": 1
+        }
+
+        response = self.client.post("/learning_journey",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        # response = self.client.get("/learning_journeys")
+        print("response is: ", response.json)
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json, {
+            'job_role_id': 1,
+            'learning_journey_id': 1,
+            'staff_id': 1
+        })
+
+    def test_view_learning_journey(self):
+        # to create role skill course that are all connected before:
+        self.test_create_learning_journey()
+
+        response = self.client.get("/learning_journeys")
+
+        # response = self.client.get("/learning_journeys")
+        print("cccresponse is: ", response.json)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json,{
+                'data': [{
+                    'job_role_id': 1,
+                    'learning_journey_id': 1,
+                    'staff_id': 1
+                }]
+            })
+
+    def test_add_skills_to_learning_journey(self):
+        # to create role skill course, learning journey that are all connected before:
+        self.test_create_learning_journey()
+        # 'learning_journey_id', 'skill_id',
+        request_body = {
+            "learning_journey_id": 1,
+            "skill_id": 1
+        }
+
+        response = self.client.post("/learning_journey_addskill",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        response = self.client.get("/learning_journey_skills")
+        print("response is: ", response.json)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {
+                'data': [{
+                    'learning_journey_id': 1,
+                    'skill_id': 1
+                }]
+            })
+
+    def test_add_courses_to_learning_journey(self):
+        # to create role skill course, learning journey that are all connected before:
+        self.test_add_skills_to_learning_journey()
+        request_body = {
+            "learning_journey_id": 1,
+            "course_id": 1
+        }
+        response = self.client.post("/learning_journey_addcourse",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        print("response is: ", response.json)
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json, {
+                'course_id': '1',
+                'learning_journey_id': 1
+            })
+
 
 
 if __name__ == '__main__':
