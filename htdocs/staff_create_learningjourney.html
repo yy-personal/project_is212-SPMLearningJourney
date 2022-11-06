@@ -205,7 +205,7 @@
                         <!-- for loading courses2: -->
                     <div class="w-full pb-6 px-6 flex flex-col flex-grow flex-shrink" v-for="[key, value] of Object.entries(coursesBySkill2)">
                         <!-- FOR LOOP -->
-                        <div class="w-full p-4 flex-1 bg-red-100 overflow-hidden shadow rounded-xl"
+                        <div class="w-full p-4 flex-1 overflow-hidden shadow rounded-xl"
                             style='padding-top: 20px;'>
                             <h1 class="m-4 w-4/5 text-black text-xl font-bold">{{key}}</h1>
                             
@@ -217,7 +217,7 @@
                             >{{course.course_name}}</button> 
 
                             <button type="button" 
-                            class="bg-pink-300 mx-4 w-4/5 text-blue-700 hover:text-white border border-white;;  -700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                            class="bg-blue-300 mx-4 w-4/5 text-blue-700 hover:text-white border border-white;;  -700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
                             v-else
                             v-on:click="selectCourse(course)"
                             >{{course.course_name}}</button> 

@@ -678,5 +678,31 @@ class TestSkillsToCourse(TestApp):
         })
 
 
+    def test_assign_invalid_courses_to_skill(self):
+        skill1_data = {
+            'skill_name': 'JavaScript',
+            'skill_description': 'JavaScript is a lightweight interpreted programming language.'
+        }
+
+        skill1 = Skill(**skill1_data)
+        db.session.add(skill1)
+        db.session.commit()
+
+        request_body = {
+                'skill_id': 1,
+                'course_id': None
+            }
+        response = self.client.post("/skills_to_course",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+        print("jons", response.json)
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(response.json, {
+                'message': 'Unable to commit to database.'
+            })
+
+
+
 if __name__ == '__main__':
     unittest.main()
