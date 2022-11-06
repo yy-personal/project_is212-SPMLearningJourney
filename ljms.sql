@@ -703,7 +703,8 @@ INSERT INTO `LearningJourneySkill` (`learning_journey_id`, `skill_id`) VALUES
 (1, 4);
 
 INSERT INTO `LearningJourneyCourse` (`learning_journey_id`, `course_id`) VALUES
-(1, 'COR001');
+(1, 'COR001'),
+(1, 'COR002');
 
 INSERT INTO `JobRoleSkill` (`job_role_id`, `skill_id`) VALUES
 (1, 3),
