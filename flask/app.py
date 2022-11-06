@@ -909,6 +909,7 @@ def create_learning_journey():
 # HARD DELETE Learning Journey (D)
 @app.route('/learning_journey', methods=['DELETE'])
 def delete_learning_journey():
+    print("deleting")
     data = request.get_json()
     print(data)
     if not all(key in data.keys() for
@@ -916,6 +917,8 @@ def delete_learning_journey():
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
+
+    print(1)
     try:
         try:
             learning_journey = LearningJourney.query.filter_by(learning_journey_id=data["learning_journey_id"]).one()
