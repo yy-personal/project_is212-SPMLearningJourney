@@ -55,4 +55,4 @@ jobs:
         run: |
           #TODO: Add the command to run all the unittest here.
           # pytest -o log_cli=true integration_tests.py unit_test.py
-          pytest -o log_cli=true integration_tests.py
+          pytest -o log_cli=true flask/integration_tests.py flask/unit_test.py

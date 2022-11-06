@@ -23,7 +23,7 @@ class TestApp(flask_testing.TestCase):
         db.session.remove()
         db.drop_all()
 
-# # SAMPLE TEST CASE DONT TOUCH FOR NOW:
+# SAMPLE TEST CASE DONT TOUCH FOR NOW:
 # @pytest.mark.skip(reason="no way of currently testing this")
 # class TestCreateConsultation(TestApp):
 #     def test_create_consultation(self):
@@ -43,39 +43,62 @@ class TestApp(flask_testing.TestCase):
 #             'length': 15
 #         }
 
-#         response = self.client.post("/consultations",
-#                                     data=json.dumps(request_body),
-#                                     content_type='application/json')
-#         self.assertEqual(response.json, {
-#             'id': 1,
-#             'doctor_id': 1,
-#             'patient_id': 2,
-#             'diagnosis': 'Itchy armpits',
-#             'prescription': 'Better deodrant',
-#             'charge': 7.5
-#         })
+    #     response = self.client.post("/consultations",
+    #                                 data=json.dumps(request_body),
+    #                                 content_type='application/json')
+    #     print(f"response.json: {response.json}")                           
+    #     self.assertEqual(response.json, {
+    #         'id': 2,
+    #         'doctor_id': 1,
+    #         'patient_id': 2,
+    #         'diagnosis': 'Itchy armpits',
+    #         'prescription': 'Better deodrant',
+    #         'charge': 7.5
+    #     })
 
-#     def test_create_consultation_invalid_doctor(self):
-#         p1 = Patient(name='Hyacinth Bucket', title='Mrs',
-#                      contact_num='+65 8888 8888', ewallet_balance=15)
-#         db.session.add(p1)
-#         db.session.commit()
 
-#         request_body = {
-#             'doctor_id': p1.id,
-#             'patient_id': p1.id,
-#             'diagnosis': 'Itchy armpits',
-#             'prescription': 'Better deodrant',
-#             'length': 15
-#         }
+    # def test_create_doctor(self):
+    #     print("testing create doctor")
 
-#         response = self.client.post("/consultations",
-#                                     data=json.dumps(request_body),
-#                                     content_type='application/json')
-#         self.assertEqual(response.status_code, 500)
-#         self.assertEqual(response.json, {
-#             'message': 'Doctor not valid.'
-#         })
+    #     request_body = {
+    #         'name': "imran",
+    #         'title': "dr",
+    #         'reg_num': 1,
+    #         'hourly_rate': 15
+    #     }
+
+    #     response = self.client.post("/doctors",
+    #                                 data=json.dumps(request_body),
+    #                                 content_type='application/json')
+    #     print(f"response.json: {response.json}")                           
+    #     self.assertEqual(response.json, {
+    #         'hourly_rate': 15, 
+    #         'id': 1, 'name': 'imran', 
+    #         'reg_num': '1', 
+    #         'title': 'dr'})
+
+
+    # def test_create_consultation_invalid_doctor(self):
+    #     p1 = Patient(name='Hyacinth Bucket', title='Mrs',
+    #                  contact_num='+65 8888 8888', ewallet_balance=15)
+    #     db.session.add(p1)
+    #     db.session.commit()
+
+    #     request_body = {
+    #         'doctor_id': p1.id,
+    #         'patient_id': p1.id,
+    #         'diagnosis': 'Itchy armpits',
+    #         'prescription': 'Better deodrant',
+    #         'length': 15
+    #     }
+
+    #     response = self.client.post("/consultations",
+    #                                 data=json.dumps(request_body),
+    #                                 content_type='application/json')
+    #     self.assertEqual(response.status_code, 500)
+    #     self.assertEqual(response.json, {
+    #         'message': 'Doctor not valid.'
+    #     })
 
 #     def test_create_consultation_invalid_patient(self):
 #         d1 = Doctor(name='Imran', title='Dr',
@@ -138,18 +161,20 @@ class TestCreateSkill(TestApp):
         db.session.commit()
 
         response = self.client.get("/skills")
-        print("response.json['data']:", response.json["data"])
+        # print("response.json['data']:", response.json["data"])
         self.assertEqual(response.status_code, 200)
-        # self.assertEqual(response.json["data"], [
-        # {
-        #     "skill_deleted": True,
-        #     "skill_description": "JavaScript is a lightweight interpreted programming language.",
-        #     "skill_id": 1,
-        #     "skill_name": "JavaScript"
-        # }])
+        print(f"response.json: {response.json}")
+        self.assertEqual(response.json,{
+                'data': [{
+                    'skill_deleted': False,
+                    'skill_description': 'JavaScript is a lightweight interpreted programming language.',
+                    'skill_id': 1,
+                    'skill_name': 'JavaScript'
+                }]
+            })
          
 
-    def test_create_skill(self):
+    def test_create_learning_journey(self):
         request_body = {
             "skill_name": "JavaScript",
             "skill_description": "JavaScript is a lightweight interpreted programming language."

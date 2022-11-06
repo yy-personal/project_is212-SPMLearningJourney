@@ -31,7 +31,6 @@ class TestSkill(unittest.TestCase):
         s1.update_skill("UpdatedSkill", "UpdatedSkillDescription")
         self.assertEqual(s1.skill_name, "UpdatedSkill")
         self.assertEqual(s1.skill_description, "UpdatedSkillDescription")
-
         
 
 class TestLearningJourneySkill(unittest.TestCase):

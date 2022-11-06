@@ -1,6 +1,6 @@
 import unittest
 
-from app import Person, Doctor, Patient, Consultation
+from flask.app import Person, Doctor, Patient, Consultation
 
 
 class TestPerson(unittest.TestCase):

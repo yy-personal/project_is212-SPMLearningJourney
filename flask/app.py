@@ -131,8 +131,19 @@ class Skill(db.Model):
     skill_deleted = db.Column(db.Boolean(), default=False, nullable=False)
 
     __mapper_args__ = {
-        'polymorphic_identity': 'role'
+        'polymorphic_identity': 'skill'
     }
+
+    # def to_dict(self):
+    #     """
+    #     'to_dict' converts the object into a dictionary,
+    #     in which the keys correspond to database columns
+    #     """
+    #     columns = self.__mapper__.column_attrs.keys()
+    #     result = {}
+    #     for column in columns:
+    #         result[column] = getattr(self, column)
+    #     return 
 
     def to_dict(self):
         """
@@ -143,7 +154,9 @@ class Skill(db.Model):
         result = {}
         for column in columns:
             result[column] = getattr(self, column)
-        return 
+
+        # print(f"skill result: {result}")
+        return result
 
 class JobRoleSkill(db.Model):
     __tablename__ = 'jobroleskill'
