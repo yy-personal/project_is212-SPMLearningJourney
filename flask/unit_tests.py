@@ -1,6 +1,6 @@
 import unittest
 
-from app2 import Skill, JobRole, LearningJourney, LearningJourneySkill, LearningJourneyCourse
+from app2 import Skill, JobRole, LearningJourney, LearningJourneySkill, LearningJourneyCourse, Staff, Registration
 
 class TestJobRole(unittest.TestCase):
     def test_to_dict(self):
@@ -50,6 +50,32 @@ class TestLearningJourneyCourse(unittest.TestCase):
             'course_id': "COR002",
             }
         )
+
+class TestStaff(unittest.TestCase):
+    def test_to_dict(self):
+        staff1 = Staff(staff_Fname="Lucas", staff_Lname="Lee",department="HR", email="Lucas.Lee@allinone.com.sg",role=1)
+        self.assertEqual(staff1.to_dict(), {
+            'staff_id': None,
+            'staff_Fname': "Lucas", 
+            'staff_Lname': "Lee",
+            'department': "HR",
+            'email': "Lucas.Lee@allinone.com.sg",
+            'role': 1,
+            }
+        )
+
+class TestRegistration(unittest.TestCase):
+    def test_to_dict(self):
+        r1 = Registration(course_id="COR002",staff_id=150288, reg_status="Registered",completion_status='Completed')
+        self.assertEqual(r1.to_dict(), {
+            'reg_id': None,
+            'course_id': "COR002", 
+            'staff_id': 150288,
+            'reg_status': "Registered",
+            'completion_status': "Completed",
+            }
+        )
+
 
 
 if __name__ == "__main__":

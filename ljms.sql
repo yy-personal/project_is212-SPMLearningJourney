@@ -23,7 +23,7 @@ CREATE TABLE `Staff` (
     `staff_Fname` varchar(50) NOT NULL,
     `staff_Lname` varchar(50) NOT NULL,
     `department` varchar(50) NOT NULL,
-    `email` varchar(50) NOT NULL,
+    `email` varchar(100) NOT NULL,
     `role` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
