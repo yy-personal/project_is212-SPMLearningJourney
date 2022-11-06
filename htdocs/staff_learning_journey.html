@@ -222,10 +222,10 @@
                             <button v-on:click="openUpdateModal(each[0].learning_journey_id)" type="button"
                                 class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Add Course</button>
-                        </div>
                         <button v-on:click="openDeleteModal(each[0].learning_journey_id)" type="button"
                                 class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 Remove Course</button>
+                        </div>
                     </div>
                 </div>
 
@@ -431,7 +431,7 @@
                                             </div>
                                             <div
                                                 class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                <input type='checkbox' :value="eachCourse2.course_id"
+                                                <input type='checkbox' :value="eachCourse2.course_id" :id = 'eachCourse2.course_id' @change = 'countRemoveCourses(eachCourse2.course_id)'
                                                     v-model="removeCourseModal">
                                             </div>
                                         </div>
@@ -441,7 +441,8 @@
                         </div>
 
                     </div>
-                    <div class="mt-auto  p-6" style="text-align: center;">
+                    <div class="p-6" style="text-align: center;">
+                        <p v-if = 'courseDisplay.length - numCoursesRemove == 1 || courseDisplay.length - numCoursesRemove == 0 ' class="text-sm font-medium text-red-700 dark:text-red-500 mb-2">Must have at least 1 course in learning journey!</p>
                         <button v-on:click="removeCourse()" type="button"
                             class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                             Confirm Selection</button>
@@ -486,6 +487,7 @@
                 
                 notRemoved: true,
                 // after 'Remove Course' Modal pops out 
+                numCoursesRemove: 0,
                 removeCourseModal: [],
                 //selectedCourseId: [],
                 removeCouresId: [],
@@ -691,9 +693,6 @@
                             }
                         }
                     }
-                    // console.log("Selected modal lj id " + this.learningjourneyID)
-                    // console.log("selected modal skills id " + selectedJobRoleSkillId)
-                    // console.log("selected modal skills and stuff to display ")
                     for (a in this.addCourseModalSkills) {
                         // console.log(this.addCourseModalSkills[a])
                     }
@@ -726,37 +725,10 @@
                             }
                         }
                     }
-
-                    // console.log(learning_journey_id)
-                    // // var selectedModalJobRoleId
-                    // var selectedCourseId = []
-                    // var removeCourseModal = []
-
-                    // for (j in this.learningJourneyCourse) {
-                    //     if (this.learningJourneyCourse[j]['learning_journey_id'] == learning_journey_id) {
-                    //         selectedCourseId.push(this.learningJourneyCourse[j]['course_id'])
-                    //     }
-                    // }
-                    // console.log(selectedCourseId)
-                    // for (c in this.courses) {
-                    //     for (ci in this.selectedCourseId) {
-                    //         if (this.courses[c]["course_id"] == selectedCourseId[ci]) {
-                    //             var eachObject = {
-                    //                 "course_id": this.courses[c]["course_id"],
-                    //                 "course_name": this.courses[c]["course_name"],
-                    //                 "course_description": this.courses[c]["course_description"]
-                    //             }
-                    //             this.removeCourseModal.push(eachObject)
-                    //         }
-                    //     }
-                    // }
-                    // console.log(removeCourseModal)
-                    // for (a in this.removeCourseModal) {
-                    //     console.log(this.removeCourseModal[a])
-                    // }
                 },
                 removeCourse: async function () {
                     var coursesIDToBeRemoved = this.removeCourseModal
+                    console.log(coursesIDToBeRemoved)
 
                     for (i in coursesIDToBeRemoved) {
                         //console.log(coursesIDToBeRemoved[i])
@@ -778,6 +750,16 @@
                     this.closeDeleteModal()
                     window.location.reload();
                 },
+                countRemoveCourses(course_id){
+                    var a = document.getElementById(course_id)
+
+                    if (a.checked){
+                        this.numCoursesRemove += 1
+                    }
+                    else{
+                        this.numCoursesRemove -= 1
+                    }
+                } ,
                 confirmSkill() {
                     this.addCourseConfirmSkill_CourseDisplay = []
                     // console.log(this.selectedSkillModalSkillsId)
@@ -887,7 +869,8 @@
                     //this.selectedCourseId = [];
                     this.notRemoved = true;
                     this.removeCoursesId = [];
-                    this.courseDisplay = []
+                    this.courseDisplay = [];
+                    this.numCoursesRemove = 0
                 }
 
             }
