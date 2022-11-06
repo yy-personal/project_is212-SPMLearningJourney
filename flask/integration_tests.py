@@ -586,6 +586,76 @@ class TestCreateLearningJourney(TestApp):
                 'learning_journey_id': 1
             })
 
+# CREATE SKILL:
+class TestDeleteLearningJourney(TestApp):
+
+    def test_delete_learning_journey(self):
+        data = {
+            "staff_id": 1,
+            "job_role_id": 1
+        }
+
+        learningjourney = LearningJourney(**data)
+        db.session.add(learningjourney)
+        db.session.commit()
+
+        response = self.client.get("/learning_journeys")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json,{
+                'data': [{
+                    'job_role_id': 1,
+                    'learning_journey_id': 1,
+                    'staff_id': 1
+                }]
+            })
+
+        delete_request_body = {
+            "learning_journey_id": 1,
+        }
+
+        response = self.client.delete("/learning_journey",
+                                    data=json.dumps(delete_request_body),
+                                    content_type='application/json'
+                                    )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json, {
+                'learning_journey_id': 1
+            })
+
+    def test_delete_learning_journey_invalid_id(self):
+
+        delete_request_body = {
+            "learning_journey_id": 2,
+        }
+
+        response = self.client.delete("/learning_journey",
+                                    data=json.dumps(delete_request_body),
+                                    content_type='application/json'
+                                    )
+
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(response.json, {
+                'message': 'Unable to find role with id: 2.'
+            })
+
+    def test_delete_learning_journey_invalid_json(self):
+
+        delete_request_body = {
+            "learning_journey": 2,
+        }
+
+        response = self.client.delete("/learning_journey",
+                                    data=json.dumps(delete_request_body),
+                                    content_type='application/json'
+                                    )
+
+        self.assertEqual(response.status_code, 500)
+        print(response.json)
+        self.assertEqual(response.json, {
+            'message': 'Incorrect JSON object provided.'
+        })
+                            
 
 
 if __name__ == '__main__':
