@@ -380,7 +380,30 @@ class TestCreateJobRole(TestApp):
             })
 
         
+# CREATE SKILL:
+class TestCreateLearningJourney(TestApp):
+    def test_selects_interested_role(self):
+        data = {
+            'job_role_name': "job1", 
+            'job_role_description': "job description 1",
+        }
+       
+        skill = JobRole(**data)
+        db.session.add(skill)
+        db.session.commit()
 
+        response = self.client.get("/jobroles")
+        # print("response.json['data']:", response.json["data"])
+        self.assertEqual(response.status_code, 200)
+        print(f"response.json: {response.json}")
+        self.assertEqual(response.json,{
+            'data': [{
+                'job_role_deleted': False,
+                'job_role_description': 'job description 1',
+                'job_role_id': 1,
+                'job_role_name': 'job1'
+            }]
+        })
 
 
 if __name__ == '__main__':
