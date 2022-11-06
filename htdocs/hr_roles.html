@@ -174,10 +174,12 @@
 
             <div>
                 <p><label id="error" class="text-danger">{{ error }}</label></p>
+                
                 <button type="button"
                     class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
             focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4 mx-5"
                     data-modal-toggle="authentication-modal" style='float: right;'>Create Role</button>
+                
             </div>
 
 
@@ -266,10 +268,11 @@
 
                                 <div style="text-align: center;">
                                     <button type="submit" v-on:click="createRole(this)"
-                                        :disabled="checkCreateNameValid|| checkCreateDesTooLong() || checkCreateNameTooLong() || checkRoleExist()"
-                                        class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                    :disabled="checkCreateDesTooLong() ||  checkCreateNameTooLong() || checkCreateNameValid() || checkRoleExist() || isEmpty() "
+                                        class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         Submit</button>
                                 </div>
+
                             </form>
                         </div>
                     </div>
