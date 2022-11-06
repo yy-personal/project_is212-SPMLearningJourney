@@ -1,6 +1,6 @@
 import unittest
 
-from app2 import Skill, JobRole, LearningJourney, LearningJourneySkill, LearningJourneyCourse
+from app2 import Role, Staff, Skill, JobRole, LearningJourney, LearningJourneySkill, LearningJourneyCourse
 
 class TestJobRole(unittest.TestCase):
     def test_to_dict(self):
@@ -50,6 +50,41 @@ class TestLearningJourneyCourse(unittest.TestCase):
             'course_id': "COR002",
             }
         )
+
+    
+class TestLearningJourney(unittest.TestCase):
+    def test_to_dict(self):
+        ljc1 = LearningJourney(staff_id=1, job_role_id=1)
+        self.assertEqual(ljc1.to_dict(), {
+            'learning_journey_id': None,
+            'staff_id': 1,
+            'job_role_id': 1
+        })
+
+    # def test_create_learning_journey(self):
+    #     # role = Role(name="Staff")
+    #     # job_role = JobRole(job_role_name="Analyst", job_role_description="Analyse work", job_role_deleted= False)
+    #     # print(job_role.to_dict())
+    #     # staff = Staff(staff_Fname="Jane", staff_Lname="Smith", department="Cardiac", email="janesmith@gmail.com", role=role.id)
+    #     ljc1 = LearningJourney(staff_id=1, job_role_id=1)
+    #     # ljc2 = LearningJourney(staff_id=staff.staff_id, job_role_id=job_role.job_role_id)
+    #     # learningJourneyList = LearningJourney.query.all()
+        
+    #     # items = [learningJourney.to_dict()
+    #     #             for learningJourney in learningJourneyList]
+    #     print("sss:",ljc1.to_dict())
+    #     # print()
+    #     # self.assertEqual(ljc1.to_dict(), {
+    #     #     'learning_journey_id': 1, 
+    #     #     'course_id': "COR002",
+    #     #     }
+    #     # )
+
+    #     self.assertEqual(ljc1.to_dict(), {
+    #         'learning_journey_id': None,
+    #         'staff_id': 1,
+    #         'job_role_id': 1
+    #     })
 
 
 if __name__ == "__main__":
