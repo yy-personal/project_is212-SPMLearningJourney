@@ -115,23 +115,23 @@
                     <ul
                         class="flex flex-col p-2 mt-1 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 ">
                         <li>
-                            <a href="#"
+                            <a href="../htdocs/staff_ljmshome.html"
                                 class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Skills</a>
+                            <a href="../htdocs/staff_skills.html"
+                                class="text-lg block py-2 pr-4 pl-3 text-blue-700 rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Skills</a>
                         </li>
                         <li>
                             <a href="../htdocs/staff_roles.html"
-                                class="text-lg block py-2 pr-4 pl-3 text-blue-700 rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Roles</a>
+                                class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Roles</a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="../htdocs/staff_courses.html"
                                 class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Courses</a>
                         </li>
                         <li>
-                            <a href="../htdocs/staff_create_learningjourney.html"
+                            <a href="../htdocs/staff_learning_journey.html"
                                 class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Learning
                                 Journey</a>
                         </li>
@@ -140,11 +140,11 @@
             </div>
         </nav>
 
-        <!-- DISPLAY ROLES -->
-        <section class="container bg-white py-8 pt-20" id="Roles">
+        <!-- DISPLAY SKILLS -->
+        <section class="container bg-white py-8 pt-20" id="Skills">
             <div class="container mx-auto flex flex-wrap pt-4">
                 <h2 class="w-full mt-12 text-5xl font-bold leading-tight text-center text-gray-800 pt-4">
-                    Roles
+                    Skills
                 </h2>
 
                 <div class="w-full mb-4">
@@ -152,18 +152,18 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 bg-orange-200 " id="rolesContainer">
-                    <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-for="role in roles">
+                <div class="grid grid-cols-1 md:grid-cols-3 bg-orange-200 " id="skillsContainer">
+                    <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-for="skill in skills">
 
                         <!-- EACH SKILL -->
                         <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
                             style='padding-top: 20px;'>
                             <p class="w-full font-bold text-xl text-gray-800 px-6"
                                 style='margin-bottom: 10px; font-size: 25px;'>
-                                {{role.skill_name}}
+                                {{skill.skill_name}}
                             </p>
                             <p class="text-gray-800 text-base px-6 mb-5">
-                                {{role.skill_description}}
+                                {{skill.skill_description}}
                             </p>
                         </div>
                         <!-- </a> -->
@@ -199,9 +199,7 @@
                 skills2 = []
                 await axios(config)
                     .then(function (response) {
-                        //console.log(JSON.stringify(response.data.data));
                         skills = response.data.data
-                        //console.log(roles);
                         coursesDivs = ""
                         skills2 = skills
                     })
