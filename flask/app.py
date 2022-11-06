@@ -110,6 +110,17 @@ class JobRole(db.Model):
         'polymorphic_identity': 'jobrole'
     }
 
+    # def to_dict(self):
+    #     """
+    #     'to_dict' converts the object into a dictionary,
+    #     in which the keys correspond to database columns
+    #     """
+    #     columns = self.__mapper__.column_attrs.keys()
+    #     result = {}
+    #     for column in columns:
+    #         result[column] = getattr(self, column)
+    #     return result
+
     def to_dict(self):
         """
         'to_dict' converts the object into a dictionary,
@@ -119,6 +130,8 @@ class JobRole(db.Model):
         result = {}
         for column in columns:
             result[column] = getattr(self, column)
+
+        # print(f"skill result: {result}")
         return result
 
 
@@ -565,7 +578,6 @@ def create_skill():
     try:
         db.session.add(skill)
         db.session.commit()
-        print("addedddd")
         return jsonify(skill.to_dict()), 201
     except Exception:
         return jsonify({
@@ -606,10 +618,12 @@ def update_skill(id):
 #SOFT DELETE
 @app.route("/skill/<int:id>", methods=['DELETE'])
 def delete_skill(id):
+    print("deleting skilllll with id", id)
     skill = Skill.query.get_or_404(id)
     skill.skill_deleted = True
     db.session.commit()
     return '', 204
+
 
 
 ######## JOB ROLE ########
@@ -617,7 +631,7 @@ def delete_skill(id):
 @app.route("/jobrole", methods=['POST'])
 def create_role():
     data = request.get_json()
-    print(data)
+    # print(data)
     if not all(key in data.keys() for
             key in ('job_role_name', 'job_role_description',
                     )):
@@ -628,6 +642,7 @@ def create_role():
     try:
         db.session.add(jobrole)
         db.session.commit()
+        # print(f"expecteddd{jobrole.to_dict()}")
         return jsonify(jobrole.to_dict()), 201
     except Exception:
         return jsonify({
@@ -638,12 +653,43 @@ def create_role():
 @app.route("/jobroles")
 def read_role():
     roleList = JobRole.query.all()
+    result = [role.to_dict()
+                    for role in roleList]
+    print(f"expecteddd: {result}")
     return jsonify(
         {
             "data": [role.to_dict()
                     for role in roleList]
         }
     ), 200
+
+
+# Update Existing Roles (U)
+@app.route("/jobrole/<int:id>", methods=['PUT'])
+def update_role(id):
+    chosenRole = JobRole.query.filter_by(job_role_id=id).first()
+    if chosenRole:
+        data = request.get_json() 
+        if data['job_role_name']:
+            chosenRole.job_role_name = data['job_role_name']
+        if data['job_role_description']:
+            chosenRole.job_role_description = data['job_role_description']
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                # "data": chosenRole.json()
+            }
+        )
+
+# Delete An Existing Job Role (D)
+#SOFT DELETE
+@app.route("/jobrole/<int:id>", methods=['DELETE'])
+def delete_role(id):
+    jobrole = JobRole.query.get_or_404(id)
+    jobrole.job_role_deleted = True
+    db.session.commit()
+    return '', 204
 
 
 if __name__ == '__main__':

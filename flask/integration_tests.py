@@ -174,7 +174,7 @@ class TestCreateSkill(TestApp):
             })
          
 
-    def test_create_learning_journey(self):
+    def test_create_skill(self):
         request_body = {
             "skill_name": "JavaScript",
             "skill_description": "JavaScript is a lightweight interpreted programming language."
@@ -190,6 +190,197 @@ class TestCreateSkill(TestApp):
         print("response is: ", response.json["data"])
 
         self.assertEqual(response.status_code, 200)
+
+    def test_delete_skill(self):
+
+        request_body = {
+            "skill_name": "JavaScript",
+            "skill_description": "JavaScript is a lightweight interpreted programming language."
+        }
+
+
+        response = self.client.post("/skill",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        # search_name = request.args.get('name')
+        response = self.client.delete("/skill/1",
+                                    # data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        print(f"expected response: {response.json}")
+        # print("response is: ", response.json["data"])
+        self.assertEqual(response.status_code, 204)
+
+        response = self.client.get("/skills")
+        self.assertEqual(response.json,  {
+            'data': [{
+                'skill_deleted': True,
+                'skill_description': 'JavaScript is a lightweight interpreted programming language.',
+                'skill_id': 1,
+                'skill_name': 'JavaScript'
+            }]
+        })
+
+    def test_update_skill(self):
+
+        request_body = {
+            "skill_name": "JavaScript",
+            "skill_description": "JavaScript is a lightweight interpreted programming language."
+        }
+
+
+        response = self.client.post("/skill",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        request_body = {
+            "skill_name": "JavaScript222",
+            "skill_description": "JavaScript is a lightweight interpreted programming language."
+        }
+
+        # search_name = request.args.get('name')
+        response = self.client.put("/skill/1",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        # print(f"expected response: {response.status_code}")
+        # print("response is: ", response.json["data"])
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get("/skills")
+        print(f"expected response: {response.json}")
+        self.assertEqual(response.json,  {
+            'data': [{
+                'skill_deleted': False,
+                'skill_description': 'JavaScript is a lightweight interpreted programming language.',
+                'skill_id': 1,
+                'skill_name': 'JavaScript'
+            }]
+        })
+
+        
+
+# CREATE SKILL:
+class TestCreateJobRole(TestApp):
+    def test_read_jobrole(self):
+        data = {
+            'job_role_name': "job1", 
+            'job_role_description': "job description 1",
+        }
+       
+        skill = JobRole(**data)
+        db.session.add(skill)
+        db.session.commit()
+
+        response = self.client.get("/jobroles")
+        # print("response.json['data']:", response.json["data"])
+        self.assertEqual(response.status_code, 200)
+        print(f"response.json: {response.json}")
+        self.assertEqual(response.json,{
+            'data': [{
+                'job_role_deleted': False,
+                'job_role_description': 'job description 1',
+                'job_role_id': 1,
+                'job_role_name': 'job1'
+            }]
+        })
+                
+
+    def test_create_jobrole(self):
+
+        request_body = {
+            'job_role_name': "job1", 
+            'job_role_description': "job description 1",
+        }
+
+
+        response = self.client.post("/jobrole",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json, {
+            'job_role_id': 1,
+            'job_role_name': 'job1',
+            'job_role_description': 'job description 1',
+            'job_role_deleted': False
+        })
+
+    def test_delete_jobrole(self):
+        
+        request_body = {
+            'job_role_name': "job1", 
+            'job_role_description': "job description 1",
+        }
+
+        response = self.client.post("/jobrole",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        # search_name = request.args.get('name')
+        response = self.client.delete("/jobrole/1",
+                                    # data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+        # print(f"expected response: {response.json}")
+        # print("response is: ", response.json["data"])
+        self.assertEqual(response.status_code, 204)
+
+        response = self.client.get("/skills")
+        # print(f"expected response: {response.json}")
+        self.assertEqual(response.json,  {'data': []})
+
+    def test_update_jobrole(self):
+
+
+        pass
+        request_body = {
+            'job_role_name': "job1", 
+            'job_role_description': "job description 1",
+        }
+
+
+        response = self.client.post("/jobrole",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+        
+        new_request_body = {
+            'job_role_name': "job1", 
+            'job_role_description': "job description 1",
+        }
+
+        # search_name = request.args.get('name')
+        response = self.client.put("/jobrole/1",
+                                    data=json.dumps(new_request_body),
+                                    content_type='application/json'
+                                    )
+
+        # print(f"expected response: {response.status_code}")
+        # print("response is: ", response.json["data"])
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get("/jobroles")
+        print(f"expected response: {response.json}")
+        self.assertEqual(response.json,  {
+                'data': [{
+                    'job_role_deleted': False,
+                    'job_role_description': 'job description 1',
+                    'job_role_id': 1,
+                    'job_role_name': 'job1'
+                }]
+            })
+
+        
+
 
 
 if __name__ == '__main__':
