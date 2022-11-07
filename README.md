@@ -61,7 +61,7 @@ To select and proceed, the user will have to choose one of the boxes by clicking
 #### <ins>Steps for HR to Create Roles</ins>
 <img width="350" alt="Screenshot 2022-11-07 at 8 04 28 PM" src="https://user-images.githubusercontent.com/85498185/200306005-bb3cf14b-ff97-429e-bf47-181d75aaf45f.png">
 1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
-2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Job Roles” in the Human Resource box. <br>
+2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Job Roles” in the Job Roles box. <br>
 3. Click on the 'Create role' button <br>
 4. Enter role name and role description <br>
 5. Click 'Submit'. A new role will be created. <br>
@@ -69,48 +69,86 @@ To select and proceed, the user will have to choose one of the boxes by clicking
 #### <ins>Steps for HR to Read Roles</ins>
 <img width="350" alt="Screenshot 2022-11-07 at 8 08 55 PM" src="https://user-images.githubusercontent.com/85498185/200306837-f79259ff-1a1b-40d6-8018-334dae16bf04.png">
 1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
-2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Job Roles” in the Human Resource box. It will bring HR to (<code>hr_roles.html</code>)<br>
+2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Job Roles” in the Job Roles box. It will bring HR to (<code>hr_roles.html</code>)<br>
 
 #### <ins>Steps for HR to Update Roles</ins>
 <img width="350" alt="Screenshot 2022-11-07 at 8 17 20 PM" src="https://user-images.githubusercontent.com/85498185/200308372-5a518b84-7d7e-4219-9023-295e1e747702.png">
 1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
-2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Job Roles” in the Human Resource box. It will bring HR to (<code>hr_roles.html</code>) <br>
+2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Job Roles” in the Job Roles box. It will bring HR to (<code>hr_roles.html</code>) <br>
 3. Click on the 'Update' button <br>
 4. Make necessary changes to role name and role description <br>
 5. Click 'Submit'. The job role will be updated. <br>
 
 #### <ins>Steps for HR to Delete Roles</ins>
 1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
-2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Job Roles” in the Human Resource box. It will bring HR to (<code>hr_roles.html</code>) <br>
+2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Job Roles” in the Job Roles box. It will bring HR to (<code>hr_roles.html</code>) <br>
 3. Click on the 'Delete' button. The job role will be deleted. <br>
 
 ### CRUD Skills
 #### <ins>Steps for HR to Create Skills</ins>
 <img width="350" alt="Screenshot 2022-11-07 at 8 25 18 PM" src="https://user-images.githubusercontent.com/85498185/200309819-a9d3e85f-0d88-40ef-b87c-582c19cbe74a.png">
-1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
-2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “skills” in the Human Resource box. It will bring HR to (<code>hr_skills.html</code>)<br>
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Staff” in the Staff box. <br>
+2. From the Staff homepage (<code>staff_ljmshome.html</code>), click on the “More ->” button or the text  “skills” in the Skills box. It will bring HR to (<code>staff_skills.html</code>) <br>
 3. Click on the 'Create skill' button <br>
 4. Enter skill name and skill description <br>
 5. Click 'Submit'. A new skill will be created. <br>
 
 #### <ins>Steps for HR to Read Skills</ins>
 <img width="350" alt="Screenshot 2022-11-07 at 8 25 40 PM" src="https://user-images.githubusercontent.com/85498185/200309907-0b1a4955-4824-4766-bf72-187c133f1c09.png">
-1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
-2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “skills” in the Human Resource box. It will bring HR to (<code>hr_skills.html</code>)<br>
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Staff” in the Staff box. <br>
+2. From the Staff homepage (<code>staff_ljmshome.html</code>), click on the “More ->” button or the text  “skills” in the Skills box. It will bring HR to (<code>staff_skills.html</code>) <br>
 
 #### <ins>Steps for HR to Update Skills</ins>
 <img width="350" alt="Screenshot 2022-11-07 at 8 26 27 PM" src="https://user-images.githubusercontent.com/85498185/200310044-28a837d4-5200-462b-a080-91abd329ceb9.png">
-1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
-2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “skills” in the Human Resource box. It will bring HR to (<code>hr_skills.html</code>) <br>
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Staff” in the Staff box. <br>
+2. From the Staff homepage (<code>staff_ljmshome.html</code>), click on the “More ->” button or the text  “skills” in the Skills box. It will bring HR to (<code>staff_skills.html</code>) <br>
 3. Click on the 'Update' button <br>
 4. Make necessary changes to skill name and skill description <br>
 5. Click 'Submit'. The skill will be updated. <br>
 
 #### <ins>Steps for HR to Delete Skills</ins>
-1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
-2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “skills” in the Human Resource box. It will bring HR to (<code>hr_skills.html</code>) <br>
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Staff” in the Staff box. <br>
+2. From the Staff homepage (<code>staff_ljmshome.html</code>), click on the “More ->” button or the text  “skills” in the Skills box. It will bring HR to (<code>staff_skills.html</code>) <br>
 3. Click on the 'Delete' button. The skill will be deleted. <br>
 
 ## Staff
-### Staff to View Courses, Roles, Skills
+### Staff to View Courses, Roles, Skills, Learning Journey
 #### <ins>Steps for Staff to View Job Roles</ins>
+<img width="350" alt="Screenshot 2022-11-07 at 8 37 01 PM" src="https://user-images.githubusercontent.com/85498185/200312136-53a54f38-c29b-405c-8531-1a6257aa7498.png">
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Staff” in the Staff box. <br>
+2. From the Staff homepage (<code>staff_ljmshome.html</code>), click on the “More ->” button or the text “Job Roles” in the Job Roles box. It will bring HR to (<code>staff_roles.html</code>) <br>
+
+#### <ins>Steps for Staff to View Skills</ins>
+<img width="350" alt="Screenshot 2022-11-07 at 8 38 24 PM" src="https://user-images.githubusercontent.com/85498185/200312412-f4477113-9c66-4804-8930-efa024e4dd05.png">
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Staff” in the Staff box. <br>
+2. From the Staff homepage (<code>staff_ljmshome.html</code>), click on the “More ->” button or the text “Skills” in the Skills box. It will bring HR to (<code>staff_skills.html</code>) <br>
+
+#### <ins>Steps for Staff to View Courses</ins>
+<img width="350" alt="Screenshot 2022-11-07 at 8 40 04 PM" src="https://user-images.githubusercontent.com/85498185/200312730-5a0853c8-e48c-4d12-93df-43b4535a289f.png">
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Staff” in the Staff box. <br>
+2. From the Staff homepage (<code>staff_ljmshome.html</code>), click on the “More ->” button or the text “Courses” in the Courses box. It will bring HR to (<code>staff_courses.html</code>) <br>
+
+#### <ins>Steps for Staff to View Learning Journey</ins>
+<img width="350" alt="Screenshot 2022-11-07 at 8 43 57 PM" src="https://user-images.githubusercontent.com/85498185/200313507-babeba2d-48ef-4299-9d70-5db9a7e87561.png">
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Staff” in the Staff box. <br>
+2. From the Staff homepage (<code>staff_ljmshome.html</code>), click on the “More ->” button or the text “Learning Journey” in the Learning Journey box. It will bring HR to (<code>staff_learning_journey.html</code>) <br>
+
+### Staff to Create Learning Journey
+#### <ins>Steps for Staff to Create Learning Journey</ins>
+<img width="350" alt="Screenshot 2022-11-07 at 8 47 53 PM" src="https://user-images.githubusercontent.com/85498185/200314212-ca89a317-2cb0-4ae4-92cb-4a3b8158dfc3.png">
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Staff” in the Staff box. <br>
+2. From the Staff homepage (<code>staff_ljmshome.html</code>), click on the “More ->” button or the text “Learning Journey” in the Learning Journey box. It will bring HR to (<code>staff_learning_journey.html</code>) <br>
+3. Click on "Create Learning Journey" button <br>
+4. Select Add Course button <br> 
+5. Select on checkbox for the skill you want, then the courses option would appear. <br>
+6. Select the checkbox for the course you wish to add to learning journey. <br>
+7. Select 'Confirm Selection' button. A new learning journey is created.<br> 
+
+### Staff to Remove Course from Learning Journey
+#### <ins>Steps for Staff to Remove Course from Learning Journey</ins> 
+<img width="350" alt="Screenshot 2022-11-07 at 8 51 49 PM" src="https://user-images.githubusercontent.com/85498185/200314961-ea460063-7391-42b5-ab9d-69024783b997.png">
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Staff” in the Staff box. <br>
+2. From the Staff homepage (<code>staff_ljmshome.html</code>), click on the “More ->” button or the text “Learning Journey” in the Learning Journey box. It will bring HR to (<code>staff_learning_journey.html</code>) <br>
+4. Select 'Remove Course' button <br>
+5. Check the courses to remove from the list <br>
+6. Select 'Confirm Selection' button. Selected Courses will be removed. <br> 
