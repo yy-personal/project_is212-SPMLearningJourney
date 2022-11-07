@@ -292,7 +292,8 @@
                 roleDropDown: false,
                 coursesBySkill2: {},
                 error_msg: "",
-                success_msg: ""
+                success_msg: "",
+                staff_id: 140004
                 // coursesBySkill3: {"Software Testing":[{"skill_description":"Software testing is the process of assessing the functionality of a software program.","skill_id":7,"skill_name":"Software Testing"},[]],
                 // "Machine Learning":[{"skill_description":"Machine learning (ML) is a type of artificial intelligence (AI) that allows software applications to become more accurate at predicting outcomes without being explicitly programmed to do so.","skill_id":5,"skill_name":"Machine Learning"},
                 // [{"course_category":"Core","course_description":"Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics","course_id":"COR002","course_name":"Lean Six Sigma Green Belt Certification","course_status":"Active","course_type":"Internal"},{"course_category":"Finance","course_description":"Business continuity planning is essential in any business to minimise loss when faced with potential threats and disruptions.","course_id":"FIN003","course_name":"Business Continuity Planning","course_status":"Retired","course_type":"External"},{"course_category":"Core","course_description":"The programme provides the learner with the key foundations of what builds customer confidence in the service industry","course_id":"COR004","course_name":"Service Excellence","course_status":"Pending","course_type":"Internal"}]]}
@@ -435,7 +436,7 @@
                     createLearningJourney: async function createLearningJourney(role_id){
                         var data = JSON.stringify({
                         "job_role_id": role_id,
-                        "staff_id": 130001
+                        "staff_id": this.staff_id
                         });
 
                         var config = {
