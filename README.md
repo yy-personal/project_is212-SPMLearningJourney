@@ -20,7 +20,7 @@
 
 #### Steps to set up:
 <ins>Windows</ins>
-- Username: rooe
+- Username: root
 - Password is empty
 
 <ins>Mac</ins>
@@ -49,7 +49,7 @@ To select and proceed, the user will have to choose one of the boxes by clicking
 2. Click "Sign out". It will lead to <code>main_home.html</code> <br>
 
 ## Human Resource (HR)
-### Asign Skills to Roles & Assign Skills to Courses
+### Assign Skills to Roles & Assign Skills to Courses
 #### <ins>Steps for HR to Assign Skills to Roles</ins>
 <img width="350" alt="Screenshot 2022-11-07 at 4 21 26 PM" src="https://user-images.githubusercontent.com/85498185/200260615-2b2f08b7-de64-4364-8de0-893a5f463606.png">
 1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
