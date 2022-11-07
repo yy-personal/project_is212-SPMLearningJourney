@@ -40,9 +40,14 @@ Selecting their role would bring them to their individual homepage where they ca
 To select and proceed, the user will have to choose one of the boxes by clicking on either the text “Staff”, “Human Resource”, “Manager” or by clicking one of the “More ->” buttons that are highlighted in blue.
 
 ### Human Resource 
-#### Steps for HR to Assign Skills to Roles
-1. From the homepage, click on the “More ->” button or the text  “Human Resource” in the Human Resource box.
-2. From the HR homepage, click on the “More ->” button or the text  “Job Roles” in the Human Resource box.
-3. From the Roles Page, click on the “Assign Skills” button under the Job Role you would like to assign a skill to.
-4. From the Individual Role Page, you will be able to see all available skills on the left that can be assigned to the Job Role. Tick the checkboxes for your desired skills under the “Available Skills” section on the left.
-5. Click on the “Confirm Selection” button.
+#### <ins>Steps for HR to Assign Skills to Roles</ins>
+<img width="350" alt="Screenshot 2022-11-07 at 4 21 26 PM" src="https://user-images.githubusercontent.com/85498185/200260615-2b2f08b7-de64-4364-8de0-893a5f463606.png">
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
+2. From the HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Job Roles” in the Human Resource box. <br>
+3. From the Roles Page (<code>hr_roles.html</code>), click on the “Assign Skills” button under the Job Role you would like to assign a skill to. <br>
+4. From the Individual Role Page (<code>individual_role.html</code>), you will be able to see all available skills on the left that can be assigned to the Job Role. Tick the checkboxes for your desired skills under the “Available Skills” section on the left. <br>
+5. Click on the “Confirm Selection” button. Skills have now be successfully assigned to that job role. <br>
+
+
+
+
