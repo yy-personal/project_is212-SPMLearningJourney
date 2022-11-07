@@ -471,25 +471,8 @@ class TestDeleteLearningJourney(TestApp):
                                     )
 
         self.assertEqual(response.status_code, 404)
-        print("nnn: ", response.json)
         self.assertEqual(response.json, None)
 
-    # def test_delete_learning_journey_invalid_json(self):
-
-    #     delete_request_body = {
-    #         "learning_journey": 2,
-    #     }
-
-    #     response = self.client.delete("/learning_journey",
-    #                                 data=json.dumps(delete_request_body),
-    #                                 content_type='application/json'
-    #                                 )
-
-    #     self.assertEqual(response.status_code, 500)
-    #     print(response.json)
-    #     self.assertEqual(response.json, {
-    #         'message': 'Incorrect JSON object provided.'
-    #     })
                             
 class TestSkillsToRole(TestApp):
 

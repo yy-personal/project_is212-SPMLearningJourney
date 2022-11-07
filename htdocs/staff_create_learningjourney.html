@@ -35,7 +35,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Flowbite -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" /> -->
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
     <!--ICON-->
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
     
@@ -147,25 +147,11 @@
                     </div>
                 </div>
 
-
-                <div class="w-full flex justify-center items-center" v-if="error_msg.length != 0">
-                    <div class=" p-4 mb-4 text-sm text-blue-700 bg-red-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
-                        <span class="font-medium">Info alert!</span> {{error_msg}}
-                    </div>
-                </div>
-
-                <div class="w-full flex justify-center items-center" v-if="success_msg.length != 0">
-                    <div class=" p-4 mb-4 text-sm text-blue-700 bg-green-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
-                        <span class="font-medium">Info alert!</span> {{success_msg}}
-                    </div>
-                </div>
-
-
-
                 <div class="w-full justify-center items-center flex pb-5">
-                <button id="dropdownDefault"  v-if="selectedRole != null" data-dropdown-toggle="dropdown" class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                <button id="dropdownDefault"  v-if="selectedRole != null" data-dropdown-toggle="dropdown" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                     {{selectedRole.job_role_name}} <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
-                    <button id="dropdownDefault"  v-else data-dropdown-toggle="dropdown" class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                    <!-- bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl -->
+                    <button id="dropdownDefault"  v-else data-dropdown-toggle="dropdown" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700" type="button">
                         Please select a role <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
                     <!-- Dropdown menu -->
                     <div id="dropdown" class="hidden z-10 w-60 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
@@ -241,12 +227,32 @@
 
             </div>
 
-            <div>
+            <div >
+
+                
+
+
+
                 <!-- <p><label id="error" class="text-danger">{{ error }}</label></p> -->
                 <button v-on:click="createLearningJourneywork" type="button"
-                    class="text-white bg-gradient-to-br from-red-500 to-yellow-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
-            focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4 mx-5"
+                    class="mt-5 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl  
+             font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4 mx-5"
                     style='float: right;'>Create Learning Journey</button>
+            </div>
+
+
+            <div class="flex justify-end mt-5">
+                <div class="w-full flex justify-center items-center" v-if="error_msg.length != 0">
+                    <div class=" p-4 mb-4 text-sm text-blue-700 bg-red-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
+                        <span class="font-medium">Info alert!</span> {{error_msg}}
+                    </div>
+                </div>
+
+                <div class="w-full flex justify-center items-center" v-if="success_msg.length != 0">
+                    <div class=" p-4 mb-4 text-sm text-blue-700 bg-green-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
+                        <span class="font-medium">Info alert!</span> {{success_msg}}
+                    </div>
+                </div>
             </div>
 
         </section>
@@ -595,6 +601,8 @@
 
                     if (learningjourney == "err"){
                         error_msg = "Learning Journey could not be created please refresh and try again later."
+                        await this.displayError("Learning Journey could not be created please refresh and try again later.", null);
+                        return 
                     }
 
                     for (skill of this.selectedSkills){
@@ -605,11 +613,11 @@
                     }
                     console.log("skills added created: ", addskillresponse)
 
-                    if (addskillresponse.indexOf("err") > -1){
+                    if (addskillresponse.indexOf("err") != -1){
                         error_msg = "Skills could not be added and thus Learning Journey could not be created please refresh and try again later."
+                        await this.displayError("Skills could not be added and thus Learning Journey could not be created please refresh and try again later.", null);
+                        return 
                     }
-
-
 
                     for (course of this.selectedCourses){
                         console.log("this.selectedCourses: ", course, " from ", this.selectedCourses)
@@ -624,7 +632,8 @@
 
                     console.log("error_msg:", error_msg)
 
-                    await displayError(error_msg, learningjourney);
+
+                    await this.displayError(error_msg, learningjourney);
 
 
 
@@ -640,12 +649,14 @@
                 },
 
                 displayError: async function(error_msg, learningjourney) {
+                    console.log("error_msg in displayError: ", error_msg);
                     if ( error_msg != "NO ERROR MSG" & learningjourney == null){
 
                         console.log("delete on cascade learning journey!:")
                         
                         this.error_msg = error_msg;
-                    }else{
+                    }else if ( error_msg == "NO ERROR MSG"){
+                        console.log("success msg shd be displayed")
                         this.success_msg = `Learning journey with id-${learningjourney.learning_journey_id} created!`
                     }
 
