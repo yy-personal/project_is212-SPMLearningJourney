@@ -43,6 +43,11 @@ Selecting their role would bring them to their individual homepage where they ca
 
 To select and proceed, the user will have to choose one of the boxes by clicking on either the text “Staff”, “Human Resource”, “Manager” or by clicking one of the “More ->” buttons that are highlighted in blue.
 
+### Switch between roles (HR, Manager, Staff) 
+#### <ins>Steps to switch between roles</ins>
+1. At the nav bar, click "profile" icon <br>
+2. Click "Sign out". It will lead to <code>main_home.html</code> <br>
+
 ## Human Resource (HR)
 ### Asign Skills to Roles & Assign Skills to Courses
 #### <ins>Steps for HR to Assign Skills to Roles</ins>
