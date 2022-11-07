@@ -270,8 +270,9 @@ class TestCreateSkill(TestApp):
         db.session.commit()
 
         response = self.client.get("/skills")
-        self.assertEqual(response.status_code, 200)
         print(f"response.json: {response.json}")
+
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json,{
                 'data': [{
                     'skill_deleted': False,
@@ -295,9 +296,17 @@ class TestCreateSkill(TestApp):
                                     )
 
         response = self.client.get("/skills")
-        print("response is: ", response.json["data"])
+        print("response is: ", response.json)
 
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {
+                'data': [{
+                    'skill_deleted': False,
+                    'skill_description': 'JavaScript is a lightweight interpreted programming language.',
+                    'skill_id': 1,
+                    'skill_name': 'JavaScript'
+                }]
+            })
 
     def test_delete_skill(self):
 
@@ -311,6 +320,8 @@ class TestCreateSkill(TestApp):
                                     data=json.dumps(request_body),
                                     content_type='application/json'
                                     )
+        
+        self.assertEqual(response.status_code, 201)
 
         response = self.client.delete("/skill/1",
                                     content_type='application/json'
@@ -341,6 +352,14 @@ class TestCreateSkill(TestApp):
                                     data=json.dumps(request_body),
                                     content_type='application/json'
                                     )
+
+        print("response", response.status_code)
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json, {'skill_deleted': False, 
+        'skill_description': 'JavaScript is a lightweight interpreted programming language.', 
+        'skill_id': 1, 'skill_name': 'JavaScript'})
+        
 
         request_body = {
             "skill_name": "JavaScript222",
@@ -426,6 +445,9 @@ class TestCreateJobRole(TestApp):
                                     content_type='application/json'
                                     )
 
+        self.assertEqual(response.json, {'job_role_deleted': False, 'job_role_description': 'job description 1', 'job_role_id': 1, 'job_role_name': 'job1'})
+        self.assertEqual(response.status_code, 201)
+
         response = self.client.delete("/jobrole/1",
                                     content_type='application/json')
 
@@ -446,7 +468,9 @@ class TestCreateJobRole(TestApp):
                                     data=json.dumps(request_body),
                                     content_type='application/json'
                                     )
-        
+
+        self.assertEqual(response.json, {'job_role_deleted': False, 'job_role_description': 'job description 1', 'job_role_id': 1, 'job_role_name': 'job1'})
+        self.assertEqual(response.status_code, 201)
         new_request_body = {
             'job_role_name': "job1", 
             'job_role_description': "job description 1",
@@ -456,8 +480,8 @@ class TestCreateJobRole(TestApp):
                                     data=json.dumps(new_request_body),
                                     content_type='application/json'
                                     )
-
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {'code': 200})
 
         response = self.client.get("/jobroles")
         print(f"expected response: {response.json}")
@@ -564,7 +588,7 @@ class TestSkillsToRole(TestApp):
                                     content_type='application/json'
                                     )
 
-
+        self.assertEqual(response.json, {'job_role_id': 1, 'skill_id': 2})
             
         response_coursebyskills_2 = self.client.get("/skillbyrole/1")
         
@@ -653,6 +677,9 @@ class TestSkillsToCourse(TestApp):
                                     content_type='application/json'
                                     )
 
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json, {'course_id': 1, 'skill_id': 1})
+
         response_coursebyskills_1 = self.client.get("/coursebyskill/1",
                                     content_type='application/json'
                                     )
@@ -666,6 +693,8 @@ class TestSkillsToCourse(TestApp):
                                     content_type='application/json'
                                     )
 
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json, {'course_id': 2, 'skill_id': 1})
 
 
         response_coursebyskills_2 = self.client.get("/coursebyskill/1",
