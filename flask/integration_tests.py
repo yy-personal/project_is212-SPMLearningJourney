@@ -14,7 +14,6 @@ class TestApp(flask_testing.TestCase):
         return app
 
     def setUp(self):
-        # with app.app_context():
         db.create_all()
 
     def tearDown(self):
@@ -23,7 +22,7 @@ class TestApp(flask_testing.TestCase):
 
 
         
-# CREATE SKILL:
+# CREATE LEARNING JOURNEY:
 class TestCreateLearningJourney(TestApp):
 
     def test_read_jobrole(self):
@@ -141,7 +140,6 @@ class TestCreateLearningJourney(TestApp):
 
 
     def test_create_learning_journey(self):
-        self.test_selects_interested_skill()
         request_body = {
             "staff_id": 1,
             "job_role_id": 1
@@ -163,7 +161,17 @@ class TestCreateLearningJourney(TestApp):
         })
 
     def test_view_learning_journey(self):
-        self.test_create_learning_journey()
+        request_body = {
+            "staff_id": 1,
+            "job_role_id": 1
+        }
+
+        response = self.client.post("/learning_journey",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
+
 
         response = self.client.get("/learning_journeys")
         print("cccresponse is: ", response.json)
@@ -179,7 +187,26 @@ class TestCreateLearningJourney(TestApp):
             })
 
     def test_add_skills_to_learning_journey(self):
-        self.test_create_learning_journey()
+
+        skill1_data = {
+            'skill_name': "skill_name1", 
+            'skill_description': "skill_description 1",
+        }
+       
+        skill1 = Skill(**skill1_data)
+        db.session.add(skill1)
+        db.session.commit()
+
+        request_body = {
+            "staff_id": 1,
+            "job_role_id": 1
+        }
+
+        response = self.client.post("/learning_journey",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json'
+                                    )
+
         request_body = {
             "learning_journey_id": 1,
             "skill_id": 1
@@ -202,7 +229,18 @@ class TestCreateLearningJourney(TestApp):
             })
 
     def test_add_courses_to_learning_journey(self):
-        self.test_add_skills_to_learning_journey()
+        course1_data = {
+            'course_name': "course_name1", 
+            'course_description': "course_description 1",
+            'course_status': "course_status 1",
+            'course_type': "course_type 1",
+            'course_category': "course_category 1"
+        }
+       
+        course1 = Course(**course1_data)
+        db.session.add(course1)
+        db.session.commit()
+
         request_body = {
             "learning_journey_id": 1,
             "course_id": 1
@@ -398,8 +436,6 @@ class TestCreateJobRole(TestApp):
 
     def test_update_jobrole(self):
 
-
-        pass
         request_body = {
             'job_role_name': "job1", 
             'job_role_description': "job description 1",
@@ -462,8 +498,6 @@ class TestDeleteLearningJourney(TestApp):
         response = self.client.delete("/learning_journey/1",
                                     content_type='application/json'
                                     )
-
-        # print("delete responseee: ", response.status_code)
 
         self.assertEqual(response.status_code, 204)
         self.assertEqual(response.json, None)
@@ -568,7 +602,6 @@ class TestSkillsToRole(TestApp):
                                     data=json.dumps(request_body),
                                     content_type='application/json'
                                     )
-        print("jons", response.json)
         self.assertEqual(response.status_code, 500)
         self.assertEqual(response.json, {
                 'message': 'Unable to commit to database.'
@@ -638,7 +671,7 @@ class TestSkillsToCourse(TestApp):
         response_coursebyskills_2 = self.client.get("/coursebyskill/1",
                                     content_type='application/json'
                                     )
-        print(f"response: {response.json}")
+
         self.assertEqual(response_coursebyskills_2.status_code, 200)
         self.assertGreater(len(response_coursebyskills_2.json["data"]), len(response_coursebyskills_1.json["data"]))
         self.assertEqual(response_coursebyskills_2.json, {
@@ -678,7 +711,6 @@ class TestSkillsToCourse(TestApp):
                                     data=json.dumps(request_body),
                                     content_type='application/json'
                                     )
-        print("jons", response.json)
         self.assertEqual(response.status_code, 500)
         self.assertEqual(response.json, {
                 'message': 'Unable to commit to database.'
