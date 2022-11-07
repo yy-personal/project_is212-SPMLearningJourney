@@ -37,5 +37,5 @@ This is the starting point regardless of their role. Users should see 3 boxes re
 
 Selecting their role would bring them to their individual homepage where they can access other functions of LJMS (etc. staff homepage, human resource homepage and manager homepage).
 
-To select and proceed, the user will have to choose one of the boxes by clicking on either the text “Staff”, “Human Resource”, “Manager” or by clicking one of the ```“More ->” buttons that are highlighted in blue.
+To select and proceed, the user will have to choose one of the boxes by clicking on either the text “Staff”, “Human Resource”, “Manager” or by clicking one of the ```diff“More ->” buttons that are highlighted in blue.
 
