@@ -1,6 +1,6 @@
 ## IS2121 Project by Team 4
 
-<h4> Group Members: <h4>
+<h4> Group Members: </h4>
 - Lim Yin Yao 
 - Tian Fu Wei
 - Gerald Ng Xian Wei
