@@ -338,9 +338,12 @@
                 },
 
                  setRole: async function setRole() {
-                    console.log("load skills for: ", this.selectedRole.job_role_id)
+                    // console.log("load skills for: ", this.selectedRole.job_role_id)
                     results = await this.getSkills(this.selectedRole.job_role_id);
-                    console.log("setRole: ",results)
+                    // reset courses displayed and courses selected:
+                    this.coursesBySkill2 = []
+                    this.selectedSkills = []
+                    // console.log("setRole: ",results)
                     // this.skills = results;
                 },
 
