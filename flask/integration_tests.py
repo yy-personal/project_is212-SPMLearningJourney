@@ -367,6 +367,7 @@ class TestCreateLearningJourney(TestApp):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json, {
             'job_role_id': 1,
+            'learning_journey_deleted': False,
             'learning_journey_id': 1,
             'staff_id': 1
         })
@@ -381,6 +382,7 @@ class TestCreateLearningJourney(TestApp):
         self.assertEqual(response.json,{
                 'data': [{
                     'job_role_id': 1,
+                    'learning_journey_deleted': False,
                     'learning_journey_id': 1,
                     'staff_id': 1
                 }]
@@ -442,60 +444,52 @@ class TestDeleteLearningJourney(TestApp):
 
         response = self.client.get("/learning_journeys")
         self.assertEqual(response.status_code, 200)
+        print("response.jsonnn: ", response.json)
         self.assertEqual(response.json,{
                 'data': [{
                     'job_role_id': 1,
+                    'learning_journey_deleted': False,
                     'learning_journey_id': 1,
                     'staff_id': 1
                 }]
             })
 
-        delete_request_body = {
-            "learning_journey_id": 1,
-        }
-
-        response = self.client.delete("/learning_journey",
-                                    data=json.dumps(delete_request_body),
+        response = self.client.delete("/learning_journey/1",
                                     content_type='application/json'
                                     )
 
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.json, {
-                'learning_journey_id': 1
-            })
+        # print("delete responseee: ", response.status_code)
+
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.json, None)
 
     def test_delete_learning_journey_invalid_id(self):
 
-        delete_request_body = {
-            "learning_journey_id": 2,
-        }
 
-        response = self.client.delete("/learning_journey",
-                                    data=json.dumps(delete_request_body),
+        response = self.client.delete("/learning_journey/6",
                                     content_type='application/json'
                                     )
 
-        self.assertEqual(response.status_code, 500)
-        self.assertEqual(response.json, {
-                'message': 'Unable to find role with id: 2.'
-            })
+        self.assertEqual(response.status_code, 404)
+        print("nnn: ", response.json)
+        self.assertEqual(response.json, None)
 
-    def test_delete_learning_journey_invalid_json(self):
+    # def test_delete_learning_journey_invalid_json(self):
 
-        delete_request_body = {
-            "learning_journey": 2,
-        }
+    #     delete_request_body = {
+    #         "learning_journey": 2,
+    #     }
 
-        response = self.client.delete("/learning_journey",
-                                    data=json.dumps(delete_request_body),
-                                    content_type='application/json'
-                                    )
+    #     response = self.client.delete("/learning_journey",
+    #                                 data=json.dumps(delete_request_body),
+    #                                 content_type='application/json'
+    #                                 )
 
-        self.assertEqual(response.status_code, 500)
-        print(response.json)
-        self.assertEqual(response.json, {
-            'message': 'Incorrect JSON object provided.'
-        })
+    #     self.assertEqual(response.status_code, 500)
+    #     print(response.json)
+    #     self.assertEqual(response.json, {
+    #         'message': 'Incorrect JSON object provided.'
+    #     })
                             
 class TestSkillsToRole(TestApp):
 

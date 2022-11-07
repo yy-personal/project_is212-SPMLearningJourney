@@ -239,6 +239,7 @@ class LearningJourney(db.Model):
     learning_journey_id = db.Column(db.Integer, primary_key=True)
     staff_id = db.Column(db.Integer, db.ForeignKey('staff.staff_id'))
     job_role_id = db.Column(db.Integer , db.ForeignKey('jobrole.job_role_id'))
+    learning_journey_deleted = db.Column(db.Boolean(), default=False, nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity': 'learningjourney',
@@ -276,6 +277,7 @@ class LearningJourneyCourse(db.Model):
     __tablename__ = 'learningjourneycourse'
     learning_journey_id = db.Column(db.Integer, db.ForeignKey('learningjourney.learning_journey_id'), primary_key=True)
     course_id = db.Column(db.String(20), db.ForeignKey('course.course_id'), primary_key=True)
+
 
     def to_dict(self):
         """
@@ -602,10 +604,27 @@ def read_course_by_skill(id):
 @app.route("/learning_journeys")
 def get_learning_journey():
     learning_journey_List = LearningJourney.query.all()
+    
     return jsonify(
         {
             "data": [learning_journey.to_dict()
                     for learning_journey in learning_journey_List]
+        }
+    ), 200
+
+# Get all Learning Journey 
+@app.route("/learning_journeys/<int:id>")
+def get_learning_journey_by_staffid(id):
+    # learning_journey_List = LearningJourney.query.all()
+    learning_journey_List = LearningJourney.query.filter_by(staff_id=id).all()
+    learning_journey_present_list = []
+    for i in learning_journey_List:
+        if i.to_dict()["learning_journey_deleted"] == False:
+            learning_journey_present_list += [i.to_dict()]
+
+    return jsonify(
+        {
+            "data": learning_journey_present_list 
         }
     ), 200
 
@@ -656,31 +675,48 @@ def create_learning_journey():
 #             "message": "Unable to commit to database."
 #         }), 500
 
-# HARD DELETE Learning Journey (D)
-@app.route('/learning_journey', methods=['DELETE'])
-def delete_learning_journey():
-    data = request.get_json()
-    print(data)
-    if not all(key in data.keys() for
-            key in ('learning_journey_id', 'learning_journey_id')):
-        return jsonify({
-            "message": "Incorrect JSON object provided."
-        }), 500
-    try:
-        try:
-            learning_journey = LearningJourney.query.filter_by(learning_journey_id=data["learning_journey_id"]).one()
-        except Exception:
-            return jsonify({
-                "message": f"Unable to find role with id: {data['learning_journey_id']}."
-            }), 500
-        db.session.delete(learning_journey)
-        db.session.commit()
+# # HARD DELETE Learning Journey (D)
+# @app.route('/learning_journey', methods=['DELETE'])
+# def delete_learning_journey():
+#     data = request.get_json()
+#     print(data)
+#     if not all(key in data.keys() for
+#             key in ('learning_journey_id', 'learning_journey_id')):
+#         return jsonify({
+#             "message": "Incorrect JSON object provided."
+#         }), 500
+#     try:
+#         try:
+#             learning_journey = LearningJourney.query.filter_by(learning_journey_id=data["learning_journey_id"]).one()
+#         except Exception:
+#             return jsonify({
+#                 "message": f"Unable to find role with id: {data['learning_journey_id']}."
+#             }), 500
+#         db.session.delete(learning_journey)
+#         db.session.commit()
 
-        return jsonify(data), 201
+#         return jsonify(data), 201
+#     except Exception:
+#             return jsonify({
+#                 "message": "Unable to commit to database."
+#             }), 500
+
+
+# Delete An Existing Job Role (D)
+#SOFT DELETE
+@app.route("/learning_journey/<int:id>", methods=['DELETE'])
+def delete_learning_journey(id):
+    print("deleting: ", id)
+    learningjourney = LearningJourney.query.get_or_404(id)
+    print(learningjourney.to_dict())
+    try: 
+        learningjourney.learning_journey_deleted = True
+        db.session.commit()
     except Exception:
-            return jsonify({
+        return jsonify({
                 "message": "Unable to commit to database."
             }), 500
+    return '', 204
 
 ########### Learning Journey Course #####################
 # Get all Learning Journey Course Relationship (R)

@@ -36,6 +36,7 @@ class TestSkill(unittest.TestCase):
 class TestLearningJourneySkill(unittest.TestCase):
     def test_to_dict(self):
         ljs1 = LearningJourneySkill(learning_journey_id=1, skill_id=3)
+        
         self.assertEqual(ljs1.to_dict(), {
             'learning_journey_id': 1,
             'skill_id': 3,
@@ -79,11 +80,13 @@ class TestRegistration(unittest.TestCase):
     
 class TestLearningJourney(unittest.TestCase):
     def test_to_dict(self):
-        ljc1 = LearningJourney(staff_id=1, job_role_id=1)
-        self.assertEqual(ljc1.to_dict(), {
+        lj1 = LearningJourney(staff_id=1, job_role_id=1)
+        print(f"ljs1.to_dict(): {lj1.to_dict()}")
+        self.assertEqual(lj1.to_dict(), {
             'learning_journey_id': None,
             'staff_id': 1,
-            'job_role_id': 1
+            'job_role_id': 1,
+            'learning_journey_deleted': None
         })
 
     # def test_create_learning_journey(self):
