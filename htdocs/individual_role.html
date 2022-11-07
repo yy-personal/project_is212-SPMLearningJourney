@@ -85,25 +85,16 @@
                         <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                             id="user-dropdown">
                             <div class="py-3 px-4">
-                                <span class="block text-sm text-gray-900 dark:text-white">Anna Lim</span>
+                                <span class="block text-sm text-gray-900 dark:text-white">Eric Loh</span>
+                                <span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">Staff
+                                    ID:
+                                    150008</span>
                                 <span
-                                    class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">anna_lim@hr.com</span>
+                                    class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">Eric.Loh@allinone.com.sg</span>
                             </div>
                             <ul class="py-1" aria-labelledby="user-menu-button">
                                 <li>
-                                    <a href="#"
-                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-                                </li>
-                                <li>
-                                    <a href="#"
+                                    <a href="../htdocs/main_home.html"
                                         class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
                                         out</a>
                                 </li>
@@ -164,72 +155,78 @@
                 </div>
 
                 <div id='middle'
-                    class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+                    class="p-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+                    
                     <!-- SKILLS AVAILABLE -->
-                    <div
-                        class="p-4 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                        <div class="flex justify-between items-center mb-4">
-                            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Available Skills
+                    <div class='ml-12 lg:w-1/2 w-full xl:w-1/2'>
+                        <div
+                            class="p-4 lg:w-1/2 w-full bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                            <div class="flex justify-between items-center mb-4">
+                                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Available
+                                    Skills
 
-                                <a href="/mnm.html">hello</a>
-                            </h5>
-                        </div>
-                        <div class="flow-root">
-                            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <li class="py-3 sm:py-4" v-for="skill in editedSkills">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="flex-1 min-w-0">
-                                            <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
-                                                {{skill.skill_name}}
-                                            </p>
-                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                {{skill.skill_description}}
-                                            </p>
-                                        </div>
-                                        <div
-                                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                            <input type='checkbox' v-model='selectedSkills' :value="skill.skill_name"
-                                                v-model="selectedSkills">
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
 
-                            <div
-                                class="flex flex-col justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-                                <p class="text-sm font-medium text-red-700 dark:text-red-500">{{error}}</p>
-                                <button v-on:click="assignSkills()" type="button"
-                                    class="mt-3 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                    Confirm Selection</button>
+                                </h5>
+                            </div>
+                            <div class="flow-root">
+                                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <li class="py-3 sm:py-4" v-for="skill in editedSkills">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                                                    {{skill.skill_name}}
+                                                </p>
+                                                <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                    {{skill.skill_description}}
+                                                </p>
+                                            </div>
+                                            <div
+                                                class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                <input type='checkbox' v-model='selectedSkills'
+                                                    :value="skill.skill_name" v-model="selectedSkills">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div
+                                    class="flex flex-col justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+                                    <p class="text-sm font-medium text-red-700 dark:text-red-500">{{error}}</p>
+                                    <button v-on:click="assignSkills()" type="button"
+                                        class="mt-3 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                        Confirm Selection</button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- SKILLS ASSIGNED -->
-                    <div
-                        class="p-4 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                        <div class="flex justify-between items-center mb-4">
-                            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Skills Assigned
-                            </h5>
-                            <!-- <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                    <div class='ml-12 lg:w-1/2 w-full xl:w-1/2'>
+                        <div
+                            class="p-4 mr-12 bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                            <div class="flex justify-between items-center mb-4">
+                                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Skills Assigned
+                                </h5>
+                                <!-- <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
                                 View all
                             </a> -->
-                        </div>
-                        <div class="flow-root">
-                            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <li class="py-3 sm:py-4" v-for="skill in assignedSkills">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="flex-1 min-w-0">
-                                            <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
-                                                {{skill.skill_name}}
-                                            </p>
-                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                {{skill.skill_description}}
-                                            </p>
+                            </div>
+                            <div class="flow-root">
+                                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <li class="py-3 sm:py-4" v-for="skill in assignedSkills">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                                                    {{skill.skill_name}}
+                                                </p>
+                                                <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                    {{skill.skill_description}}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -299,10 +296,9 @@
                         var skills = this.skills
                         var skillIDs = []
 
-                        if(this.editedSkills.length == 0){
+                        if (this.editedSkills.length == 0) {
                             this.error = "No skills available for selection!"
-                        }
-                        else if (this.selectedSkills.length == 0) {
+                        } else if (this.selectedSkills.length == 0) {
                             this.error = "Please select skills to assign"
                         } else {
                             this.error = ""
@@ -348,7 +344,8 @@
                                             if (each.skill_id == each_skill.skill_id) {
                                                 if (!this.assignedSkills.includes(each_skill)) {
                                                     this.assignedSkills.push(each_skill)
-                                                    this.editedSkills.splice(this.editedSkills.indexOf(each_skill) , 1)
+                                                    this.editedSkills.splice(this.editedSkills.indexOf(
+                                                        each_skill), 1)
                                                 }
                                             }
                                         }
