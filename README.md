@@ -1,4 +1,8 @@
-## IS2121 Project by Team 4
+## IS212 Project by Team 4
+
+![example workflow](https://img.shields.io/badge/Build%20In-Python%2CHTML%2CCSS%2CVue.JS-brightgreen)
+![example workflow](https://img.shields.io/badge/Build%20With-Flask%2C%20SQLAlchemy-blue)
+![example workflow](https://img.shields.io/badge/Database-SQL-red)
 
 #### Group Members:
 - Lim Yin Yao 
