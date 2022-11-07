@@ -239,6 +239,7 @@ class LearningJourney(db.Model):
     learning_journey_id = db.Column(db.Integer, primary_key=True)
     staff_id = db.Column(db.Integer, db.ForeignKey('staff.staff_id'))
     job_role_id = db.Column(db.Integer , db.ForeignKey('jobrole.job_role_id'))
+    learning_journey_deleted = db.Column(db.Boolean(), default=False, nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity': 'learningjourney',
@@ -276,6 +277,7 @@ class LearningJourneyCourse(db.Model):
     __tablename__ = 'learningjourneycourse'
     learning_journey_id = db.Column(db.Integer, db.ForeignKey('learningjourney.learning_journey_id'), primary_key=True)
     course_id = db.Column(db.String(20), db.ForeignKey('course.course_id'), primary_key=True)
+
 
     def to_dict(self):
         """
@@ -700,7 +702,9 @@ def create_learning_journey():
 #SOFT DELETE
 @app.route("/learning_journey/<int:id>", methods=['DELETE'])
 def delete_learning_journey(id):
+    print("deleting: ", id)
     learningjourney = LearningJourney.query.get_or_404(id)
+    print(learningjourney.to_dict())
     try: 
         learningjourney.learning_journey_deleted = True
         db.session.commit()
