@@ -49,11 +49,17 @@ To select and proceed, the user will have to choose one of the boxes by clicking
 5. Click on the “Confirm Selection” button. Skills have now be successfully assigned to that job role. <br>
 
 #### <ins>Steps for HR to Assign Skills to Courses</ins>
-<img width="350" alt="Screenshot 2022-11-07 at 4 21 26 PM" src="https://user-images.githubusercontent.com/85498185/200260615-2b2f08b7-de64-4364-8de0-893a5f463606.png">
+<img width="350" alt="Screenshot 2022-11-07 at 7 58 26 PM" src="https://user-images.githubusercontent.com/85498185/200304907-95a3f9f4-ebe6-41f3-b48a-ef3c90f12b37.png">
 1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
 2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Courses” in the Human Resource box. <br>
 3. From the Courses Page (<code>hr_courses.html</code>), click on the “Assign Skills” button under the Course you would like to assign a skill to. <br>
 4. From the Individual Course Page (<code>individual_course.html</code>), you will be able to see all available skills on the left that can be assigned to the Course. Tick the checkboxes for your desired skills under the “Available Skills” section on the left. <br>
 5. Click on the “Confirm Selection” button. Skills have now be successfully assigned to that course. <br>
 
-
+#### <ins>Steps for HR to Create Roles</ins>
+<img width="350" alt="Screenshot 2022-11-07 at 8 04 28 PM" src="https://user-images.githubusercontent.com/85498185/200306005-bb3cf14b-ff97-429e-bf47-181d75aaf45f.png">
+1. From <code>main_home.html</code> , click on “More ->” button or the text  “Human Resource” in the Human Resource box. <br>
+2. From the  HR homepage (<code>hr_ljmsHome.html</code>), click on the “More ->” button or the text  “Job Roles” in the Human Resource box. <br>
+3. Click on the 'Create role' button <br>
+4. Enter role name and role description <br>
+5. Click 'Submit'. A new role will be created. <br>
