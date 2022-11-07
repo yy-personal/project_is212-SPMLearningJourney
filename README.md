@@ -28,6 +28,8 @@
 3. Run app2.py under flask folder with commands <code>python app2.py</code> <br>
 
 ### Main Homepage 
+<img width="1470" alt="Screenshot 2022-11-07 at 3 45 34 PM" src="https://user-images.githubusercontent.com/85498185/200253901-67e828c1-bb7c-474b-86da-53615186220d.png">
+
 <code>main_home.html</code>
 This is the starting point regardless of their role. Users should see 3 boxes representing 3 roles: Staff, Human Resource and Manager.
 
