@@ -2,7 +2,7 @@ import unittest
 import flask_testing
 import pytest
 import json
-from app import app, db, Doctor, Patient, LearningJourney, LearningJourneyCourse,\
+from app2 import app, db, LearningJourney, LearningJourneyCourse,\
 Role, Staff, JobRole, Skill, JobRoleSkill, Course, SkillCourse, Registration, LearningJourneySkill
 
 class TestApp(flask_testing.TestCase):

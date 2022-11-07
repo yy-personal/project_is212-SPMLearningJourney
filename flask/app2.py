@@ -2,22 +2,48 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-app = Flask(__name__)
-# Mac user ====================================================================
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
-                                        '@localhost:3306/ljms'
-# =============================================================================
-
-
-# Windows user -------------------------------------------------------------------
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
+# app = Flask(__name__)
+# # Mac user ====================================================================
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
 #                                         '@localhost:3306/ljms'
-# --------------------------------------------------------------------------------
+# # =============================================================================
+
+
+# # Windows user -------------------------------------------------------------------
+# # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
+# #                                         '@localhost:3306/ljms'
+# # --------------------------------------------------------------------------------
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_size': 100,
+#                                         'pool_recycle': 280}
+
+# db = SQLAlchemy(app)
+
+# CORS(app)
+
+app = Flask(__name__)
+app.app_context().push()
+
+if __name__ == '__main__':
+    # # Mac user -------------------------------------------------------------------
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:' + \
+    #                                         '@localhost:3306/ljms'
+    # # --------------------------------------------------------------------------------
+
+    # Windows user -------------------------------------------------------------------
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+                                            '@localhost:3306/ljms'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_size': 100,
+                                            'pool_recycle': 280}
+else:
+    print("herrr")
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite://"
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_size': 100,
-                                        'pool_recycle': 280}
 
 db = SQLAlchemy(app)
+
 
 CORS(app)
 
@@ -53,7 +79,7 @@ class Staff(db.Model):
     staff_Lname  = db.Column(db.String(50))
     department  = db.Column(db.String(50))
     email  = db.Column(db.String(50))
-    role = db.Column(db.Integer , db.ForeignKey('role.role_id'))
+    role = db.Column(db.Integer , db.ForeignKey('role.id'))
 
     __mapper_args__ = {
         'polymorphic_identity': 'staff'
@@ -690,16 +716,6 @@ def create_learning_journey_course():
         return jsonify({
             "message": "Unable to commit to database."
         }), 500
-
-# Remove course from Learning Journey 
-@app.route("/learning_journey_removecourse/<int:learning_journey_id>/<string:course_id>", methods=['DELETE'])
-def remove_learning_journey_course(learning_journey_id , course_id):
-
-    LJcourse =  db.session.query(LearningJourneyCourse).get((learning_journey_id, course_id))
-    
-    db.session.delete(LJcourse)
-    db.session.commit()
-    return '', 204
 
 
 ########### Learning Journey Skill #####################
