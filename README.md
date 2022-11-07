@@ -31,7 +31,7 @@
 2. Load ljms.sql file into phpMyAdmin <br>
 3. Run app2.py under flask folder with commands <code>python app2.py</code> <br>
 
-### Main Homepage 
+## Main Homepage 
 <code>main_home.html</code>
 <br>
 <br>
@@ -43,7 +43,7 @@ Selecting their role would bring them to their individual homepage where they ca
 
 To select and proceed, the user will have to choose one of the boxes by clicking on either the text “Staff”, “Human Resource”, “Manager” or by clicking one of the “More ->” buttons that are highlighted in blue.
 
-### Switch between roles (HR, Manager, Staff) 
+## Switch between roles (HR, Manager, Staff) 
 #### <ins>Steps to switch between roles</ins>
 1. At the nav bar, click "profile" icon <br>
 2. Click "Sign out". It will lead to <code>main_home.html</code> <br>
