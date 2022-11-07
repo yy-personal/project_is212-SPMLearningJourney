@@ -48,6 +48,7 @@ To select and proceed, the user will have to choose one of the boxes by clicking
 4. From the Individual Role Page (<code>individual_role.html</code>), you will be able to see all available skills on the left that can be assigned to the Job Role. Tick the checkboxes for your desired skills under the “Available Skills” section on the left. <br>
 5. Click on the “Confirm Selection” button. Skills have now be successfully assigned to that job role. <br>
 
-
+#### <ins>Steps for HR to Assign Skills to Courses</ins>
+<img width="350" alt="Screenshot 2022-11-07 at 4 21 26 PM" src="https://user-images.githubusercontent.com/85498185/200260615-2b2f08b7-de64-4364-8de0-893a5f463606.png">
 
 
