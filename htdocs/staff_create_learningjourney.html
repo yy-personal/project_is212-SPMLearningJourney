@@ -148,7 +148,7 @@
                 </div>
 
                 <div class="w-full justify-center items-center flex pb-5">
-                <button id="dropdownDefault"  v-if="selectedRole != null" data-dropdown-toggle="dropdown" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                <button id="dropdownDefault"  v-if="selectedRole.length != 0" data-dropdown-toggle="dropdown" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                     {{selectedRole.job_role_name}} <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
                     <!-- bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl -->
                     <button id="dropdownDefault"  v-else data-dropdown-toggle="dropdown" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700" type="button">
@@ -266,7 +266,7 @@
             el: '#main-container',
             data: {
                 roles: [],
-                selectedRole: null,
+                selectedRole: "",
                 currPage: "Home",
                 activeClass: "inline-block py-2 px-4 text-black font-bold no-underline",
                 inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
