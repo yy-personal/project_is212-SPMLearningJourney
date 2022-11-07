@@ -617,10 +617,14 @@ def get_learning_journey():
 def get_learning_journey_by_staffid(id):
     # learning_journey_List = LearningJourney.query.all()
     learning_journey_List = LearningJourney.query.filter_by(staff_id=id).all()
+    learning_journey_present_list = []
+    for i in learning_journey_List:
+        if i.to_dict()["learning_journey_deleted"] == False:
+            learning_journey_present_list += [i.to_dict()]
+
     return jsonify(
         {
-            "data": [learning_journey.to_dict()
-                    for learning_journey in learning_journey_List]
+            "data": learning_journey_present_list 
         }
     ), 200
 
