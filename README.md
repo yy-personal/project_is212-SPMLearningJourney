@@ -1,6 +1,6 @@
-# IS2121 Project by Team 4
+## IS2121 Project by Team 4
 
-## Group Members:
+### Group Members:
 - Lim Yin Yao 
 - Tian Fu Wei
 - Gerald Ng Xian Wei
@@ -8,11 +8,11 @@
 - Maaruni Pandithurai
 - Yi Mon Mon Aung
 
-## Dependencies:
+### Dependencies:
 - Flask 
 - Flask SQLAlchemy
 - Flask CORS
 - WAMP (Windows) / Mamp (Mac)
 
-## Steps to set up:
-<u>Windows</u>
+### Steps to set up:
+<ins>Windows</ins>
