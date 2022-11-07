@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+    <title>View Roles Records</title>
+
+    <!-- Bootstrap libraries -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script> -->
+
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script> -->
+
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <!--Replace with your tailwind.css once created-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Flowbite -->
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    <!-- ICON -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+
+    <style>
+        .gradient {
+            background: linear-gradient(90deg, #82cde8 0%, #78cea9 100%);
+        }
+
+        .backdrop {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+
+
+<body class="leading-normal tracking-normal text-white" style="font-family: 'Source Sans Pro', sans-serif;">
+    <div id="main-container">
+
+        <!-- NAV BAR -->
+        <nav id="header" class="fixed w-full z-30 top-0 text-white gradient py-2 mb-10">
+            <div class="container flex flex-wrap justify-between items-center mx-auto">
+                <!-- LOGO -->
+                <img src='../logo.png' width="109" height="109" class='mb-2'>
+
+                <div class="flex items-center md:order-2">
+                    <button type="button"
+                        class="flex mr-3 text-sm  rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                        id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+                        data-dropdown-placement="bottom">
+
+                        <iconify-icon icon="carbon:user-avatar-filled-alt" style="color: white;" height='40' width='40'>
+                        </iconify-icon>
+                    </button>
+
+                    <!-- PROFILE Dropdown menu -->
+                    <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                        id="user-dropdown">
+                        <div class="py-3 px-4">
+                            <span class="block text-sm text-gray-900 dark:text-white">Mary Teo</span>
+                            <span
+                                class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">Staff ID: 140004</span>
+                            <span
+                                class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">Mary.Teo@allinone.com</span>
+                        </div>
+                        <ul class="py-1" aria-labelledby="user-menu-button">
+                            <li>
+                                <a href="../htdocs/staff_learning_journey.html"
+                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Learning Journy</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
+                                    out</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button data-collapse-toggle="mobile-menu-2" type="button"
+                        class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        aria-controls="mobile-menu-2" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+
+                </div>
+
+                <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
+                    <ul
+                        class="flex flex-col p-2 mt-1 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 ">
+                        <li>
+                            <a href="../htdocs/staff_ljmshome.html"
+                                class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</a>
+                        </li>
+                        <li>
+                            <a href="../htdocs/staff_skills.html"
+                                class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Skills</a>
+                        </li>
+                        <li>
+                            <a href="../htdocs/staff_roles.html"
+                                class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Roles</a>
+                        </li>
+                        <li>
+                            <a href="../htdocs/staff_courses.html"
+                                class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Courses</a>
+                        </li>
+                        <li>
+                            <a href="../htdocs/staff_learning_journey.html"
+                                class="text-lg block py-2 pr-4 pl-3 text-blue-700 rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Learning
+                                Journey</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class='mt-20'>
+            <h2 class="w-full mt-12 text-5xl font-bold leading-tight text-center text-gray-800 pt-4">
+                Learning Journey
+            </h2>
+
+            <div>
+                <a href="../htdocs/staff_create_learningjourney.html"
+                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mx-8">
+                Create Learning Journey</a>
+            </div>
+
+            <div class="w-full mb-10">
+                <div class="h-4 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t font-underline bg-slate-400">
+                </div>
+            </div>
+            
+            
+
+            <!-- DISPLAY LEARNING JOURNEY -->
+            <div class='container'>
+                <div class='row mx-8' v-for='(each, idx) of learningJourneyRole'>
+
+                    <!-- EACH LEARNING JOURNEY -->
+                    <div
+                        class="mb-10 p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white mb-3">{{each[1]}}</h5>
+                        <!-- <div class="flex justify-between mb-1">
+                            <span class="text-lg font-semibold text-black dark:text-white">Work in
+                                Progress</span>
+                            <span class="text-lg font-bold text-black dark:text-white">40%</span>
+                        </div>
+                        <div class="mb-4 w-full h-4 bg-gray-200 rounded-full dark:bg-gray-700">
+                            <div class="h-4 bg-blue-600 rounded-full dark:bg-red-500" style="width: 40%">
+                            </div>
+                        </div> -->
+
+                        <!-- DISPLAY COURSES AND SKILLS -->
+                        <table class="table-fixed w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
+                            <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6 sm:text-sm">
+                                        Skills
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 sm:text-sm">
+                                        Courses
+                                    </th>
+                                    <!-- <th scope="col" class="py-3 px-6 sm:text-sm">
+                                        Skill Completion Status
+                                    </th> -->
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                    v-for='eachSkill in getSkillName(each[0].learning_journey_id)'>
+                                    
+                                    <th scope="row" class="py-2 px-6 font-medium text-gray-900  dark:text-white">
+                                        {{eachSkill[0]}}
+                                    </th>
+                                    <td scope="row" class="pt-3 px-6 font-medium text-gray-900  dark:text-white">
+                                        <ul class="space-y-1 max-w-md list-disc list-inside text-gray-900">
+                                            <template v-for='eachskillcourse in skillCourse'
+                                                v-if="eachskillcourse.skill_id == eachSkill[1]">
+                                                <template
+                                                    v-for='eachCourse in getCourseName(each[0].learning_journey_id)'
+                                                    v-if="eachCourse[1] == eachskillcourse.course_id">
+                                                    <li>{{eachCourse[0]}}</li>
+                                                    <br>
+                                                </template>
+                                            </template>
+                                        </ul>
+                                    </td>
+                                    <!-- <td class="py-4 px-6 text-center">
+                                        <iconify-icon icon="akar-icons:circle-check-fill" style="color: lime;"
+                                            width="32" height="32"></iconify-icon>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-auto  p-6" style="text-align: center;">
+                            <button v-on:click="openUpdateModal(each[0].learning_journey_id)" type="button"
+                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Add Course</button>
+                        <button v-on:click="openDeleteModal(each[0].learning_journey_id)" type="button"
+                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Remove Course</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div v-if="learningjourneyID != null" id="authentication-modal" tabindex="-1" aria-hidden="true"
+            class="backdrop overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full grid justify-center items-center">
+            <div class="relative p-4 h-full md:h-auto">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 w-100">
+
+                    <button type="button" v-on:click="closeUpdateModal()"
+                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                        data-modal-toggle="authentication-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+
+                    <div class="py-6 px-6 lg:px-8 align-items: center">
+                        <h3 class=" text-center text-xl font-bold text-gray-900 dark:text-white underline">Add Courses
+                        </h3>
+                        <div id='middle'
+                            class="p-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+                            <!-- SKILLS AVAILABLE -->
+                            <div
+                                class="p-4 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                                        Skills
+                                    </h5>
+                                </div>
+                                <div class="flow-root">
+                                    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                        <li class="py-3 sm:py-4" v-for="eachSkill in addCourseModalSkills">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="flex-1 min-w-0">
+                                                    <p
+                                                        class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                                                        {{eachSkill.skill_name}}
+                                                    </p>
+                                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                        {{eachSkill.skill_description}}
+                                                    </p>
+                                                </div>
+                                                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                    
+                                                    <!-- <input checked type='checkbox'  v-if="eachSkill.skill_id && eachSkill[0]" :value="eachSkill.skill_id" v-model="selectedSkillModalSkillsId" @change="confirmSkill()" > -->
+                                                    <!-- <input checked type='checkbox' :value="eachSkill.skill_id" v-model="selectedSkillModalSkillsId" @change="confirmSkill()" > -->
+                                                    <input checked type='checkbox' :value="eachSkill.skill_id"
+                                                        v-model="selectedSkillModalSkillsId" @change="confirmSkill()" checked />
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div
+                                        class="flex flex-col justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+                                        <p class="text-sm font-medium text-red-700 dark:text-red-500"></p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SKILLS ASSIGNED -->
+                            <div
+                                class="p-4 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Courses
+                                    </h5>
+                                </div>
+                                <!-- <div class="flow-root">
+                                    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                        <li class="py-3 sm:py-4" v-for="courseObjects in addCourseConfirmSkill_CourseDisplay">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="flex-1 min-w-0">
+                                                    <p
+                                                        class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                                                        {{courseObjects.course_id}} - {{courseObjects.course_name}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div> -->
+                                <div class="flow-root">
+                                    <template v-for="a in selectedSkillModalSkillsId">
+                                        <template v-for="b in addCourseModalSkills" v-if="a==b.skill_id">
+                                            <h2 class="text-xl font-extrabold text-dark">{{b.skill_name}}</h2>
+
+                                            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700"
+                                                v-for="courseObjects in addCourseConfirmSkill_CourseDisplay"
+                                                v-if="courseObjects.skill_name==b.skill_name">
+                                                <!-- Verify if this course is already inside user current courses -->
+                                                <!-- <template
+                                                    v-for='eachCourse in getCourseName(each[0].learning_journey_id)'
+                                                    v-if="eachCourse[1] == eachskillcourse.course_id">
+                                                    <li>{{eachCourse[0]}}</li>
+                                                    <br>
+                                                </template> -->
+                                                <template v-if="pageCourseListForModalToDeduct.includes(courseObjects.course_id)==false">
+                                                        <li class="py-3 sm:py-4">
+                                                            <div class="flex items-center space-x-4">
+                                                                <div class="flex-1 min-w-0">
+                                                                    <p
+                                                                        class="text-sm font-base text-gray-500 truncate dark:text-white">
+                                                                        {{courseObjects.course_id}}-{{courseObjects.course_name}}
+                                                                    </p>
+                                                                </div>
+                                                                <div
+                                                                    class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                                    <input type='checkbox' :value="courseObjects.course_id"
+                                                                        v-model="selectedCourseModal">
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                </template>
+                                                <template v-else>
+                                                    <li class="py-3 sm:py-4">
+                                                        <div class="flex items-center space-x-4">
+                                                            <div class="flex-1 min-w-0">
+                                                                <p
+                                                                    class="text-sm font-base text-gray-500 truncate dark:text-white">
+                                                                    {{courseObjects.course_id}}-{{courseObjects.course_name}}
+                                                                </p>
+                                                            </div>
+                                                            <div
+                                                                class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                                <p
+                                                                    class="text-sm font-base text-gray-500 truncate dark:text-white">
+                                                                    Added
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                            </template>
+                                            </ul>
+                                            <hr>
+                                        </template>
+                                    </template>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mt-auto  p-6" style="text-align: center;">
+                            <button v-on:click="testDataObject()" type="button"
+                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Confirm Selection</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- remove courses -->
+        <div v-if="learningjourneyID != null && notRemoved == false" id="authentication-modal" tabindex="-1"
+        aria-hidden="true"
+        class="backdrop overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full grid justify-center items-center">
+        <div class="relative p-4 h-full md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 w-100">
+
+                <button type="button" v-on:click="closeDeleteModal()"
+                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                    data-modal-toggle="authentication-modal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+
+                <div class="py-6 px-6 lg:px-8 align-items: center">
+                    <h3 class=" text-center text-xl font-bold text-gray-900 dark:text-white underline">Remove
+                        Courses
+                    </h3>
+                    <div id='middle' class="p-6">
+
+                        <!-- Courses displayed -->
+                        <div
+                            class="p-4 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                            <div class="flex justify-between items-center mb-4">
+                                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Courses
+                                </h5>
+                            </div>
+                            <div class="flow-root">
+                                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700"
+                                    v-for="eachCourse2 in courseDisplay">
+                                    <li class="py-3 sm:py-4">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-sm font-base text-gray-500 truncate dark:text-white">
+                                                    {{eachCourse2.course_id}}-{{eachCourse2.course_name}}
+                                                </p>
+                                            </div>
+                                            <div
+                                                class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                <input type='checkbox' :value="eachCourse2.course_id" :id = 'eachCourse2.course_id' @change = 'countRemoveCourses(eachCourse2.course_id)'
+                                                    v-model="removeCourseModal">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-6" style="text-align: center;">
+                        <p v-if = 'courseDisplay.length - numCoursesRemove == 1 || courseDisplay.length - numCoursesRemove == 0 ' class="text-sm font-medium text-red-700 dark:text-red-500 mb-2">Must have at least 1 course in learning journey!</p>
+                        <button v-on:click="removeCourse()" type="button"
+                            class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            Confirm Selection</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+
+
+
+
+    <!--- JAVASCRIPT -->
+    <script>
+        const vm = new Vue({
+            el: '#main-container',
+            data: {
+                url: "http://localhost:5010",
+                learningJourney: [],
+                learningJourneySkill: [],
+                learningJourneyCourse: [],
+                jobRoles: [],
+                skills: [],
+                courses: [],
+                learningJourneyRole: [],
+                skillCourse: [],
+                learningjourneyID: null,
+                learningJourneyIDs_array: [],
+
+                //after 'Add Course' Modal pops out
+                addCourseModalSkills: [],
+                selectedSkillModalSkillsId: [],
+                addCourseConfirmSkill_CourseDisplay: [],
+                selectedCourseModal: [],
+                ObjToPOST: [],
+
+                pageCourseListForModalToDeduct: [],
+                
+                notRemoved: true,
+                // after 'Remove Course' Modal pops out 
+                numCoursesRemove: 0,
+                removeCourseModal: [],
+                //selectedCourseId: [],
+                removeCouresId: [],
+                courseDisplay: []
+
+
+            },
+            async mounted() {
+                this.loadAll()
+                //console.log(this.learningJourney)
+            },
+            methods: {
+                async loadAll() {
+                    this.loadLearningJourney()
+                    this.loadLearningJourneySkill()
+                    this.loadLearningJourneyCourse()
+                    this.loadSkills()
+                    this.loadJobRoles()
+                    this.loadCourses()
+                    this.loadskillCourses()
+                    this.loadJobRoleSkill()
+                },
+                async loadLearningJourney() {
+                    var url = this.url + `/learning_journeys`
+                    await axios.get(url)
+                        .then(response => {
+                            // console.log(response)
+                            staff_LJ = []
+                            var data = response.data.data
+                            for (each of data){
+                                if (each.staff_id == 140004){
+                                    staff_LJ.push(each)
+                                    this.learningJourneyIDs_array.push(each.learning_journey_id)
+                                }
+                            }
+                            // this.learningJourney = response.data.data
+                            this.learningJourney = staff_LJ
+                            // console.log(this.learningJourney)
+                            // console.log(this.learningJourneyIDs_array)
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                        });
+                },
+                async loadLearningJourneySkill() {
+                    var url = this.url + `/learning_journey_skills`
+                    await axios.get(url)
+                        .then(response => {
+                            // console.log(response)
+                            this.learningJourneySkill = response.data.data
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                        });
+                },
+                async loadLearningJourneyCourse() {
+                    var url = this.url + `/learning_journey_course`
+                    await axios.get(url)
+                        .then(response => {
+                            //console.log(response)
+                            this.learningJourneyCourse = response.data.data
+                            // console.log(this.learningJourneyCourse)
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                        });
+                },
+                async loadJobRoles() {
+                    var url = this.url + `/jobroles`
+                    await axios.get(url)
+                        .then(response => {
+                            // console.log(response)
+                            this.jobRoles = response.data.data
+
+                            for (each in this.learningJourney) {
+                                for (each2 in this.jobRoles) {
+                                    if (this.learningJourney[each].job_role_id == this.jobRoles[each2]
+                                        .job_role_id) {
+                                        this.learningJourneyRole.push(
+                                            [this.learningJourney[each], this.jobRoles[each2]
+                                                .job_role_name
+                                            ]
+                                        )
+                                    }
+                                }
+                            }
+
+                            // console.log(this.learningJourneyRole)
+                            //console.log(this.selectedQuery)
+
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                        });
+                },
+                async loadJobRoleSkill() {
+                    var url = this.url + `/skills_to_jobrole`
+                    await axios.get(url)
+                        .then(response => {
+                            // console.log(response)
+                            this.jobRoleSkill = response.data.data
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                        });
+                },
+                async loadSkills() {
+                    var url = this.url + `/skills`
+                    await axios.get(url)
+                        .then(response => {
+                            // console.log(response)
+                            this.skills = response.data.data
+                            // console.log(this.skills)
+
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                        });
+                },
+                async loadCourses() {
+                    var url = this.url + `/courses`
+                    await axios.get(url)
+                        .then(response => {
+                            // console.log(response)
+                            this.courses = response.data.data
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                        });
+
+                },
+                async loadskillCourses() {
+                    var url = this.url + `/skillCourse`
+                    await axios.get(url)
+                        .then(response => {
+                            this.skillCourse = response.data.data
+                            // console.log(this.skillCourse)
+                        })
+                        .catch(error => {
+                            console.log(error.response)
+                        });
+
+                },
+                getCourseName(learning_journey_id) {
+                    var course_names = []
+                    for (eachLearningJourney of this.learningJourneyCourse) {
+                        if (eachLearningJourney.learning_journey_id == learning_journey_id) {
+                            for (eachCourse of this.courses) {
+                                if (eachCourse.course_id == eachLearningJourney.course_id) {
+                                    course_names.push([eachCourse.course_name, eachCourse.course_id])
+                                }
+                            }
+                        }
+                    }
+                    // console.log(course_names)
+
+                    return (course_names)
+                },
+                getSkillName(learning_journey_id) {
+                    var skill_names = []
+                    for (eachLearningJourney of this.learningJourneySkill) {
+                        if (eachLearningJourney.learning_journey_id == learning_journey_id) {
+                            for (eachSkill of this.skills) {
+                                if (eachSkill.skill_id == eachLearningJourney.skill_id) {
+                                    skill_names.push([eachSkill.skill_name, eachSkill.skill_id])
+                                }
+                            }
+                        }
+                    }
+                    
+                    return (skill_names)
+                },
+                // Open up modal and fill in Skills tab according to job id from learning journey
+                openUpdateModal(learning_journey_id) {
+                    this.learningjourneyID = learning_journey_id
+                    var selectedModalJobRoleId
+                    var selectedJobRoleSkillId = []
+                    // var selectedModalSkillsDisplay = []
+
+                    for (i in this.learningJourney) {
+                        if (this.learningJourney[i]["learning_journey_id"] == learning_journey_id) {
+                            selectedModalJobRoleId = this.learningJourney[i]["job_role_id"]
+                            // console.log(selectedModalJobRoleId)
+                        }
+                    }
+                    for (j in this.jobRoleSkill) {
+                        if (this.jobRoleSkill[j]["job_role_id"] == selectedModalJobRoleId) {
+                            // console.log(this.jobRoleSkill[j]["skill_id"])
+                            selectedJobRoleSkillId.push(this.jobRoleSkill[j]["skill_id"])
+                        }
+                    }
+                    for (k in this.skills) {
+                        // console.log(this.skills)
+                        for (ki in selectedJobRoleSkillId) {
+                            // console.log(selectedJobRoleSkillId[ki])
+                            if (this.skills[k]['skill_id'] == selectedJobRoleSkillId[ki]) {
+                                var eachObject = {
+                                    "skill_id": this.skills[k]['skill_id'],
+                                    "skill_name": this.skills[k]['skill_name'],
+                                    "skill_description": this.skills[k]['skill_description']
+                                }
+                                this.addCourseModalSkills.push(eachObject)
+                            }
+                        }
+                    }
+                    for (a in this.addCourseModalSkills) {
+                        // console.log(this.addCourseModalSkills[a])
+                    }
+
+                    // For elimination purpose //
+                    for (l in this.learningJourneyCourse){
+                        if(this.learningJourneyCourse[l]['learning_journey_id'] == learning_journey_id){ // learningID in 'learningJourneyCourse is same as selected 'learning_journey_id' from for loop on top //
+                            // console.log(this.learningJourneyCourse[l]['course_id'])
+                            this.pageCourseListForModalToDeduct.push(this.learningJourneyCourse[l]['course_id'])
+                        }
+                        
+                    }
+                    // console.log(this.pageCourseListForModalToDeduct)
+                },
+                openDeleteModal(learning_journey_id) {
+                    this.learningjourneyID = learning_journey_id
+                    this.notRemoved = false;
+
+                    //get all the courses from that learning jounrney [to display]
+                    var learningjourneycourses = this.learningJourneyCourse
+                    var courses = this.courses
+
+                    for (each of learningjourneycourses) {
+                        if (each.learning_journey_id == learning_journey_id) {
+                            console.log(each.course_id)
+                            for (each2 of courses) {
+                                if (each.course_id == each2.course_id) {
+                                    this.courseDisplay.push(each2)
+                                }
+                            }
+                        }
+                    }
+                },
+                removeCourse: async function () {
+                    var coursesIDToBeRemoved = this.removeCourseModal
+                    console.log(coursesIDToBeRemoved)
+
+                    for (i in coursesIDToBeRemoved) {
+                        //console.log(coursesIDToBeRemoved[i])
+                        //console.log(this.learningjourneyID)
+                        const course_id = coursesIDToBeRemoved[i]
+                        console.log(course_id)
+
+                        const url = this.url + `/learning_journey_removecourse/${this.learningjourneyID}/${course_id}` 
+
+                        await axios.delete(url)
+                            .then(response => {
+                                console.log(response.data)
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            })
+                    }
+
+                    this.closeDeleteModal()
+                    window.location.reload();
+                },
+                countRemoveCourses(course_id){
+                    var a = document.getElementById(course_id)
+
+                    if (a.checked){
+                        this.numCoursesRemove += 1
+                    }
+                    else{
+                        this.numCoursesRemove -= 1
+                    }
+                } ,
+                confirmSkill() {
+                    this.addCourseConfirmSkill_CourseDisplay = []
+                    // console.log(this.selectedSkillModalSkillsId)
+                    // console.log(this.skillCourse)
+                    for (i in this.selectedSkillModalSkillsId) {
+                        for (j in this.skillCourse) {
+                            if (this.skillCourse[j]["skill_id"] == this.selectedSkillModalSkillsId[i]) {
+                                // console.log(this.skillCourse[j]["course_id"])
+                                for (k in this.courses) {
+                                    if (this.skillCourse[j]["course_id"] == this.courses[k]["course_id"]) {
+                                        var temp_skill_id
+                                        var temp_skill_name
+                                        this.addCourseModalSkills
+                                        for (a in this.addCourseModalSkills) {
+                                            if (this.skillCourse[j]["skill_id"] == this.addCourseModalSkills[a][
+                                                    "skill_id"
+                                                ]) {
+                                                temp_skill_id = this.addCourseModalSkills[a]["skill_id"]
+                                                temp_skill_name = this.addCourseModalSkills[a]["skill_name"]
+                                            }
+
+                                        }
+
+                                        // console.log(this.courses[k]["course_name"])
+                                        var elements = {
+                                            "skill_id": temp_skill_id,
+                                            "skill_name": temp_skill_name,
+                                            "course_id": this.skillCourse[j]["course_id"],
+                                            "course_name": this.courses[k]["course_name"]
+                                        }
+                                        this.addCourseConfirmSkill_CourseDisplay.push(elements)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // console.log(this.addCourseConfirmSkill_CourseDisplay)
+                },
+                async testDataObject() {
+                    var allInfo = this.addCourseConfirmSkill_CourseDisplay
+                    var selectedInfo_course_id = this.selectedCourseModal
+                    for (i in allInfo) {
+                        for (j in selectedInfo_course_id) {
+                            // console.log(selectedInfo_course_id[j]) courseid
+                            if (selectedInfo_course_id[j] == allInfo[i]["course_id"]) {
+                                var elements = {
+                                    "skill_id": allInfo[i]["skill_id"],
+                                    "skill_name": allInfo[i]["skill_name"],
+                                    "course_id": allInfo[i]["course_id"],
+                                    "course_name": allInfo[i]["course_name"]
+                                }
+                                this.ObjToPOST.push(elements)
+                            }
+                        }
+                    }
+
+                    console.log(this.ObjToPOST)
+                    let skillCourse = []
+                    let errors = []
+                    var url_1 = this.url + `/learning_journey_addskill`
+                    var url_2 = this.url + `/learning_journey_addcourse`
+
+                    for (each of this.ObjToPOST) {
+                        var skill_id = each.skill_id
+                        var course_id = each.course_id
+                        
+                        await axios.all([
+                        await axios.post(url_1 , {
+                            learning_journey_id : this.learningjourneyID,
+                            skill_id : skill_id
+                        }),
+                        await axios.post(url_2, {
+                            learning_journey_id: this.learningjourneyID,
+                            course_id: course_id
+                        })
+                    ]) 
+                    .then(axios.spread((response_1 , response_2) => {
+                        console.log('response_1' , response_1)
+
+                        console.log('response_2' , response_2)
+                    })) 
+                    }
+                    this.closeUpdateModal()
+                    window.location.reload()
+                },
+                clearAll(){
+                    this.learningJourney= []
+                    this.learningJourneySkill= []
+                    this.learningJourneyCourse= []
+                    this.jobRoles= []
+                    this.skills= []
+                    this.courses= []
+                    this.learningJourneyRole= []
+                    this.skillCourse= []
+                    this.pageCourseListForModalToDeduct = []
+                },
+                closeUpdateModal() {
+                    this.learningjourneyID = null
+                    this.addCourseModalSkills = []
+                    this.selectedSkillModalSkillsId = []
+                    this.addCourseConfirmSkill_CourseDisplay = []
+                    this.pageCourseListForModalToDeduct = []
+                },
+                closeDeleteModal() {
+                    this.learningjourneyID = null;
+                    this.removeCourseModal = [];
+                    //this.selectedCourseId = [];
+                    this.notRemoved = true;
+                    this.removeCoursesId = [];
+                    this.courseDisplay = [];
+                    this.numCoursesRemove = 0
+                }
+
+            }
+
+        });
+    </script>
+    <!-- flowbite -->
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+</body>
+
+</html>

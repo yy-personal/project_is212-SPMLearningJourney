@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
 
-    <title>View Courses Records</title>
+    <title>View Skills Records</title>
 
     <link rel="stylesheet" href="">
     <!-- Bootstrap libraries -->
@@ -34,14 +34,16 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Flowbite -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+
     <!--ICON-->
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
 
-    <!-- ICON -->
-    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
     <style>
-        .gradient {
+         .gradient {
             background: linear-gradient(90deg, #82cde8 0%, #78cea9 100%);
+        }
+        button:disabled {
+            background: hwb(0 0% 100% / 0.493);
         }
     </style>
 </head>
@@ -49,6 +51,8 @@
 
 <body class="leading-normal tracking-normal text-white" style="font-family: 'Source Sans Pro', sans-serif;">
     <div id="main-container">
+
+        <!-- NAV BAR -->
         <nav id="header" class="fixed w-full z-30 top-0 text-white gradient py-2">
             <div class="container flex flex-wrap justify-between items-center mx-auto">
                 <!-- LOGO -->
@@ -68,13 +72,25 @@
                     <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                         id="user-dropdown">
                         <div class="py-3 px-4">
-                            <span class="block text-sm text-gray-900 dark:text-white">Anna Lim</span>
+                            <span class="block text-sm text-gray-900 dark:text-white">Tommy Lim</span>
                             <span
-                                class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">anna_lim@hr.com</span>
+                                class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">tommy_lim@staff.com</span>
                         </div>
                         <ul class="py-1" aria-labelledby="user-menu-button">
                             <li>
-                                <a href="../htdocs/main_home.html"
+                                <a href="#"
+                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
+                            </li>
+                            <li>
+                                <a href="#"
                                     class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
                                     out</a>
                             </li>
@@ -99,31 +115,36 @@
                     <ul
                         class="flex flex-col p-2 mt-1 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 ">
                         <li>
-                            <a href="../htdocs/hr_ljmsHome.html"
+                            <a href="../htdocs/staff_ljmshome.html"
                                 class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</a>
                         </li>
                         <li>
-                            <a href="../htdocs/hr_skills.html"
-                                class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Skills</a>
+                            <a href="../htdocs/staff_skills.html"
+                                class="text-lg block py-2 pr-4 pl-3 text-blue-700 rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Skills</a>
                         </li>
                         <li>
-                            <a href="../htdocs/hr_roles.html"
+                            <a href="../htdocs/staff_roles.html"
                                 class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Roles</a>
                         </li>
                         <li>
-                            <a href="../htdocs/hr_courses.html"
-                                class="text-lg block py-2 pr-4 pl-3 text-blue-700 rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Courses</a>
+                            <a href="../htdocs/staff_courses.html"
+                                class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Courses</a>
+                        </li>
+                        <li>
+                            <a href="../htdocs/staff_learning_journey.html"
+                                class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Learning
+                                Journey</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <!-- DISPLAY COURSES -->
-        <section class="container bg-white py-8 pt-20" id="Courses">
+        <!-- DISPLAY SKILLS -->
+        <section class="container bg-white py-8 pt-20" id="Skills">
             <div class="container mx-auto flex flex-wrap pt-4">
                 <h2 class="w-full mt-12 text-5xl font-bold leading-tight text-center text-gray-800 pt-4">
-                    Courses
+                    Skills
                 </h2>
 
                 <div class="w-full mb-4">
@@ -131,34 +152,23 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 bg-orange-200 " id="coursesContainer">
-                    <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-for="course in courses">
+                <div class="grid grid-cols-1 md:grid-cols-3 bg-orange-200 " id="skillsContainer">
+                    <div class="w-full p-6 flex flex-col flex-grow flex-shrink" v-for="skill in skills">
 
-                        <!-- EACH COURSE -->
-
+                        <!-- EACH SKILL -->
                         <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
                             style='padding-top: 20px;'>
                             <p class="w-full font-bold text-xl text-gray-800 px-6"
                                 style='margin-bottom: 10px; font-size: 25px;'>
-                                {{course.course_name}}
+                                {{skill.skill_name}}
                             </p>
                             <p class="text-gray-800 text-base px-6 mb-5">
-                                {{course.course_description}}
+                                {{skill.skill_description}}
                             </p>
                         </div>
-
-                        <div class="mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
-                            style="text-align: center;">
-                            <button v-on:click="goToSinglepage(course.course_id)" type="button"
-                                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                Assign Skills</button>
-                        </div>
+                        <!-- </a> -->
                     </div>
                 </div>
-            </div>
-
-            <div>
-                <p><label id="error" class="text-danger">{{ error }}</label></p>
             </div>
 
         </section>
@@ -171,63 +181,54 @@
         const vm = new Vue({
             el: '#main-container',
             data: {
-                courses: [],
+                skills: [],
                 currPage: "Home",
                 activeClass: "inline-block py-2 px-4 text-black font-bold no-underline",
                 inActiveClass: "inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4",
                 error: "",
                 varName: "",
                 varDesc: "",
+                updateID: null,
             },
             mounted: async function () {
                 var config = {
                     method: 'get',
-                    url: 'http://localhost:5010/courses',
+                    url: 'http://localhost:5010/skills',
                     headers: {}
                 };
-                courses2 = []
+                skills2 = []
                 await axios(config)
                     .then(function (response) {
-                        //console.log(JSON.stringify(response.data.data));
-                        courses = response.data.data
-                        //console.log(roles);
+                        skills = response.data.data
                         coursesDivs = ""
-                        courses2 = courses
+                        skills2 = skills
                     })
                     .catch(function (error) {
                         console.log(error);
                         this.error = error;
                     })
-                this.courses = courses2
+                this.skills = skills2
             },
             methods: {
-                goToSinglepage: function (id) {
-                    console.log(id)
-                    window.location.assign("./individual_course.html?id=" + id)
-                },
-                getCourses: async function getCourses() {
-                    // var axios = require('axios');
-
+                getSkills: async function getSkills() {
                     var config = {
                         method: 'get',
-                        url: 'http://localhost:5010/courses',
+                        url: 'http://localhost:5010/skills',
                         headers: {}
                     };
-                    roles = []
+                    skills = []
                     await axios(config)
                         .then(function (response) {
-                            //console.log(JSON.stringify(response.data.data));
-                            courses = response.data.data
-                            //console.log(skills);
-                            coursesDivs = ""
-                            this.courses = courses
-                            // coursesContainer.innerHTML = coursesDivs
+                            skills = response.data.data
+                            skillsDivs = ""
+                            this.skills = skills
                         })
                         .catch(function (error) {
                             console.log(error);
                         })
-                    this.courses = courses
+                    this.skills = skills
                 },
+
             }
         });
     </script>

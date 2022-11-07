@@ -146,8 +146,25 @@
                     Learning Journey
                 </h2>
 
+            
+
+
+
                 <div class="w-full mb-4">
                     <div class="h-4 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t font-underline bg-slate-400">
+                    </div>
+                </div>
+
+
+                <div class="w-full flex justify-center items-center" v-if="error_msg.length != 0">
+                    <div class=" p-4 mb-4 text-sm text-blue-700 bg-red-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
+                        <span class="font-medium">Info alert!</span> {{error_msg}}
+                    </div>
+                </div>
+
+                <div class="w-full flex justify-center items-center" v-if="success_msg.length != 0">
+                    <div class=" p-4 mb-4 text-sm text-blue-700 bg-green-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
+                        <span class="font-medium">Info alert!</span> {{success_msg}}
                     </div>
                 </div>
 
@@ -274,9 +291,12 @@
                 cols: [1,2,3],
                 roleDropDown: false,
                 coursesBySkill2: {},
-                coursesBySkill3: {"Software Testing":[{"skill_description":"Software testing is the process of assessing the functionality of a software program.","skill_id":7,"skill_name":"Software Testing"},[]],
-                "Machine Learning":[{"skill_description":"Machine learning (ML) is a type of artificial intelligence (AI) that allows software applications to become more accurate at predicting outcomes without being explicitly programmed to do so.","skill_id":5,"skill_name":"Machine Learning"},
-                [{"course_category":"Core","course_description":"Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics","course_id":"COR002","course_name":"Lean Six Sigma Green Belt Certification","course_status":"Active","course_type":"Internal"},{"course_category":"Finance","course_description":"Business continuity planning is essential in any business to minimise loss when faced with potential threats and disruptions.","course_id":"FIN003","course_name":"Business Continuity Planning","course_status":"Retired","course_type":"External"},{"course_category":"Core","course_description":"The programme provides the learner with the key foundations of what builds customer confidence in the service industry","course_id":"COR004","course_name":"Service Excellence","course_status":"Pending","course_type":"Internal"}]]}
+                error_msg: "",
+                success_msg: ""
+                // coursesBySkill3: {"Software Testing":[{"skill_description":"Software testing is the process of assessing the functionality of a software program.","skill_id":7,"skill_name":"Software Testing"},[]],
+                // "Machine Learning":[{"skill_description":"Machine learning (ML) is a type of artificial intelligence (AI) that allows software applications to become more accurate at predicting outcomes without being explicitly programmed to do so.","skill_id":5,"skill_name":"Machine Learning"},
+                // [{"course_category":"Core","course_description":"Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics","course_id":"COR002","course_name":"Lean Six Sigma Green Belt Certification","course_status":"Active","course_type":"Internal"},{"course_category":"Finance","course_description":"Business continuity planning is essential in any business to minimise loss when faced with potential threats and disruptions.","course_id":"FIN003","course_name":"Business Continuity Planning","course_status":"Retired","course_type":"External"},{"course_category":"Core","course_description":"The programme provides the learner with the key foundations of what builds customer confidence in the service industry","course_id":"COR004","course_name":"Service Excellence","course_status":"Pending","course_type":"Internal"}]]}
+                
             },
             mounted: async function () {
                 this.getRoles()
@@ -547,8 +567,19 @@
 
                     if ( error_msg != "NO ERROR MSG"){
                         console.log("delete on cascade learning journey!:")
-
+                        
+                        this.error_msg = error_msg;
+                    }else{
+                        this.success_msg = `Learning journey with id-${learningjourney.learning_journey_id} created!`
                     }
+
+
+                    await new Promise(r => setTimeout(r, 10000));
+                    console.log("resetting after 10 seconds")
+                    this.error_msg = "";
+                    this.success_msg = "";
+                    // reset all other variables:
+                    
 
                     // if it fails to reach here, delete the whole learning journey, and ask to redo selection
                     // test case -- if user doesnt select at least one course for learning journey, it 
