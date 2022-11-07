@@ -54,18 +54,18 @@
     <div id="main-container">
 
         <!-- NAV BAR -->
-        <nav id="header" class="fixed w-full z-30 top-0 text-white gradient py-2">
+        <nav id="header" class="fixed w-full z-30 top-0 text-white gradient py-2 mb-10">
             <div class="container flex flex-wrap justify-between items-center mx-auto">
                 <!-- LOGO -->
-                    <img src='../logo.png' width="109" height="109" class='mb-2'>
+                <img src='../logo.png' width="109" height="109" class='mb-2'>
 
                 <div class="flex items-center md:order-2">
                     <button type="button"
                         class="flex mr-3 text-sm  rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                         id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                         data-dropdown-placement="bottom">
-                        
-                        <iconify-icon icon="carbon:user-avatar-filled-alt" style="color: white;" height = '40' width = '40'>
+
+                        <iconify-icon icon="carbon:user-avatar-filled-alt" style="color: white;" height='40' width='40'>
                         </iconify-icon>
                     </button>
 
@@ -73,22 +73,20 @@
                     <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                         id="user-dropdown">
                         <div class="py-3 px-4">
-                            <span class="block text-sm text-gray-900 dark:text-white">Tommy Tan</span>
+                            <span class="block text-sm text-gray-900 dark:text-white">Mary Teo</span>
                             <span
-                                class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">tommy_tan@staff.com</span>
+                                class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">Staff ID: 140004</span>
+                            <span
+                                class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">Mary.Teo@allinone.com</span>
                         </div>
                         <ul class="py-1" aria-labelledby="user-menu-button">
                             <li>
-                                <a href="#"
-                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                                <a href="../htdocs/staff_learning_journey.html"
+                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Learning Journy</a>
                             </li>
                             <li>
                                 <a href="#"
                                     class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
                             </li>
                             <li>
                                 <a href="#"
@@ -113,26 +111,28 @@
                 </div>
 
                 <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
-                    <ul class="flex flex-col p-2 mt-1 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 ">
+                    <ul
+                        class="flex flex-col p-2 mt-1 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 ">
                         <li>
-                            <a href="#" 
+                            <a href="../htdocs/staff_ljmshome.html"
                                 class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="../htdocs/staff_skills.html"
                                 class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Skills</a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="../htdocs/staff_roles.html"
                                 class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Roles</a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="../htdocs/staff_courses.html"
                                 class="text-lg block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Courses</a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="text-lg block py-2 pr-4 pl-3 text-blue-700 rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Learning Journey</a>
+                            <a href="../htdocs/staff_learning_journey.html"
+                                class="text-lg block py-2 pr-4 pl-3 text-blue-700 rounded hover:bg-gray-400 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Learning
+                                Journey</a>
                         </li>
                     </ul>
                 </div>
