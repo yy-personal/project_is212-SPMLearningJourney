@@ -521,6 +521,37 @@
 
 
                     },
+
+                    checkRolePresentInStaff: async function checkRolePresentInStaff(roleid){
+                    
+
+                        var config = {
+                        method: 'get',
+                        url: 'http://localhost:5010/learning_journeys/' + this.staff_id,
+                        headers: { 
+                            'Content-Type': 'application/json'
+                        }
+                        };
+
+                    
+                        roleids = []
+                        await axios(config)
+                        .then(function (response) {
+                        // console.log(JSON.stringify(response.data));
+
+                        for (d of response.data["data"]){
+                            // console.log("ddd: ", d["job_role_id"])
+                            roleids.push(d["job_role_id"])
+                        }
+
+                        })
+                        .catch(function (error) {
+                        console.log(error);
+                        });
+                        // console.log("roleids: ", roleids)
+                        return roleids;
+
+                    },
                     
 
                 createLearningJourneywork: async function createLearningJourneywork(){
@@ -528,14 +559,43 @@
                     error_msg = "NO ERROR MSG"
                     addskillresponse = []
                     addcourseresponse = []
-                    console.log("createLearningJourneywork load skills for: ", this.selectedRole)
 
-                    console.log("this.selectedSkills: ", this.selectedSkills)
-                    console.log("this.selectedCourses: ", this.selectedCourses)
+                    if (this.selectedRole == null){
+                        await this.displayError("Role not selected. Please select a role.", null);
+                        return 
+                    }else if (this.selectedRole != null){
+
+                        // console.log("checking", this.selectedRole.job_role_id)
+                        roleAlreadyPresent = await this.checkRolePresentInStaff(this.selectedRole.job_role_id)
+                        console.log("roleAlreadyPresent: ", roleAlreadyPresent.indexOf(this.selectedRole.job_role_id))
+                        if (roleAlreadyPresent.indexOf(this.selectedRole.job_role_id) != -1){
+                            await this.displayError("Role already selected in another learning journey. Please select another role.", null);
+                            return
+                        }
+                        
+                    }else if (this.selectedSkills.length == 0){
+                        // console.log("selectedSkills: ", this.selectedSkills)
+                        await this.displayError("Skills not selected. Please select at least 1 skill.", null);
+                        return 
+                    }else if (this.selectedCourses.length == 0){
+                        // console.log("selectedCourses: ", this.selectedCourses)
+                        await this.displayError("Courses not selected. Please select at least 1 course.", null);
+                        return 
+
+                    }   
+                    
+                    // console.log("createLearningJourneywork load skills for: ", this.selectedRole)
+
+                    // console.log("this.selectedSkills: ", this.selectedSkills)
+                    // console.log("this.selectedCourses: ", this.selectedCourses)
 
                     input = this.selectedRole.job_role_id
-                    console.log(input)
+                    console.log("input", input)
+
+
                     let learningjourney = await this.createLearningJourney(input)
+
+
                     console.log("learning journey created!!1: ", learningjourney)
 
                     if (learningjourney == "err"){
@@ -569,18 +629,8 @@
 
                     console.log("error_msg:", error_msg)
 
-                    if ( error_msg != "NO ERROR MSG"){
-                        console.log("delete on cascade learning journey!:")
-                        
-                        this.error_msg = error_msg;
-                    }else{
-                        this.success_msg = `Learning journey with id-${learningjourney.learning_journey_id} created!`
-                    }
+                    await displayError(error_msg, learningjourney);
 
-                    await new Promise(r => setTimeout(r, 10000));
-                    console.log("resetting after 10 seconds")
-                    this.error_msg = "";
-                    this.success_msg = "";
 
 
                     // reset all other variables:
@@ -593,6 +643,26 @@
                     // maybe we need 3 user stories for creation of one learning journey:
 
                 },
+
+                displayError: async function(error_msg, learningjourney) {
+                    if ( error_msg != "NO ERROR MSG" & learningjourney == null){
+
+                        console.log("delete on cascade learning journey!:")
+                        
+                        this.error_msg = error_msg;
+                    }else{
+                        this.success_msg = `Learning journey with id-${learningjourney.learning_journey_id} created!`
+                    }
+
+                    await new Promise(r => setTimeout(r, 10000));
+                    console.log("resetting after 10 seconds")
+                    this.error_msg = "";
+                    this.success_msg = "";
+                    this.selectedRole = "";
+                    this.selectedSkills = [];
+                    this.selectedCourses = [];
+
+                }
 
                 // ---------------------------------------------------USED HERE ---------------------------------------------------------------------------------------------------------
 

@@ -602,6 +602,19 @@ def read_course_by_skill(id):
 @app.route("/learning_journeys")
 def get_learning_journey():
     learning_journey_List = LearningJourney.query.all()
+    
+    return jsonify(
+        {
+            "data": [learning_journey.to_dict()
+                    for learning_journey in learning_journey_List]
+        }
+    ), 200
+
+# Get all Learning Journey 
+@app.route("/learning_journeys/<int:id>")
+def get_learning_journey_by_staffid(id):
+    # learning_journey_List = LearningJourney.query.all()
+    learning_journey_List = LearningJourney.query.filter_by(staff_id=id).all()
     return jsonify(
         {
             "data": [learning_journey.to_dict()
