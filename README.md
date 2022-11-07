@@ -22,7 +22,7 @@
 <ins>Mac</ins>
 - Username: root
 - Password: root
-<br>
-1. Turn on WAMP/MAMP
-2. Load ljms.sql file into phpMyAdmin
-3. Run app2.py under flask folder with commands <code>python app2.py</code>
+ 
+1. Turn on WAMP/MAMP <br>
+2. Load ljms.sql file into phpMyAdmin <br>
+3. Run app2.py under flask folder with commands <code>python app2.py</code> <br>
