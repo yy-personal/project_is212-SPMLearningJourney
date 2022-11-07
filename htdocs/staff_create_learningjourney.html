@@ -491,9 +491,15 @@
                     },
 
                     addCourseToLearningJourney: async function createLearningJourneywork(learning_journey_id, course_id){
+                        console.log("learning_journey_id: ", learning_journey_id)
+                        console.log("course_id: ", course_id)
+                        // var data = JSON.stringify({
+                        // "learning_journey_id": 1,
+                        // "course_id": "COR001"
+                        // });
                         var data = JSON.stringify({
-                        "learning_journey_id": 1,
-                        "course_id": "COR001"
+                        "learning_journey_id": learning_journey_id,
+                        "course_id": course_id
                         });
 
                         var config = {
@@ -552,16 +558,18 @@
                         error_msg = "Skills could not be added and thus Learning Journey could not be created please refresh and try again later."
                     }
 
+
+
                     for (course of this.selectedCourses){
-                        // console.log("this.selectedCourses: ", this.selectedCourses)
-                        addcourseresponse.push(this.addCourseToLearningJourney(learningjourney.learning_journey_id, course.course_id))
+                        console.log("this.selectedCourses: ", course, " from ", this.selectedCourses)
+                        
+                        addcourseresponse.push(this.addCourseToLearningJourney(learningjourney.learning_journey_id, course))
                     }
 
 
                     if (addcourseresponse.indexOf("err") > -1){
                         error_msg = "Courses could not be added and thus Learning Journey could not be created please refresh and try again later."
                     }
-
 
                     console.log("error_msg:", error_msg)
 
@@ -573,11 +581,12 @@
                         this.success_msg = `Learning journey with id-${learningjourney.learning_journey_id} created!`
                     }
 
-
                     await new Promise(r => setTimeout(r, 10000));
                     console.log("resetting after 10 seconds")
                     this.error_msg = "";
                     this.success_msg = "";
+
+
                     // reset all other variables:
                     
 
