@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-# app = Flask(__name__)
+app = Flask(__name__)
 # # Mac user ====================================================================
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
-#                                         '@localhost:3306/ljms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root' + \
+                                        '@localhost:3306/ljms'
 # # =============================================================================
 
 
@@ -753,6 +753,16 @@ def create_learning_journey_course():
             "message": "Unable to commit to database."
         }), 500
 
+# Remove Learning Journey
+@app.route("/learning_journey_removecourse/<int:learning_journey_id>/<string:course_id>", methods=['DELETE'])
+def remove_learning_journey_course(learning_journey_id , course_id):
+
+    LJcourse =  db.session.query(LearningJourneyCourse).get((learning_journey_id, course_id))
+    
+    db.session.delete(LJcourse)
+    db.session.commit()
+    return '', 204
+
 
 ########### Learning Journey Skill #####################
 # Get all Learning Journey Skill R/S
@@ -789,6 +799,8 @@ def create_learning_journey_skill():
         return jsonify({
             "message": "Unable to commit to database."
         }), 500
+
+
 
 
 db.create_all()
